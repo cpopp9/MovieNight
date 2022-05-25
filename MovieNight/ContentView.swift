@@ -9,14 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Form {
-            Section {
-            Text("Hello, earth!")
-        }
-            Section {
-                Text("hello")
-    
+        NavigationView {
+            Form {
+                Section {
+                    Text("Hello, earth!")
             }
+                
+                Section {
+                    Text("Movies")
+                    Text("TV Shows")
+            }
+            }
+        .navigationTitle("Put.io")
         }
     }
 }
