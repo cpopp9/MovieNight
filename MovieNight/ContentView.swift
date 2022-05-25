@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        Form {
         Text("Hello, earth!")
-            .padding()
+        }
     }
 }
 
