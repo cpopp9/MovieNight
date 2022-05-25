@@ -8,19 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var selectedMovie: String = "Gravity"
+    @State var movieList: [String] = ["Indiana Jones and the Raiders of the Lost Ark", "Gravity", "Tommy Boy", "Alien"]
+    
+    
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    Text("Hello, earth!")
+                    Text("Hello, movie lovers!")
             }
                 
                 Section {
-                    Text("Movies")
-                    Text("TV Shows")
+                    Picker("Select a movie", selection: $selectedMovie) {
+                        ForEach(movieList, id: \.self) {
+                            Text($0)
+                        }
+                    }
             }
             }
-        .navigationTitle("Put.io")
+        .navigationTitle("Movie Night 🍿")
         }
     }
 }
