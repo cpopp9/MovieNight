@@ -17,7 +17,7 @@ struct ContentView: View {
             Form {
                 Section {
                     Text("Hello, movie lovers!")
-                    Text("New text added")
+                    Text("What would you like to watch?")
             }
                 
                 Section {
