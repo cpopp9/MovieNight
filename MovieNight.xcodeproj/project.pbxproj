@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC5381C728498CBB0079F436 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5381C628498CBB0079F436 /* Settings.swift */; };
+		DC5381C928498CEE0079F436 /* MovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5381C828498CEE0079F436 /* MovieView.swift */; };
 		DCBE5F6C283EB3EB00EE1943 /* MovieNightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBE5F6B283EB3EB00EE1943 /* MovieNightApp.swift */; };
 		DCBE5F6E283EB3EB00EE1943 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBE5F6D283EB3EB00EE1943 /* ContentView.swift */; };
 		DCBE5F70283EB3EC00EE1943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBE5F6F283EB3EC00EE1943 /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC5381C628498CBB0079F436 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		DC5381C828498CEE0079F436 /* MovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieView.swift; sourceTree = "<group>"; };
 		DCBE5F68283EB3EB00EE1943 /* MovieNight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieNight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBE5F6B283EB3EB00EE1943 /* MovieNightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightApp.swift; sourceTree = "<group>"; };
 		DCBE5F6D283EB3EB00EE1943 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +57,8 @@
 			children = (
 				DCBE5F6B283EB3EB00EE1943 /* MovieNightApp.swift */,
 				DCBE5F6D283EB3EB00EE1943 /* ContentView.swift */,
+				DC5381C828498CEE0079F436 /* MovieView.swift */,
+				DC5381C628498CBB0079F436 /* Settings.swift */,
 				DCBE5F6F283EB3EC00EE1943 /* Assets.xcassets */,
 				DCBE5F71283EB3EC00EE1943 /* Preview Content */,
 			);
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC5381C728498CBB0079F436 /* Settings.swift in Sources */,
+				DC5381C928498CEE0079F436 /* MovieView.swift in Sources */,
 				DCBE5F6E283EB3EB00EE1943 /* ContentView.swift in Sources */,
 				DCBE5F6C283EB3EB00EE1943 /* MovieNightApp.swift in Sources */,
 			);
