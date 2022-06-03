@@ -12,42 +12,42 @@ struct Settings: View {
     let appVersion: String = "0.1"
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section {
-                    Text("v\(appVersion)")
-                } header: {
-                    Text("About MovieNight")
-                }
-                
-                Section {
-                    Text("Email Us")
-                } header: {
-                    Text("Support")
-                }
-                
-                Section{
-                    Toggle("Enable Dark Mode", isOn: $darkMode)
-                    
-                    if darkMode {
-                                   Text("enable dark mode")
-                               }
-                    
-                } header: {
-                    Text("Features")
-                }
-                
-                Section {
-                    Button("Rate on the App Store", action: deleteData)
-                    Button("Clear Cache", action: deleteData)
-                    Button("Export Data", action: deleteData)
-                    Button("Delete All Data", action: deleteData)
-                } header: {
-                    Text("Meta")
-                }
+        
+        Form {
+            Section {
+                Text("v\(appVersion)")
+            } header: {
+                Text("About MovieNight")
             }
-            .navigationTitle("Settings")
+            
+            Section {
+                Text("Email Us")
+            } header: {
+                Text("Support")
+            }
+            
+            Section{
+                Toggle("Enable Dark Mode", isOn: $darkMode)
+                
+                if darkMode {
+                    Text("enable dark mode")
+                }
+                
+            } header: {
+                Text("Features")
+            }
+            
+            Section {
+                Button("Rate on the App Store", action: deleteData)
+                Button("Clear Cache", action: deleteData)
+                Button("Export Data", action: deleteData)
+                Button("Delete All Data", action: deleteData)
+            } header: {
+                Text("Meta")
+            }
         }
+        .navigationTitle("Settings")
+        
     }
     
 }
