@@ -47,7 +47,6 @@ struct Settings: View {
                 }
             }
             .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.automatic)
         }
     }
     
