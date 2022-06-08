@@ -11,37 +11,42 @@ struct MovieView: View {
     var body: some View {
         VStack(spacing: 30) {
             
-            VStack(alignment: .leading) {
-                Text("Gravity")
-                    .foregroundStyle(.primary)
-                    .font(.title.bold())
-                Text("2013")
-                    .foregroundStyle(.secondary)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Gravity")
+                        .foregroundStyle(.primary)
+                        .font(.title.bold())
+                    Text("2013")
+                        .foregroundStyle(.secondary)
+                    
+                }.padding()
+                Spacer()
             }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
+            
             
             VStack {
-            Image("Gravity-movie-poster")
+                Image("Gravity-movie-poster")
                 
-                .resizable()
-                .scaledToFit()
-                .shadow(radius: 5)
-                .frame(width: 300)
+                    .resizable()
+                    .scaledToFit()
+                    .shadow(radius: 5)
+                    .frame(width: 300)
                 
-            
-            Button("Add to watch list") { }
-                .buttonStyle(.borderedProminent)
+                
+                Button("Add to watch list") { }
+                    .buttonStyle(.borderedProminent)
             }
             
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Information")
-                    .foregroundStyle(.primary)
-                    .font(.title)
-                Text("Two astronauts work together to survive after an accident leaves them stranded in space.")
+            HStack {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Information")
+                        .foregroundStyle(.primary)
+                        .font(.title)
+                    Text("Two astronauts work together to survive after an accident leaves them stranded in space.")
+                }.padding()
+                Spacer()
             }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
+            
         }
     }
 }
