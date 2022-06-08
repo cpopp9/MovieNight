@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var selectedMovie: String = "Gravity"
-    @State var movieList: [String] = ["Indiana Jones and the Raiders of the Lost Ark", "Gravity", "Tommy Boy", "Alien"]
-    
+    @State private var searchText = ""
     
     var body: some View {
         NavigationView {
-            Form {
+            Group {
                 NavigationLink {
                     Settings()
                 } label: {
@@ -23,10 +21,18 @@ struct ContentView: View {
                 NavigationLink {
                     MovieView()
                 } label: {
-                    Text("Gravity")
+                    VStack(alignment: .leading) {
+                        Image("Gravity-movie-poster")
+                        .resizable()
+                        .scaledToFit()
+                        .shadow(radius: 5)
+                        Text("Gravity")
+                    }.frame(width: 150)
                 }
+                
             }
             .navigationTitle("Movie Night 🍿")
+            .searchable(text: $searchText)
         }
     }
 }
