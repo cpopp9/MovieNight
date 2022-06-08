@@ -15,20 +15,18 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section {
-                    Text("Hello, movie lovers!")
-                    Text("What would you like to watch?")
+                NavigationLink {
+                    Settings()
+                } label: {
+                    Text("Settings")
+                }
+                NavigationLink {
+                    MovieView()
+                } label: {
+                    Text("Gravity")
+                }
             }
-                
-                Section {
-                    Picker("Select a movie", selection: $selectedMovie) {
-                        ForEach(movieList, id: \.self) {
-                            Text($0)
-                        }
-                    }
-            }
-            }
-        .navigationTitle("Movie Night 🍿")
+            .navigationTitle("Movie Night 🍿")
         }
     }
 }
