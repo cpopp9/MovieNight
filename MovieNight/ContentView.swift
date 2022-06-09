@@ -31,7 +31,7 @@ struct ContentView: View {
                 }
                 
             }
-            .navigationTitle("Movie Night 🍿")
+            .navigationTitle("Movie List")
             .searchable(text: $searchText)
         }
     }
