@@ -9,31 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var searchText = ""
+    var movies = ["4j0PNHkMr5ax3IA8tjtxcmPU3QT", "6DrHO1jr3qVrViUO6s6kFiAGM7"]
     
     var body: some View {
         NavigationView {
-            Group {
-                NavigationLink {
-                    Settings()
-                } label: {
-                    Text("Settings")
-                }
-                NavigationLink {
-                    MovieView()
-                } label: {
-                    VStack(alignment: .leading) {
-                        Image("Gravity-movie-poster")
+            NavigationLink {
+                MovieView()
+            } label: {
+                VStack(alignment: .leading) {
+                    Image(movies[0])
                         .resizable()
                         .scaledToFit()
                         .shadow(radius: 5)
-                        Text("Gravity")
-                    }.frame(width: 150)
-                }
-                
+                    Text("Gravity")
+                }.frame(width: 150)
             }
             .navigationTitle("Movie List")
             .searchable(text: $searchText)
         }
+        
     }
 }
 
