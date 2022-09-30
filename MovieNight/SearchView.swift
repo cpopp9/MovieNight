@@ -67,6 +67,7 @@ struct SearchView: View {
                         let newItem = Movie(context: moc)
                         newItem.title = item.title ?? item.name ?? "Unknown"
                         newItem.id = Int32(item.id)
+                        
                     }
                     
                 }

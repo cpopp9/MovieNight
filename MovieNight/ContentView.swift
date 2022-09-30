@@ -23,7 +23,7 @@ struct ContentView: View {
                     .tag(0)
                 
                 
-                WatchlistView()
+                WatchListView()
                     .tabItem {
                         VStack {
                             Image(systemName: "tv")
