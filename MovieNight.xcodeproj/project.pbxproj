@@ -21,6 +21,7 @@
 		DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E135228E6668E00A50AC5 /* DiscoverView.swift */; };
 		DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */; };
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
+		DCC484FC28E7852A004116CD /* WatchListMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FB28E7852A004116CD /* WatchListMovieView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		DC6E135228E6668E00A50AC5 /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		DC72838128E672490028D4BA /* MovieNight.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieNight.xcdatamodel; sourceTree = "<group>"; };
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
+		DCC484FB28E7852A004116CD /* WatchListMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListMovieView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,18 +73,9 @@
 		DC6E133228E5F4EE00A50AC5 /* MovieNight */ = {
 			isa = PBXGroup;
 			children = (
-				DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */,
 				DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */,
-				DC6E133528E5F4EE00A50AC5 /* ContentView.swift */,
-				DC6E135028E6668900A50AC5 /* SettingsView.swift */,
-				DC6E135228E6668E00A50AC5 /* DiscoverView.swift */,
-				DC6E134E28E6668100A50AC5 /* WatchlistView.swift */,
-				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
-				DC6E134A28E6662200A50AC5 /* SearchResults.swift */,
-				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
-				DC6E134628E665E200A50AC5 /* MovieView.swift */,
-				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
-				DC6E134428E603F900A50AC5 /* DataController.swift */,
+				DC88889528E77D21000B9E01 /* Views */,
+				DC88889428E77D15000B9E01 /* Extensions */,
 				DC6E133728E5F4EF00A50AC5 /* Assets.xcassets */,
 				DC6E133928E5F4F000A50AC5 /* Preview Content */,
 			);
@@ -95,6 +88,40 @@
 				DC6E133A28E5F4F000A50AC5 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DC88889428E77D15000B9E01 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DC88889528E77D21000B9E01 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DC6E133528E5F4EE00A50AC5 /* ContentView.swift */,
+				DC6E135028E6668900A50AC5 /* SettingsView.swift */,
+				DC6E135228E6668E00A50AC5 /* DiscoverView.swift */,
+				DC6E134E28E6668100A50AC5 /* WatchlistView.swift */,
+				DCC484FB28E7852A004116CD /* WatchListMovieView.swift */,
+				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
+				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
+				DC6E134628E665E200A50AC5 /* MovieView.swift */,
+				DC88889628E77D42000B9E01 /* Data */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DC88889628E77D42000B9E01 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */,
+				DC6E134428E603F900A50AC5 /* DataController.swift */,
+				DC6E134A28E6662200A50AC5 /* SearchResults.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +199,7 @@
 				DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */,
 				DC6E133628E5F4EE00A50AC5 /* ContentView.swift in Sources */,
 				DC6E134528E603F900A50AC5 /* DataController.swift in Sources */,
+				DCC484FC28E7852A004116CD /* WatchListMovieView.swift in Sources */,
 				DC6E134D28E6664000A50AC5 /* SearchView.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
 				DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */,
@@ -307,6 +335,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MovieNight/Preview Content\"";
+				DEVELOPMENT_TEAM = R9SLYR2Y3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -335,6 +364,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MovieNight/Preview Content\"";
+				DEVELOPMENT_TEAM = R9SLYR2Y3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

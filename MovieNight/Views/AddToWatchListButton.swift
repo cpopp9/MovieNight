@@ -11,7 +11,7 @@ import SwiftUI
 struct AddToWatchListButton: View {
     @Environment(\.managedObjectContext) var moc
     @State var object: Watchlist?
-    var movie: Movie
+    var movie: Movie?
     
     var onList: Bool {
         if let object = object {
@@ -25,23 +25,29 @@ struct AddToWatchListButton: View {
         
         VStack {
             Button() {
-                
                 onList ? deleteFromWatchlist() : saveToWatchlist()
+                
+                if let movie = movie {
+                    loadObject(contentId: Int(movie.id))
+                }
+                
+                if let object = object {
+                    loadObject(contentId: Int(object.id))
+                }
             
-                loadObject(contentId: Int(movie.id))
             } label: {
                 Text(onList ? "Remove from Watchlist" : "Add to watchlist")
             }
         }
         .task {
-            loadObject(contentId: Int(movie.id))
+            if let movie = movie {
+                loadObject(contentId: Int(movie.id))
+            }
+            
+            if let object = object {
+                loadObject(contentId: Int(object.id))
+            }
         }
-        
-//        if let onList = object {
-//            Text("On watchlist")
-//        } else {
-//            Text("Not on watchlist")
-//        }
     }
     
     func loadObject(contentId: Int) {
@@ -55,11 +61,20 @@ struct AddToWatchListButton: View {
     }
     
     func saveToWatchlist() {
-        let newItem = Watchlist(context: moc)
-        newItem.title = movie.title ?? "Unknown"
-        newItem.id = Int32(movie.id)
-        
-        try? moc.save()
+        if let movie = movie {
+            
+            let newItem = Watchlist(context: moc)
+            newItem.title = movie.title ?? "Unknown"
+            newItem.id = Int32(movie.id)
+            newItem.backdrop_path = movie.backdrop_path
+            newItem.poster_path = movie.poster_path
+            newItem.media_type = movie.media_type
+            newItem.original_language = movie.original_language
+            newItem.original_title = movie.original_title
+            newItem.overview = movie.overview
+            
+            try? moc.save()
+        }
     }
     
     func deleteFromWatchlist() {

@@ -12,7 +12,6 @@ struct ContentView: View {
         
             
             TabView {
-                
                 SearchView()
                     .tabItem {
                         VStack {

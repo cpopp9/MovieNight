@@ -1,5 +1,5 @@
     //
-    //  SearchView.swift
+    //  DiscoverView.swift
     //  MovieNight
     //
     //  Created by Cory Popp on 9/29/22.
@@ -7,17 +7,14 @@
 
 import SwiftUI
 
-struct SearchView: View {
-    @State var searchText = ""
-        //    @State var search = SearchResults(results: nil)
+struct DiscoverView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var search: FetchedResults<Movie>
-    
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == true")) var discover: FetchedResults<Movie>
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(search) { searchResult in
+                ForEach(discover) { searchResult in
                     NavigationLink {
                         MovieView(movie: searchResult)
                     } label: {
@@ -25,33 +22,16 @@ struct SearchView: View {
                     }
                 }
             }
-            
             .navigationTitle("My App")
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for a movie")
-            .onChange(of: searchText) { newValue in
-                Task {
-                    await multiSearch()
-                }
+            .task {
+                await loadDiscovery()
             }
         }
     }
     
-    func multiSearch() async {
+    func loadDiscovery() async {
         
-        for objects in search {
-            moc.delete(objects)
-        }
-        
-        var encoded: String {
-            
-            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
-                return encodedText
-            } else {
-                return "Failed"
-            }
-        }
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {
             fatalError("Invalid URL")
         }
         
@@ -59,7 +39,6 @@ struct SearchView: View {
             let (data, _) = try await URLSession.shared.data(from: url)
             
             if let decodedResponse = try? JSONDecoder().decode(SearchResults.self, from: data) {
-                    //                search.results = decodedResponse.results
                 
                 if let searchResults = decodedResponse.results {
                     
@@ -67,19 +46,21 @@ struct SearchView: View {
                         let newItem = Movie(context: moc)
                         newItem.title = item.title ?? item.name ?? "Unknown"
                         newItem.id = Int32(item.id)
+                        newItem.discovery = true
                         
                     }
-                    
                 }
             }
         } catch {
             fatalError("Invalid Data")
         }
     }
+    
+    
 }
 
-struct SearchView_Previews: PreviewProvider {
+struct DiscoverView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        DiscoverView()
     }
 }
