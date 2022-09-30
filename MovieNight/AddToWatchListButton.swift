@@ -33,6 +33,9 @@ struct AddToWatchListButton: View {
                 Text(onList ? "Remove from Watchlist" : "Add to watchlist")
             }
         }
+        .task {
+            loadObject(contentId: Int(movie.id))
+        }
         
 //        if let onList = object {
 //            Text("On watchlist")
