@@ -14,6 +14,11 @@ struct WatchListMovieView: View {
     var body: some View {
         List {
             AddToWatchListButton(object: movie, movie: nil)
+            Button() {
+                movie.watched.toggle()
+            } label: {
+                Text(movie.watched ? "Unwatched" : "Watched")
+            }
             Text("title: \(movie.title ?? "Unknown")")
             Text("id: \(String(movie.id))")
             Text("backdrop_path: \(movie.backdrop_path ?? "Unknown")")

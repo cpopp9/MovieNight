@@ -20,8 +20,12 @@
 		DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E135028E6668900A50AC5 /* SettingsView.swift */; };
 		DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E135228E6668E00A50AC5 /* DiscoverView.swift */; };
 		DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */; };
+		DCA973E728EB1E0E004E33EF /* Watchlist+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA973E528EB1E0E004E33EF /* Watchlist+CoreDataClass.swift */; };
+		DCA973E828EB1E0E004E33EF /* Watchlist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA973E628EB1E0E004E33EF /* Watchlist+CoreDataProperties.swift */; };
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
 		DCC484FC28E7852A004116CD /* WatchListMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FB28E7852A004116CD /* WatchListMovieView.swift */; };
+		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
+		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,8 +43,12 @@
 		DC6E135028E6668900A50AC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC6E135228E6668E00A50AC5 /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		DC72838128E672490028D4BA /* MovieNight.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieNight.xcdatamodel; sourceTree = "<group>"; };
+		DCA973E528EB1E0E004E33EF /* Watchlist+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Watchlist+CoreDataClass.swift"; path = "MovieNight/Watchlist+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DCA973E628EB1E0E004E33EF /* Watchlist+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Watchlist+CoreDataProperties.swift"; path = "MovieNight/Watchlist+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
 		DCC484FB28E7852A004116CD /* WatchListMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListMovieView.swift; sourceTree = "<group>"; };
+		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
+		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +65,8 @@
 		DC6E132728E5F4EE00A50AC5 = {
 			isa = PBXGroup;
 			children = (
+				DCA973E528EB1E0E004E33EF /* Watchlist+CoreDataClass.swift */,
+				DCA973E628EB1E0E004E33EF /* Watchlist+CoreDataProperties.swift */,
 				DC6E133228E5F4EE00A50AC5 /* MovieNight */,
 				DC6E133128E5F4EE00A50AC5 /* Products */,
 			);
@@ -101,10 +111,12 @@
 		DC88889528E77D21000B9E01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DCC484FD28EB13C4004116CD /* AttributionsView.swift */,
 				DC6E133528E5F4EE00A50AC5 /* ContentView.swift */,
 				DC6E135028E6668900A50AC5 /* SettingsView.swift */,
 				DC6E135228E6668E00A50AC5 /* DiscoverView.swift */,
 				DC6E134E28E6668100A50AC5 /* WatchlistView.swift */,
+				DCC484FF28EB177A004116CD /* WatchListFilter.swift */,
 				DCC484FB28E7852A004116CD /* WatchListMovieView.swift */,
 				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
 				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
@@ -194,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */,
 				DC6E134928E6660900A50AC5 /* Percent-Encoding.swift in Sources */,
 				DC6E134728E665E200A50AC5 /* MovieView.swift in Sources */,
 				DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */,
@@ -201,12 +214,15 @@
 				DC6E134528E603F900A50AC5 /* DataController.swift in Sources */,
 				DCC484FC28E7852A004116CD /* WatchListMovieView.swift in Sources */,
 				DC6E134D28E6664000A50AC5 /* SearchView.swift in Sources */,
+				DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
 				DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */,
 				DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */,
 				DC6E134B28E6662200A50AC5 /* SearchResults.swift in Sources */,
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
+				DCA973E828EB1E0E004E33EF /* Watchlist+CoreDataProperties.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* WatchlistView.swift in Sources */,
+				DCA973E728EB1E0E004E33EF /* Watchlist+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

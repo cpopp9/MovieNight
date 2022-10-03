@@ -36,8 +36,17 @@ struct AddToWatchListButton: View {
                 }
             
             } label: {
-                Text(onList ? "Remove from Watchlist" : "Add to watchlist")
+                HStack {
+                    Image(systemName: onList ? "minus" : "plus")
+                    Text(onList ? "Remove from Watchlist" : "Add to watchlist")
+                }
+                .frame(maxWidth: .infinity)
             }
+            .tint(onList ? .red : .blue)
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.roundedRectangle(radius: 10))
+            .controlSize(.large)
+            .padding()
         }
         .task {
             if let movie = movie {
@@ -72,6 +81,8 @@ struct AddToWatchListButton: View {
             newItem.original_language = movie.original_language
             newItem.original_title = movie.original_title
             newItem.overview = movie.overview
+            newItem.watched = movie.watched
+//            newItem.watched = false
             
             try? moc.save()
         }

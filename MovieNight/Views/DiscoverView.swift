@@ -22,7 +22,7 @@ struct DiscoverView: View {
                     }
                 }
             }
-            .navigationTitle("My App")
+            .navigationTitle("Discover")
             .task {
                 await loadDiscovery()
             }
@@ -47,6 +47,17 @@ struct DiscoverView: View {
                         newItem.title = item.title ?? item.name ?? "Unknown"
                         newItem.id = Int32(item.id)
                         newItem.discovery = true
+                        newItem.backdrop_path = item.backdrop_path
+                        newItem.poster_path = item.poster_path
+                        newItem.media_type = "movie"
+                        newItem.original_language = item.original_language
+                        newItem.original_title = item.original_title ?? item.original_name
+                        newItem.overview = item.overview
+                        newItem.watched = false
+                        
+//                        newItem.genre_ids = item.genre_ids
+//                        newItem.vote_average = Double?(item.vote_average) ?? 0.0
+//                        newItem.vote_count = Int(item.vote_count) ?? 0
                         
                     }
                 }

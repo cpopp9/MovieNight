@@ -11,7 +11,7 @@ struct SearchView: View {
     @State var searchText = ""
         //    @State var search = SearchResults(results: nil)
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var search: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery != true")) var search: FetchedResults<Movie>
     
     
     var body: some View {
@@ -26,7 +26,7 @@ struct SearchView: View {
                 }
             }
             
-            .navigationTitle("My App")
+            .navigationTitle("Search")
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for a movie")
             .onChange(of: searchText) { newValue in
                 Task {
@@ -73,12 +73,12 @@ struct SearchView: View {
                         newItem.original_language = item.original_language
                         newItem.original_title = item.original_title ?? item.original_name
                         newItem.overview = item.overview
+                        newItem.discovery = false
 //                        newItem.genre_ids = item.genre_ids
 //                        newItem.vote_average = Double?(item.vote_average) ?? 0.0
 //                        newItem.vote_count = Int(item.vote_count) ?? 0
                         
                     }
-                    
                 }
             }
         } catch {
