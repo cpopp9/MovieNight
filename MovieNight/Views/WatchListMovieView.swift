@@ -10,25 +10,10 @@ import SwiftUI
 struct WatchListMovieView: View {
     let movie: Watchlist
     @Environment(\.managedObjectContext) var moc
-    @State var onList = false
     
     var body: some View {
         List {
             AddToWatchListButton(object: movie, movie: nil)
-            Button() {
-                onList.toggle()
-                
-                movie.watched = onList
-                
-                if moc.hasChanges {
-                    try? moc.save()
-                }
-            } label: {
-                HStack {
-                    Image(systemName: onList ? "checkmark.circle.fill" : "checkmark.circle")
-                    Text("Watched")
-                }
-            }
             Text("title: \(movie.title ?? "Unknown")")
             Text("id: \(String(movie.id))")
             Text("backdrop_path: \(movie.backdrop_path ?? "Unknown")")

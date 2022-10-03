@@ -12,6 +12,7 @@ struct AddToWatchListButton: View {
     @Environment(\.managedObjectContext) var moc
     @State var object: Watchlist?
     var movie: Movie?
+    @State var watched = false
     
     var onList: Bool {
         if let object = object {
@@ -23,7 +24,7 @@ struct AddToWatchListButton: View {
     
     var body: some View {
         
-        VStack {
+        
             Button() {
                 onList ? deleteFromWatchlist() : saveToWatchlist()
                 
@@ -47,6 +48,23 @@ struct AddToWatchListButton: View {
             .buttonBorderShape(.roundedRectangle(radius: 10))
             .controlSize(.large)
             .padding()
+            
+            Button() {
+                watched.toggle()
+                
+                if let object = object {
+                    object.watched = watched
+                }
+                
+                if moc.hasChanges {
+                    try? moc.save()
+                }
+            } label: {
+                HStack {
+                    Image(systemName: watched ? "checkmark.circle.fill" : "checkmark.circle")
+                    Text("Watched")
+                }
+            
         }
         .task {
             if let movie = movie {

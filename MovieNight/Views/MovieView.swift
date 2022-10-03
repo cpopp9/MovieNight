@@ -11,6 +11,7 @@ import SwiftUI
 struct MovieView: View {
     let movie: Movie
     @Environment(\.managedObjectContext) var moc
+    @State var onList = false
     
     var body: some View {
         List {
