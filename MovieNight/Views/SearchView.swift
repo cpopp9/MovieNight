@@ -73,7 +73,6 @@ struct SearchView: View {
                         newItem.original_language = item.original_language
                         newItem.original_title = item.original_title ?? item.original_name
                         newItem.overview = item.overview
-                        newItem.discovery = false
 //                        newItem.genre_ids = item.genre_ids
 //                        newItem.vote_average = Double?(item.vote_average) ?? 0.0
 //                        newItem.vote_count = Int(item.vote_count) ?? 0
