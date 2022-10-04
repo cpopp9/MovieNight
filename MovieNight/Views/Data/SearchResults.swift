@@ -5,6 +5,7 @@
 //  Created by Cory Popp on 9/29/22.
 //
 
+import CoreData
 import Foundation
 
 struct Result: Codable {

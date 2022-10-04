@@ -43,21 +43,7 @@ struct DiscoverView: View {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        let newItem = Movie(context: moc)
-                        newItem.title = item.title ?? item.name ?? "Unknown"
-                        newItem.id = Int32(item.id)
-                        newItem.discovery = true
-                        newItem.backdrop_path = item.backdrop_path
-                        newItem.poster_path = item.poster_path
-                        newItem.media_type = "movie"
-                        newItem.original_language = item.original_language
-                        newItem.original_title = item.original_title ?? item.original_name
-                        newItem.overview = item.overview
-                        
-//                        newItem.genre_ids = item.genre_ids
-//                        newItem.vote_average = Double?(item.vote_average) ?? 0.0
-//                        newItem.vote_count = Int(item.vote_count) ?? 0
-                        
+                        DiscoverItem(item: item)
                     }
                 }
             }
@@ -66,6 +52,21 @@ struct DiscoverView: View {
         }
     }
     
+    
+    func DiscoverItem(item: Result) {
+        let newItem = Movie(context: moc)
+        newItem.title = item.title ?? item.name ?? "Unknown"
+        newItem.id = Int32(item.id)
+        newItem.backdrop_path = item.backdrop_path
+        newItem.poster_path = item.poster_path
+        newItem.media_type = item.media_type
+        newItem.original_language = item.original_language
+        newItem.original_title = item.original_title ?? item.original_name
+        newItem.overview = item.overview
+//        newItem.genre_ids = item.genre_ids
+//        newItem.vote_average = Double?(item.vote_average) ?? 0.0
+//        newItem.vote_count = Int(item.vote_count) ?? 0
+    }
     
 }
 

@@ -11,7 +11,7 @@ struct SearchView: View {
     @State var searchText = ""
         //    @State var search = SearchResults(results: nil)
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery != true")) var search: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == false")) var search: FetchedResults<Movie>
     
     
     var body: some View {
@@ -64,19 +64,7 @@ struct SearchView: View {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        let newItem = Movie(context: moc)
-                        newItem.title = item.title ?? item.name ?? "Unknown"
-                        newItem.id = Int32(item.id)
-                        newItem.backdrop_path = item.backdrop_path
-                        newItem.poster_path = item.poster_path
-                        newItem.media_type = item.media_type
-                        newItem.original_language = item.original_language
-                        newItem.original_title = item.original_title ?? item.original_name
-                        newItem.overview = item.overview
-//                        newItem.genre_ids = item.genre_ids
-//                        newItem.vote_average = Double?(item.vote_average) ?? 0.0
-//                        newItem.vote_count = Int(item.vote_count) ?? 0
-                        
+                        searchItem(item: item)
                     }
                 }
             }
@@ -84,6 +72,24 @@ struct SearchView: View {
             fatalError("Invalid Data")
         }
     }
+    
+    func searchItem(item: Result) {
+        let newItem = Movie(context: moc)
+        newItem.title = item.title ?? item.name ?? "Unknown"
+        newItem.id = Int32(item.id)
+        newItem.backdrop_path = item.backdrop_path
+        newItem.discovery = false
+        newItem.poster_path = item.poster_path
+        newItem.media_type = item.media_type
+        newItem.original_language = item.original_language
+        newItem.original_title = item.original_title ?? item.original_name
+        newItem.overview = item.overview
+//        newItem.genre_ids = item.genre_ids
+//        newItem.vote_average = Double?(item.vote_average) ?? 0.0
+//        newItem.vote_count = Int(item.vote_count) ?? 0
+    }
+    
+    
 }
 
 struct SearchView_Previews: PreviewProvider {
