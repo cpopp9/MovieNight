@@ -24,7 +24,6 @@ struct AddToWatchListButton: View {
     
     var body: some View {
         
-        
             Button() {
                 onList ? deleteFromWatchlist() : saveToWatchlist()
                 
@@ -66,6 +65,7 @@ struct AddToWatchListButton: View {
                 }
             
         }
+            .disabled(!watched)
         .task {
             if let movie = movie {
                 loadObject(contentId: Int(movie.id))
