@@ -100,6 +100,8 @@ struct AddToWatchListButton: View {
             newItem.original_title = movie.original_title
             newItem.overview = movie.overview
             newItem.watched = false
+            newItem.vote_average = movie.vote_average
+            newItem.vote_count = movie.vote_count
             
             try? moc.save()
         }

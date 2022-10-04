@@ -9,12 +9,12 @@ import SwiftUI
 
 struct DiscoverView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == true")) var discover: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == true")) var discoverResults: FetchedResults<Movie>
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(discover) { searchResult in
+                ForEach(discoverResults) { searchResult in
                     NavigationLink {
                         MovieView(movie: searchResult)
                     } label: {
@@ -26,10 +26,23 @@ struct DiscoverView: View {
             .task {
                 await loadDiscovery()
             }
+            .toolbar {
+                Button() {
+                    Task {
+                        await loadDiscovery()
+                    }
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
         }
     }
     
     func loadDiscovery() async {
+        
+        for object in discoverResults {
+            moc.delete(object)
+        }
         
         guard let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {
             fatalError("Invalid URL")
@@ -38,7 +51,7 @@ struct DiscoverView: View {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             
-            if let decodedResponse = try? JSONDecoder().decode(SearchResults.self, from: data) {
+            if let decodedResponse = try? JSONDecoder().decode(DiscoverResults.self, from: data) {
                 
                 if let searchResults = decodedResponse.results {
                     
@@ -53,19 +66,26 @@ struct DiscoverView: View {
     }
     
     
-    func DiscoverItem(item: Result) {
+    func DiscoverItem(item: DiscoverResult) {
         let newItem = Movie(context: moc)
-        newItem.title = item.title ?? item.name ?? "Unknown"
+        newItem.title = item.title ?? "Unknown"
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path
         newItem.poster_path = item.poster_path
         newItem.media_type = item.media_type
         newItem.original_language = item.original_language
-        newItem.original_title = item.original_title ?? item.original_name
+        newItem.original_title = item.original_title
         newItem.overview = item.overview
+        newItem.discovery = true
 //        newItem.genre_ids = item.genre_ids
-//        newItem.vote_average = Double?(item.vote_average) ?? 0.0
-//        newItem.vote_count = Int(item.vote_count) ?? 0
+        
+        if let vote_average = item.vote_average {
+            newItem.vote_average = vote_average
+        }
+        
+        if let vote_count = item.vote_count {
+            newItem.vote_count = Int16(vote_count)
+        }
     }
     
 }

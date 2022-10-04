@@ -1,13 +1,13 @@
 //
-//  SearchResults.swift
+//  DiscoverResults.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 9/29/22.
+//  Created by Cory Popp on 10/4/22.
 //
 
 import Foundation
 
-struct SearchResult: Codable {
+struct DiscoverResult: Codable {
     
     var id: Int
     var backdrop_path: String?
@@ -29,13 +29,8 @@ struct SearchResult: Codable {
     var original_name: String?
     var first_air_date: String?
     
-    // Person Details
-    var known_for_department: String?
-    var profile_path: String?
-    
 }
 
-struct SearchResults: Codable {
-    var results: [SearchResult]?
+struct DiscoverResults: Codable {
+    var results: [DiscoverResult]?
 }
-

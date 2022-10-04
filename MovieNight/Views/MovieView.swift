@@ -16,15 +16,27 @@ struct MovieView: View {
     var body: some View {
         List {
             AddToWatchListButton(movie: movie)
-            Text("title: \(movie.title ?? "Unknown")")
-            Text("id: \(String(movie.id))")
-            Text("backdrop_path: \(movie.backdrop_path ?? "Unknown")")
-            Text("poster_path: \(movie.poster_path ?? "Unknown")")
-            Text("media_type: \(movie.media_type ?? "Unknown")")
-            Text("original_title: \(movie.original_title ?? "Unknown")")
-            Text("original_language: \(movie.original_language ?? "Unknown")")
-            Text("overview: \(movie.overview ?? "Unknown")")
+            
+            Section("Movie Details") {
+                Text(movie.wrappedTitle)
+                Text("id: \(String(movie.id))")
+                Text("media_type: \(movie.wrappedMediaType)")
+                Text("original_title: \(movie.wrappedOriginalTitle)")
+                Text("original_language: \(movie.wrappedOriginalLanguage)")
+                Text("overview: \(movie.wrappedOverview)")
+            }
+            
+            Section("Media Images") {
+                Text("backdrop_path: \(movie.wrappedBackdropPath)")
+                Text("poster_path: \(movie.wrappedPosterPath)")
+            }
+            
+            Section("Voting") {
+                Text("vote_average: \(String(movie.vote_average))")
+                Text("vote_count: \(String(movie.vote_count))")
+            }
         }
+        .navigationTitle(movie.wrappedTitle)
     }
 }
 

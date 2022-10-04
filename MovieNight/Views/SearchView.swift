@@ -11,17 +11,23 @@ struct SearchView: View {
     @State var searchText = ""
         //    @State var search = SearchResults(results: nil)
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == false")) var search: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == false")) var searchResults: FetchedResults<Movie>
     
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(search) { searchResult in
+                ForEach(searchResults) { result in
                     NavigationLink {
-                        MovieView(movie: searchResult)
+                        MovieView(movie: result)
                     } label: {
-                        Text(searchResult.title ?? "Unknown")
+                        VStack(alignment: .leading) {
+                            Text(result.wrappedTitle)
+                                .font(.headline)
+                            Text(result.wrappedMediaType)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
                     }
                 }
             }
@@ -38,7 +44,7 @@ struct SearchView: View {
     
     func multiSearch() async {
         
-        for objects in search {
+        for objects in searchResults {
             moc.delete(objects)
         }
         
@@ -73,7 +79,7 @@ struct SearchView: View {
         }
     }
     
-    func searchItem(item: Result) {
+    func searchItem(item: SearchResult) {
         let newItem = Movie(context: moc)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -85,8 +91,14 @@ struct SearchView: View {
         newItem.original_title = item.original_title ?? item.original_name
         newItem.overview = item.overview
 //        newItem.genre_ids = item.genre_ids
-//        newItem.vote_average = Double?(item.vote_average) ?? 0.0
-//        newItem.vote_count = Int(item.vote_count) ?? 0
+        
+        if let vote_average = item.vote_average {
+            newItem.vote_average = vote_average
+        }
+        
+        if let vote_count = item.vote_count {
+            newItem.vote_count = Int16(vote_count)
+        }
     }
     
     
