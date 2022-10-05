@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ActorView: View {
+    var person: Movie
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(person.wrappedTitle)
     }
 }
 
-struct ActorView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActorView()
-    }
-}
+//struct ActorView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ActorView()
+//    }
+//}

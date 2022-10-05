@@ -18,12 +18,13 @@ struct MovieView: View {
             AddToWatchListButton(movie: movie)
             
             Section("Movie Details") {
-                Text(movie.wrappedTitle)
+                Text("title: \(movie.wrappedTitle)")
                 Text("id: \(String(movie.id))")
                 Text("media_type: \(movie.wrappedMediaType)")
                 Text("original_title: \(movie.wrappedOriginalTitle)")
                 Text("original_language: \(movie.wrappedOriginalLanguage)")
                 Text("overview: \(movie.wrappedOverview)")
+                Text("Release Date: \(movie.wrappedReleaseDate)")
             }
             
             Section("Media Images") {

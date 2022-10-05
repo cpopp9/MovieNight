@@ -19,7 +19,12 @@ struct SearchView: View {
             List {
                 ForEach(searchResults) { result in
                     NavigationLink {
-                        MovieView(movie: result)
+                        
+                        if result.media_type == "person" {
+                            ActorView(person: result)
+                        } else {
+                            MovieView(movie: result)
+                        }
                     } label: {
                         VStack(alignment: .leading) {
                             Text(result.wrappedTitle)
@@ -90,6 +95,8 @@ struct SearchView: View {
         newItem.original_language = item.original_language
         newItem.original_title = item.original_title ?? item.original_name
         newItem.overview = item.overview
+        newItem.release_date = item.release_date
+        
 //        newItem.genre_ids = item.genre_ids
         
         if let vote_average = item.vote_average {

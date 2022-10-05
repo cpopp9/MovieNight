@@ -55,9 +55,9 @@ extension Movie {
         overview ?? "Unknown"
     }
     
-//    var wrappedReleaseDat: Date {
-//        release_date ?? Date("2022-04-15")
-//    }
+    var wrappedReleaseDate: String {
+        release_date ?? "Unknown"
+    }
     
     var wrappedTitle: String {
         title ?? "Unknown"

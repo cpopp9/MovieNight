@@ -29,7 +29,7 @@ struct SettingsView: View {
                 
                 Section("About this app") {
                     Text("Rate this app")
-                    Text("App Developer")
+                    Link("App Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
                 }
                 
                 Section("Attributions") {
@@ -40,7 +40,9 @@ struct SettingsView: View {
                             .scaledToFit()
                             .frame(width: 100)
                         
-                            Text("All movie data was provided by The Movie Database")
+//                            Text("All movie data was provided by The Movie Database")
+                        Link("All movie data was provided by The Movie Database", destination: URL(string: "http://themoviedb.org")!)
+                            .foregroundColor(.primary)
                     
                         .padding()
                     }

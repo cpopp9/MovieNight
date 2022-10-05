@@ -23,6 +23,7 @@ struct SearchResult: Codable {
     // Movie Details
     var title: String?
     var original_title: String?
+    var release_date: String?
     
     // TV Details
     var name: String?

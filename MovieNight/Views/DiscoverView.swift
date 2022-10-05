@@ -18,7 +18,7 @@ struct DiscoverView: View {
                     NavigationLink {
                         MovieView(movie: searchResult)
                     } label: {
-                        Text(searchResult.title ?? "Unknown")
+                        Text(searchResult.wrappedTitle)
                     }
                 }
             }
@@ -72,11 +72,12 @@ struct DiscoverView: View {
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path
         newItem.poster_path = item.poster_path
-        newItem.media_type = item.media_type
+        newItem.media_type = "movie"
         newItem.original_language = item.original_language
         newItem.original_title = item.original_title
         newItem.overview = item.overview
         newItem.discovery = true
+        newItem.release_date = item.release_date
 //        newItem.genre_ids = item.genre_ids
         
         if let vote_average = item.vote_average {
