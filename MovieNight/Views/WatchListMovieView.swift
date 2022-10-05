@@ -14,6 +14,7 @@ struct WatchListMovieView: View {
     var body: some View {
         List {
             AddToWatchListButton(object: watchlistItem)
+            WatchedButton(media: watchlistItem)
             
             Section("Movie Details") {
                 Text(watchlistItem.wrappedTitle)

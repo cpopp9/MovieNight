@@ -47,25 +47,6 @@ struct AddToWatchListButton: View {
             .buttonBorderShape(.roundedRectangle(radius: 10))
             .controlSize(.large)
             .padding()
-            
-            Button() {
-                watched.toggle()
-                
-                if let object = object {
-                    object.watched = watched
-                }
-                
-                if moc.hasChanges {
-                    try? moc.save()
-                }
-            } label: {
-                HStack {
-                    Image(systemName: watched ? "checkmark.circle.fill" : "checkmark.circle")
-                    Text("Watched")
-                }
-            
-        }
-            .disabled(!watched)
         .task {
             if let movie = movie {
                 loadObject(contentId: Int(movie.id))

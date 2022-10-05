@@ -29,6 +29,7 @@
 		DCDFAC8328EC93E3008F3672 /* DiscoverResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */; };
 		DCDFAC8628EC95B1008F3672 /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFAC8428EC95B1008F3672 /* Movie+CoreDataClass.swift */; };
 		DCDFAC8728EC95B1008F3672 /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFAC8528EC95B1008F3672 /* Movie+CoreDataProperties.swift */; };
+		DCEA9DB728EDD1B500A9F078 /* WatchedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA9DB628EDD1B500A9F078 /* WatchedButton.swift */; };
 		DCF1810228ECA78900F394F5 /* ActorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF1810128ECA78900F394F5 /* ActorView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverResults.swift; sourceTree = "<group>"; };
 		DCDFAC8428EC95B1008F3672 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "MovieNight/Movie+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DCDFAC8528EC95B1008F3672 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "MovieNight/Movie+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DCEA9DB628EDD1B500A9F078 /* WatchedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedButton.swift; sourceTree = "<group>"; };
 		DCF1810128ECA78900F394F5 /* ActorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
 				DCF1810128ECA78900F394F5 /* ActorView.swift */,
 				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
+				DCEA9DB628EDD1B500A9F078 /* WatchedButton.swift */,
 				DC6E134628E665E200A50AC5 /* MovieView.swift */,
 				DC88889628E77D42000B9E01 /* Data */,
 			);
@@ -238,6 +241,7 @@
 				DCDFAC8728EC95B1008F3672 /* Movie+CoreDataProperties.swift in Sources */,
 				DCA973E828EB1E0E004E33EF /* Watchlist+CoreDataProperties.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* WatchlistView.swift in Sources */,
+				DCEA9DB728EDD1B500A9F078 /* WatchedButton.swift in Sources */,
 				DCA973E728EB1E0E004E33EF /* Watchlist+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
