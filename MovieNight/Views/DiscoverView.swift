@@ -61,7 +61,7 @@ struct DiscoverView: View {
                 }
             }
         } catch {
-            fatalError("Invalid Data")
+            print("Invalid Data")
         }
     }
     
