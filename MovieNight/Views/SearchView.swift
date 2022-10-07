@@ -17,21 +17,106 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(searchResults) { result in
-                    NavigationLink {
-                        
-                        if result.media_type == "person" {
-                            ActorView(person: result)
-                        } else {
-                            MovieView(movie: result)
+                Section("Movies") {
+                    ForEach(searchResults) { movie in
+                        if movie.media_type == "movie" {
+                            NavigationLink {
+                                MovieView(movie: movie)
+                            } label: {
+                                
+                                HStack {
+                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(movie.wrappedPosterPath)")) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        Image("poster_placeholder")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 75, height: 75)
+                                            .overlay(Color.black.opacity(0.8))
+                                            
+                                    }
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 75, height: 75)
+                                    .clipped()
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(movie.wrappedTitle)
+                                            .font(.headline)
+                                        Text(movie.wrappedReleaseDate)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                            }
                         }
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(result.wrappedTitle)
-                                .font(.headline)
-                            Text(result.wrappedMediaType)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                    }
+                }
+                
+                Section("TV Shows") {
+                    ForEach(searchResults) { tv in
+                        if tv.media_type == "tv" {
+                            NavigationLink {
+                                MovieView(movie: tv)
+                            } label: {
+                                
+                                HStack {
+                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(tv.wrappedPosterPath)")) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        Image("poster_placeholder")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 100, height: 100)
+                                            .overlay(Color.black.opacity(0.8))
+                                            
+                                    }
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 100, height: 100)
+                                    .clipped()
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(tv.wrappedTitle)
+                                            .font(.headline)
+                                        Text(tv.wrappedReleaseDate)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                Section("Actors") {
+                    ForEach(searchResults) { person in
+                        if person.media_type == "person" {
+                            NavigationLink {
+                                ActorView(person: person)
+                            } label: {
+                                HStack {
+                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(person.wrappedPosterPath)")) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        Image("poster_placeholder")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 100, height: 100)
+                                            .overlay(Color.black.opacity(0.8))
+                                            
+                                    }
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 100, height: 100)
+                                    .clipped()
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(person.wrappedTitle)
+                                            .font(.headline)
+                                        Text(person.wrappedReleaseDate)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -90,14 +175,14 @@ struct SearchView: View {
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path
         newItem.discovery = false
-        newItem.poster_path = item.poster_path
+        newItem.poster_path = item.poster_path ?? item.profile_path
         newItem.media_type = item.media_type
         newItem.original_language = item.original_language
         newItem.original_title = item.original_title ?? item.original_name
         newItem.overview = item.overview
         newItem.release_date = item.release_date
         
-//        newItem.genre_ids = item.genre_ids
+            //        newItem.genre_ids = item.genre_ids
         
         if let vote_average = item.vote_average {
             newItem.vote_average = vote_average
