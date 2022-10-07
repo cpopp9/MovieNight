@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC25CA0528F0E41300646BB9 /* MovieSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC25CA0428F0E41300646BB9 /* MovieSearch.swift */; };
+		DC25CA0828F0E83400646BB9 /* TV+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC25CA0628F0E83400646BB9 /* TV+CoreDataClass.swift */; };
+		DC25CA0928F0E83400646BB9 /* TV+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC25CA0728F0E83400646BB9 /* TV+CoreDataProperties.swift */; };
+		DC25CA0B28F0E86100646BB9 /* TVSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC25CA0A28F0E86100646BB9 /* TVSearch.swift */; };
 		DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */; };
 		DC6E133628E5F4EE00A50AC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E133528E5F4EE00A50AC5 /* ContentView.swift */; };
 		DC6E133828E5F4EF00A50AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC6E133728E5F4EF00A50AC5 /* Assets.xcassets */; };
@@ -34,6 +38,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC25CA0428F0E41300646BB9 /* MovieSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearch.swift; sourceTree = "<group>"; };
+		DC25CA0628F0E83400646BB9 /* TV+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TV+CoreDataClass.swift"; path = "MovieNight/TV+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DC25CA0728F0E83400646BB9 /* TV+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TV+CoreDataProperties.swift"; path = "MovieNight/TV+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DC25CA0A28F0E86100646BB9 /* TVSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVSearch.swift; sourceTree = "<group>"; };
 		DC6E133028E5F4EE00A50AC5 /* MovieNight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieNight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightApp.swift; sourceTree = "<group>"; };
 		DC6E133528E5F4EE00A50AC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,9 +80,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC25CA0328F0E3C300646BB9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
+				DC25CA0A28F0E86100646BB9 /* TVSearch.swift */,
+				DC25CA0428F0E41300646BB9 /* MovieSearch.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		DC6E132728E5F4EE00A50AC5 = {
 			isa = PBXGroup;
 			children = (
+				DC25CA0628F0E83400646BB9 /* TV+CoreDataClass.swift */,
+				DC25CA0728F0E83400646BB9 /* TV+CoreDataProperties.swift */,
 				DCDFAC8428EC95B1008F3672 /* Movie+CoreDataClass.swift */,
 				DCDFAC8528EC95B1008F3672 /* Movie+CoreDataProperties.swift */,
 				DCA973E528EB1E0E004E33EF /* Watchlist+CoreDataClass.swift */,
@@ -130,7 +150,7 @@
 				DC6E134E28E6668100A50AC5 /* WatchlistView.swift */,
 				DCC484FF28EB177A004116CD /* WatchListFilter.swift */,
 				DCC484FB28E7852A004116CD /* WatchListMovieView.swift */,
-				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
+				DC25CA0328F0E3C300646BB9 /* Search */,
 				DCF1810128ECA78900F394F5 /* ActorView.swift */,
 				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
 				DCEA9DB628EDD1B500A9F078 /* WatchedButton.swift */,
@@ -231,6 +251,7 @@
 				DCC484FC28E7852A004116CD /* WatchListMovieView.swift in Sources */,
 				DC6E134D28E6664000A50AC5 /* SearchView.swift in Sources */,
 				DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */,
+				DC25CA0928F0E83400646BB9 /* TV+CoreDataProperties.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
 				DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */,
 				DCF1810228ECA78900F394F5 /* ActorView.swift in Sources */,
@@ -242,7 +263,10 @@
 				DCA973E828EB1E0E004E33EF /* Watchlist+CoreDataProperties.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* WatchlistView.swift in Sources */,
 				DCEA9DB728EDD1B500A9F078 /* WatchedButton.swift in Sources */,
+				DC25CA0528F0E41300646BB9 /* MovieSearch.swift in Sources */,
+				DC25CA0B28F0E86100646BB9 /* TVSearch.swift in Sources */,
 				DCA973E728EB1E0E004E33EF /* Watchlist+CoreDataClass.swift in Sources */,
+				DC25CA0828F0E83400646BB9 /* TV+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
