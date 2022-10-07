@@ -30,6 +30,7 @@ extension Movie {
     @NSManaged public var vote_count: Int16
     @NSManaged public var watched: Bool
     @NSManaged public var genre_ids: NSObject?
+    @NSManaged public var popularity: Double
     
     var wrappedBackdropPath: String {
         backdrop_path ?? "Unknown"

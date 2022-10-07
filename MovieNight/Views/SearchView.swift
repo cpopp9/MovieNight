@@ -11,7 +11,9 @@ struct SearchView: View {
     @State var searchText = ""
         //    @State var search = SearchResults(results: nil)
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == false")) var searchResults: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "discovery == false")) var searchResults: FetchedResults<Movie>
+    
+    @State var prefix = 3
     
     
     var body: some View {
@@ -23,7 +25,6 @@ struct SearchView: View {
                             NavigationLink {
                                 MovieView(movie: movie)
                             } label: {
-                                
                                 HStack {
                                     AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(movie.wrappedPosterPath)")) { image in
                                         image.resizable()
@@ -45,6 +46,7 @@ struct SearchView: View {
                                         Text(movie.wrappedReleaseDate)
                                             .font(.caption)
                                             .foregroundColor(.secondary)
+                                        Text(String(movie.popularity))
                                     }
                                 }
                             }
@@ -160,7 +162,10 @@ struct SearchView: View {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        searchItem(item: item)
+                        
+                        if item.media_type == "movie" {
+                            searchItem(item: item)
+                        }
                     }
                 }
             }
@@ -181,6 +186,7 @@ struct SearchView: View {
         newItem.original_title = item.original_title ?? item.original_name
         newItem.overview = item.overview
         newItem.release_date = item.release_date
+        newItem.popularity = item.popularity ?? 0.0
         
             //        newItem.genre_ids = item.genre_ids
         
