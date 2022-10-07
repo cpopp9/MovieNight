@@ -11,14 +11,34 @@ struct DiscoverView: View {
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == true")) var discoverResults: FetchedResults<Movie>
     
+    let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(discoverResults) { searchResult in
-                    NavigationLink {
-                        MovieView(movie: searchResult)
-                    } label: {
-                        Text(searchResult.wrappedTitle)
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    ForEach(discoverResults) { searchResult in
+                        NavigationLink {
+                            MovieView(movie: searchResult)
+                        } label: {
+                            VStack {
+                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(searchResult.wrappedPosterPath)")) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Image("poster_placeholder")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .overlay(Color.black.opacity(0.8))
+                                }
+                                .scaledToFit()
+                                .frame(maxHeight: 300)
+                                
+                                Text(searchResult.wrappedTitle)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .padding(.bottom, 10)
+                            }
+                        }
                     }
                 }
             }
@@ -36,7 +56,9 @@ struct DiscoverView: View {
                 }
             }
         }
+        
     }
+    
     
     func loadDiscovery() async {
         
@@ -78,7 +100,7 @@ struct DiscoverView: View {
         newItem.overview = item.overview
         newItem.discovery = true
         newItem.release_date = item.release_date
-//        newItem.genre_ids = item.genre_ids
+            //        newItem.genre_ids = item.genre_ids
         
         if let vote_average = item.vote_average {
             newItem.vote_average = vote_average
