@@ -121,6 +121,16 @@ struct SearchView: View {
         newItem.release_date = item.release_date
         newItem.popularity = item.popularity ?? 0.0
         
+        if let date = item.release_date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            if let parsed = formatter.date(from: date) {
+                let calendar = Calendar.current
+                let year = calendar.component(.year, from: parsed)
+                newItem.release_date = "\(year)"
+            }
+        }
+        
             //        newItem.genre_ids = item.genre_ids
         
         if let vote_average = item.vote_average {

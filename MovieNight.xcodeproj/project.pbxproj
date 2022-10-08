@@ -84,8 +84,8 @@
 			isa = PBXGroup;
 			children = (
 				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
-				DC25CA0A28F0E86100646BB9 /* TVSearch.swift */,
 				DC25CA0428F0E41300646BB9 /* MovieSearch.swift */,
+				DC25CA0A28F0E86100646BB9 /* TVSearch.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";

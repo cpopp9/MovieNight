@@ -44,7 +44,6 @@ struct MovieSearch: View {
                                     Text(movie.wrappedReleaseDate)
                                         .font(.caption)
                                         .foregroundColor(.secondary)
-                                    Text(String(movie.popularity))
                                 }
                             }
                         }

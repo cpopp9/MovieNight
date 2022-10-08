@@ -47,7 +47,8 @@ struct MovieView: View {
                             VStack(alignment: .leading) {
                                 Text(movie.wrappedTitle)
                                     .font(.title.bold())
-                                Text("2013")
+                                Text(movie.wrappedReleaseDate)
+                                    .foregroundColor(.secondary)
                                 Text("⭐️⭐️⭐️⭐️⭐️")
                                 
                             }

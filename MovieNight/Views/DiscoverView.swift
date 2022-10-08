@@ -37,6 +37,7 @@ struct DiscoverView: View {
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                     .padding(.bottom, 10)
+                                Text(searchResult.wrappedReleaseDate)
                             }
                         }
                     }
@@ -100,21 +101,32 @@ struct DiscoverView: View {
         newItem.overview = item.overview
         newItem.discovery = true
         newItem.release_date = item.release_date
-            //        newItem.genre_ids = item.genre_ids
         
-        if let vote_average = item.vote_average {
-            newItem.vote_average = vote_average
+        if let date = item.release_date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            if let parsed = formatter.date(from: date) {
+                let calendar = Calendar.current
+                let year = calendar.component(.year, from: parsed)
+                newItem.release_date = "\(year)"
+            }
+        }
+                
+                    //        newItem.genre_ids = item.genre_ids
+                
+                if let vote_average = item.vote_average {
+                    newItem.vote_average = vote_average
+                }
+                
+                if let vote_count = item.vote_count {
+                    newItem.vote_count = Int16(vote_count)
+                }
+            }
+            
         }
         
-        if let vote_count = item.vote_count {
-            newItem.vote_count = Int16(vote_count)
+        struct DiscoverView_Previews: PreviewProvider {
+            static var previews: some View {
+                DiscoverView()
+            }
         }
-    }
-    
-}
-
-struct DiscoverView_Previews: PreviewProvider {
-    static var previews: some View {
-        DiscoverView()
-    }
-}
