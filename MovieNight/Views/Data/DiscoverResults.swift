@@ -24,12 +24,6 @@ struct DiscoverResult: Codable {
     var title: String?
     var original_title: String?
     var release_date: String?
-    
-    // TV Details
-    var name: String?
-    var original_name: String?
-    var first_air_date: String?
-    
 }
 
 struct DiscoverResults: Codable {
