@@ -23,7 +23,7 @@ struct WatchListFilter: View {
     
     init(media_type: String, watchedSort: Bool, watched: Bool, searchQuery: String) {
             
-        _WatchlistMedia = FetchRequest<WatchlistMedia>(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true && ((media_type == %@) || (%@ == 'movie and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
+        _WatchlistMedia = FetchRequest<WatchlistMedia>(sortDescriptors: [], predicate: NSPredicate(format: "((media_type == %@) || (%@ == 'movie and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
     }
     
 }

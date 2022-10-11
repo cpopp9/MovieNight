@@ -54,7 +54,7 @@ struct DiscoverMovieView: View {
                             Spacer()
                         }
                         
-//                        AddToWatchListButton(movie: movie)
+                        AddToWatchListButton(media: media)
                         
                         VStack(alignment: .leading) {
                             Text("Overview")
