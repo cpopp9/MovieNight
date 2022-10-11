@@ -57,7 +57,6 @@ struct DiscoverView: View {
                 }
             }
         }
-
     }
 
 

@@ -4,8 +4,6 @@
     //
     //  Created by Cory Popp on 9/29/22.
     //
-
-import CoreData
 import SwiftUI
 
 struct DiscoverMovieView: View {
@@ -16,6 +14,9 @@ struct DiscoverMovieView: View {
         ScrollView {
             ZStack {
                 VStack {
+                    
+                    // Backdrop Header
+                    
                     ZStack {
                         AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedBackdropPath)")) { image in
                             image.resizable()
@@ -31,8 +32,9 @@ struct DiscoverMovieView: View {
                     }
                     
                     VStack {
+                        
+                        // Initial details
                         HStack {
-                            
                             AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
                                 image.resizable()
                             } placeholder: {
@@ -54,8 +56,10 @@ struct DiscoverMovieView: View {
                             Spacer()
                         }
                         
+                        // Save to watchlist button
                         AddToWatchListButton(media: media)
                         
+                        // Additional Details
                         VStack(alignment: .leading) {
                             Text("Overview")
                                 .font(.title2.bold())
@@ -73,7 +77,6 @@ struct DiscoverMovieView: View {
             }
         }
         .ignoresSafeArea()
-        
     }
 }
 
