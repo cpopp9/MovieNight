@@ -12,15 +12,15 @@ struct ContentView: View {
         
             
             TabView {
-                SearchView()
+                
+                DiscoverView()
                     .tabItem {
                         VStack {
-                            Image(systemName: "magnifyingglass")
-                            Text("Search")
+                            Image(systemName: "person.fill.viewfinder")
+                            Text("Discover")
                         }
                     }
                     .tag(0)
-                
                 
                 WatchListView()
                     .tabItem {
@@ -31,12 +31,11 @@ struct ContentView: View {
                     }
                     .tag(1)
                 
-                
-                DiscoverView()
+                SearchView()
                     .tabItem {
                         VStack {
-                            Image(systemName: "person.fill.viewfinder")
-                            Text("Discover")
+                            Image(systemName: "magnifyingglass")
+                            Text("Search")
                         }
                     }
                     .tag(2)
