@@ -14,8 +14,10 @@ struct SearchMediaView: View {
     
     var body: some View {
         ScrollView {
-            ZStack {
                 VStack {
+                    
+                    // Backdrop Header
+                    
                     ZStack {
                         AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedBackdropPath)")) { image in
                             image.resizable()
@@ -31,8 +33,9 @@ struct SearchMediaView: View {
                     }
                     
                     VStack {
+                        
+                        // Initial details
                         HStack {
-                            
                             AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
                                 image.resizable()
                             } placeholder: {
@@ -51,11 +54,12 @@ struct SearchMediaView: View {
                                 Text("⭐️⭐️⭐️⭐️⭐️")
                                 
                             }
-                            Spacer()
                         }
                         
+                        // Save to watchlist button
                         SearchAddToWatchlistButton(media: media)
                         
+                        // Additional Details
                         VStack(alignment: .leading) {
                             Text("Overview")
                                 .font(.title2.bold())
@@ -66,14 +70,13 @@ struct SearchMediaView: View {
                         }
                         .padding(.top)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                     Spacer()
                 }
-                .frame(maxWidth: .infinity)
-            }
+                
         }
         .ignoresSafeArea()
-        
     }
 }
 

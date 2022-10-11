@@ -12,7 +12,6 @@ struct DiscoverMovieView: View {
     
     var body: some View {
         ScrollView {
-            ZStack {
                 VStack {
                     
                     // Backdrop Header
@@ -53,7 +52,6 @@ struct DiscoverMovieView: View {
                                 Text("⭐️⭐️⭐️⭐️⭐️")
                                 
                             }
-                            Spacer()
                         }
                         
                         // Save to watchlist button
@@ -70,11 +68,11 @@ struct DiscoverMovieView: View {
                         }
                         .padding(.top)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                     Spacer()
                 }
-                .frame(maxWidth: .infinity)
-            }
+                
         }
         .ignoresSafeArea()
     }

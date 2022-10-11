@@ -14,8 +14,10 @@
         
         var body: some View {
             ScrollView {
-                ZStack {
                     VStack {
+                        
+                        // Backdrop Header
+                        
                         ZStack {
                             AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedBackdropPath)")) { image in
                                 image.resizable()
@@ -31,8 +33,9 @@
                         }
                         
                         VStack {
+                            
+                            // Initial details
                             HStack {
-                                
                                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
                                     image.resizable()
                                 } placeholder: {
@@ -51,11 +54,12 @@
                                     Text("⭐️⭐️⭐️⭐️⭐️")
                                     
                                 }
-                                Spacer()
                             }
                             
+                            // Save to watchlist button
                             RemoveFromWatchlistButton(watchlistObject: media)
                             
+                            // Additional Details
                             VStack(alignment: .leading) {
                                 Text("Overview")
                                     .font(.title2.bold())
@@ -66,14 +70,13 @@
                             }
                             .padding(.top)
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                         Spacer()
                     }
-                    .frame(maxWidth: .infinity)
-                }
+                    
             }
             .ignoresSafeArea()
-            
         }
     }
 
