@@ -1,8 +1,8 @@
 //
-//  TV+CoreDataProperties.swift
+//  SearchMedia+CoreDataProperties.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 10/7/22.
+//  Created by Cory Popp on 10/11/22.
 //
 //
 
@@ -10,14 +10,13 @@ import Foundation
 import CoreData
 
 
-extension TV {
+extension SearchMedia {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<TV> {
-        return NSFetchRequest<TV>(entityName: "TV")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<SearchMedia> {
+        return NSFetchRequest<SearchMedia>(entityName: "SearchMedia")
     }
 
     @NSManaged public var backdrop_path: String?
-    @NSManaged public var discovery: Bool
     @NSManaged public var id: Int32
     @NSManaged public var media_type: String?
     @NSManaged public var original_language: String?
@@ -29,7 +28,6 @@ extension TV {
     @NSManaged public var vote_average: Double
     @NSManaged public var vote_count: Int16
     @NSManaged public var watched: Bool
-    @NSManaged public var genre_ids: NSObject?
     @NSManaged public var popularity: Double
     
     var wrappedBackdropPath: String {
@@ -66,6 +64,6 @@ extension TV {
 
 }
 
-extension TV : Identifiable {
+extension SearchMedia : Identifiable {
 
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WatchedButton: View {
     @Environment(\.managedObjectContext) var moc
-    @ObservedObject var media: Watchlist
+    @ObservedObject var media: WatchlistMedia
     
     var body: some View {
         Button() {

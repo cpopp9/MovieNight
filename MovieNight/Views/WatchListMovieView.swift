@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WatchListMovieView: View {
-    let watchlistItem: Watchlist
+    let watchlistItem: WatchlistMedia
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
@@ -52,7 +52,7 @@ struct WatchListMovieView: View {
                             Spacer()
                         }
                         
-                        AddToWatchListButton(object: watchlistItem)
+//                        AddToWatchListButton(object: watchlistItem)
                         
                         VStack(alignment: .leading) {
                             Text("Overview")

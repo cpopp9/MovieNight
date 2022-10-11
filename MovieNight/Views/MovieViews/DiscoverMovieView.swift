@@ -8,17 +8,16 @@
 import CoreData
 import SwiftUI
 
-struct MovieView: View {
-    let movie: Movie
+struct DiscoverMovieView: View {
+    @ObservedObject var media: DiscoverMedia
     @Environment(\.managedObjectContext) var moc
-    
     
     var body: some View {
         ScrollView {
             ZStack {
                 VStack {
                     ZStack {
-                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(movie.wrappedBackdropPath)")) { image in
+                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedBackdropPath)")) { image in
                             image.resizable()
                         } placeholder: {
                             ProgressView()
@@ -34,7 +33,7 @@ struct MovieView: View {
                     VStack {
                         HStack {
                             
-                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(movie.wrappedPosterPath)")) { image in
+                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
                                 image.resizable()
                             } placeholder: {
                                 ProgressView()
@@ -45,9 +44,9 @@ struct MovieView: View {
                             .padding(.trailing)
                             
                             VStack(alignment: .leading) {
-                                Text(movie.wrappedTitle)
+                                Text(media.wrappedTitle)
                                     .font(.title.bold())
-                                Text(movie.wrappedReleaseDate)
+                                Text(media.wrappedReleaseDate)
                                     .foregroundColor(.secondary)
                                 Text("⭐️⭐️⭐️⭐️⭐️")
                                 
@@ -55,7 +54,7 @@ struct MovieView: View {
                             Spacer()
                         }
                         
-                        AddToWatchListButton(movie: movie)
+//                        AddToWatchListButton(movie: movie)
                         
                         VStack(alignment: .leading) {
                             Text("Overview")
@@ -63,7 +62,7 @@ struct MovieView: View {
                             Text("Sci-fi, Adventure, Action")
                                 .font(.subheadline)
                                 .padding(.bottom)
-                            Text(movie.wrappedOverview)
+                            Text(media.wrappedOverview)
                         }
                         .padding(.top)
                     }
@@ -75,35 +74,10 @@ struct MovieView: View {
         }
         .ignoresSafeArea()
         
-        
-            //        List {
-            //            AddToWatchListButton(movie: movie)
-            //
-            //            Section("Movie Details") {
-            //                Text("title: \(movie.wrappedTitle)")
-            //                Text("id: \(String(movie.id))")
-            //                Text("media_type: \(movie.wrappedMediaType)")
-            //                Text("original_title: \(movie.wrappedOriginalTitle)")
-            //                Text("original_language: \(movie.wrappedOriginalLanguage)")
-            //                Text("overview: \(movie.wrappedOverview)")
-            //                Text("Release Date: \(movie.wrappedReleaseDate)")
-            //            }
-            //
-            //            Section("Media Images") {
-            //                Text("backdrop_path: \(movie.wrappedBackdropPath)")
-            //                Text("poster_path: \(movie.wrappedPosterPath)")
-            //            }
-            //
-            //            Section("Voting") {
-            //                Text("vote_average: \(String(movie.vote_average))")
-            //                Text("vote_count: \(String(movie.vote_count))")
-            //            }
-            //        }
-            //        .navigationTitle(movie.wrappedTitle)
     }
 }
 
-    //struct MovieView_Previews: PreviewProvider {
+    //struct DiscoverMovieView_Previews: PreviewProvider {
     //    static var previews: some View {
     //        MovieView()
     //    }

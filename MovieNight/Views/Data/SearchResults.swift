@@ -20,7 +20,6 @@ struct SearchResult: Codable {
     var vote_count: Int?
     var popularity: Double?
     
-    
     // Movie Details
     var title: String?
     var original_title: String?

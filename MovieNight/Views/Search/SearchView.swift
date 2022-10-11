@@ -11,7 +11,7 @@ struct SearchView: View {
     @State var searchText = ""
         //    @State var search = SearchResults(results: nil)
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "discovery == false")) var searchResults: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)]) var searchResults: FetchedResults<SearchMedia>
     
     @State var prefix = 3
     
@@ -20,7 +20,7 @@ struct SearchView: View {
         NavigationView {
             List {
                 MovieSearch()
-                TVSearch()
+//                TVSearch()
                 
 //                Section("Actors") {
 //                    ForEach(searchResults) { person in
@@ -97,7 +97,7 @@ struct SearchView: View {
                         if item.media_type == "movie" {
                             searchItem(item: item)
                         } else if item.media_type == "tv" {
-                            tvSearch(item: item)
+//                            tvSearch(item: item)
                         }
                     }
                 }
@@ -108,11 +108,10 @@ struct SearchView: View {
     }
     
     func searchItem(item: SearchResult) {
-        let newItem = Movie(context: moc)
+        let newItem = SearchMedia(context: moc)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path
-        newItem.discovery = false
         newItem.poster_path = item.poster_path ?? item.profile_path
         newItem.media_type = item.media_type
         newItem.original_language = item.original_language
@@ -141,30 +140,30 @@ struct SearchView: View {
         }
     }
     
-    func tvSearch (item: SearchResult) {
-        let newItem = TV(context: moc)
-        newItem.title = item.name ?? "Unknown"
-        newItem.id = Int32(item.id)
-        newItem.backdrop_path = item.backdrop_path
-        newItem.discovery = false
-        newItem.poster_path = item.poster_path
-        newItem.media_type = item.media_type
-        newItem.original_language = item.original_language
-        newItem.original_title = item.original_title ?? item.original_name
-        newItem.overview = item.overview
-        newItem.release_date = item.release_date
-        newItem.popularity = item.popularity ?? 0.0
-        
-            //        newItem.genre_ids = item.genre_ids
-        
-        if let vote_average = item.vote_average {
-            newItem.vote_average = vote_average
-        }
-        
-        if let vote_count = item.vote_count {
-            newItem.vote_count = Int16(vote_count)
-        }
-    }
+//    func tvSearch (item: SearchResult) {
+//        let newItem = TV(context: moc)
+//        newItem.title = item.name ?? "Unknown"
+//        newItem.id = Int32(item.id)
+//        newItem.backdrop_path = item.backdrop_path
+//        newItem.discovery = false
+//        newItem.poster_path = item.poster_path
+//        newItem.media_type = item.media_type
+//        newItem.original_language = item.original_language
+//        newItem.original_title = item.original_title ?? item.original_name
+//        newItem.overview = item.overview
+//        newItem.release_date = item.release_date
+//        newItem.popularity = item.popularity ?? 0.0
+//        
+//            //        newItem.genre_ids = item.genre_ids
+//        
+//        if let vote_average = item.vote_average {
+//            newItem.vote_average = vote_average
+//        }
+//        
+//        if let vote_count = item.vote_count {
+//            newItem.vote_count = Int16(vote_count)
+//        }
+//    }
     
     
 }

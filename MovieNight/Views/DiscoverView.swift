@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiscoverView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "discovery == true")) var discoverResults: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: []) var discoverResults: FetchedResults<DiscoverMedia>
     
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
@@ -17,12 +17,12 @@ struct DiscoverView: View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    ForEach(discoverResults) { searchResult in
+                    ForEach(discoverResults) { media in
                         NavigationLink {
-                            MovieView(movie: searchResult)
+                            DiscoverMovieView(media: media)
                         } label: {
                             VStack {
-                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(searchResult.wrappedPosterPath)")) { image in
+                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
                                     image.resizable()
                                 } placeholder: {
                                     Image("poster_placeholder")
@@ -33,11 +33,11 @@ struct DiscoverView: View {
                                 .scaledToFit()
                                 .frame(maxHeight: 300)
                                 
-                                Text(searchResult.wrappedTitle)
+                                Text(media.wrappedTitle)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                                     .padding(.bottom, 10)
-                                Text(searchResult.wrappedReleaseDate)
+                                Text(media.wrappedReleaseDate)
                             }
                         }
                     }
@@ -64,7 +64,7 @@ struct DiscoverView: View {
     func loadDiscovery() async {
         
         for object in discoverResults {
-            moc.delete(object)
+                moc.delete(object)
         }
         
         guard let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {
@@ -90,7 +90,7 @@ struct DiscoverView: View {
     
     
     func DiscoverItem(item: DiscoverResult) {
-        let newItem = Movie(context: moc)
+        let newItem = DiscoverMedia(context: moc)
         newItem.title = item.title ?? "Unknown"
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path
@@ -99,7 +99,6 @@ struct DiscoverView: View {
         newItem.original_language = item.original_language
         newItem.original_title = item.original_title
         newItem.overview = item.overview
-        newItem.discovery = true
         newItem.release_date = item.release_date
         
         if let date = item.release_date {

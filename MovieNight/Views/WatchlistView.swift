@@ -19,6 +19,7 @@ struct WatchListView: View {
     
     var body: some View {
         NavigationView {
+
             WatchListFilter(media_type: media_type, watchedSort: watchedSort, watched: watched, searchQuery: searchText)
             
             

@@ -9,7 +9,7 @@ import SwiftUI
 import SafariServices
 
 struct SettingsView: View {
-    @FetchRequest(sortDescriptors: []) var movies: FetchedResults<Watchlist>
+    @FetchRequest(sortDescriptors: []) var movies: FetchedResults<WatchlistMedia>
     @Environment(\.managedObjectContext) var moc
     @State private var showingAlert = false
     @AppStorage("isDarkMode") private var isDarkMode = true
