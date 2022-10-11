@@ -1,14 +1,15 @@
-    //
-    //  WatchListMovieView.swift
-    //  MovieNight
-    //
-    //  Created by Cory Popp on 9/30/22.
-    //
+//
+//  SearchMediaView.swift
+//  MovieNight
+//
+//  Created by Cory Popp on 10/11/22.
+//
 
+import CoreData
 import SwiftUI
 
-struct WatchListMovieView: View {
-    let watchlistItem: WatchlistMedia
+struct SearchMediaView: View {
+    @ObservedObject var media: SearchMedia
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
@@ -16,7 +17,7 @@ struct WatchListMovieView: View {
             ZStack {
                 VStack {
                     ZStack {
-                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(watchlistItem.wrappedBackdropPath)")) { image in
+                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedBackdropPath)")) { image in
                             image.resizable()
                         } placeholder: {
                             ProgressView()
@@ -32,7 +33,7 @@ struct WatchListMovieView: View {
                     VStack {
                         HStack {
                             
-                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(watchlistItem.wrappedPosterPath)")) { image in
+                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
                                 image.resizable()
                             } placeholder: {
                                 ProgressView()
@@ -43,16 +44,17 @@ struct WatchListMovieView: View {
                             .padding(.trailing)
                             
                             VStack(alignment: .leading) {
-                                Text(watchlistItem.wrappedTitle)
+                                Text(media.wrappedTitle)
                                     .font(.title.bold())
-                                Text("2013")
+                                Text(media.wrappedReleaseDate)
+                                    .foregroundColor(.secondary)
                                 Text("⭐️⭐️⭐️⭐️⭐️")
                                 
                             }
                             Spacer()
                         }
                         
-//                        AddToWatchListButton(object: watchlistItem)
+                        SearchAddToWatchlistButton(media: media)
                         
                         VStack(alignment: .leading) {
                             Text("Overview")
@@ -60,7 +62,7 @@ struct WatchListMovieView: View {
                             Text("Sci-fi, Adventure, Action")
                                 .font(.subheadline)
                                 .padding(.bottom)
-                            Text(watchlistItem.wrappedOverview)
+                            Text(media.wrappedOverview)
                         }
                         .padding(.top)
                     }
@@ -75,8 +77,9 @@ struct WatchListMovieView: View {
     }
 }
 
-    //struct WatchListMovieView_Previews: PreviewProvider {
+    //struct DiscoverMovieView_Previews: PreviewProvider {
     //    static var previews: some View {
-    //        WatchListMovieView()
+    //        MovieView()
     //    }
     //}
+

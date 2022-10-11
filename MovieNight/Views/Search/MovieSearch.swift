@@ -18,14 +18,13 @@ struct MovieSearch: View {
         if searchResults.count > 0 {
             
             Section("Movies") {
-                ForEach(searchResults.prefix(prefix)) { movie in
-                    if movie.media_type == "movie" {
+                ForEach(searchResults.prefix(prefix)) { media in
+                    if media.media_type == "movie" {
                         NavigationLink {
-//                            MovieView(movie: movie)
-                            Text(movie.wrappedTitle)
+                            SearchMediaView(media: media)
                         } label: {
                             HStack {
-                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(movie.wrappedPosterPath)")) { image in
+                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
                                     image.resizable()
                                 } placeholder: {
                                     Image("poster_placeholder")
@@ -40,9 +39,9 @@ struct MovieSearch: View {
                                 .clipped()
                                 
                                 VStack(alignment: .leading) {
-                                    Text(movie.wrappedTitle)
+                                    Text(media.wrappedTitle)
                                         .font(.headline)
-                                    Text(movie.wrappedReleaseDate)
+                                    Text(media.wrappedReleaseDate)
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }

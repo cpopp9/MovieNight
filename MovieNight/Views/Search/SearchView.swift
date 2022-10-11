@@ -9,18 +9,15 @@ import SwiftUI
 
 struct SearchView: View {
     @State var searchText = ""
-        //    @State var search = SearchResults(results: nil)
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)]) var searchResults: FetchedResults<SearchMedia>
     
     @State var prefix = 3
     
-    
     var body: some View {
         NavigationView {
             List {
                 MovieSearch()
-//                TVSearch()
                 
 //                Section("Actors") {
 //                    ForEach(searchResults) { person in
@@ -56,20 +53,26 @@ struct SearchView: View {
 //                    }
 //                }
             }
-            
             .navigationTitle("Search")
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for a movie")
-            .onChange(of: searchText) { newValue in
+            .onSubmit(of: .search) {
                 Task {
                     await multiSearch()
                 }
             }
+//            .onChange(of: searchText) { newValue in
+//                Task {
+//                    await multiSearch()
+//                }
+//            }
         }
     }
     
     func multiSearch() async {
         
-        moc.rollback()
+        for object in searchResults {
+            moc.delete(object)
+        }
         
         var encoded: String {
             
@@ -93,12 +96,7 @@ struct SearchView: View {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        
-                        if item.media_type == "movie" {
                             searchItem(item: item)
-                        } else if item.media_type == "tv" {
-//                            tvSearch(item: item)
-                        }
                     }
                 }
             }
