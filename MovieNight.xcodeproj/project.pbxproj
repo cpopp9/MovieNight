@@ -36,7 +36,6 @@
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 		DCDFAC8328EC93E3008F3672 /* DiscoverResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */; };
-		DCEA9DB728EDD1B500A9F078 /* WatchedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA9DB628EDD1B500A9F078 /* WatchedButton.swift */; };
 		DCF1810228ECA78900F394F5 /* ActorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF1810128ECA78900F394F5 /* ActorView.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +70,6 @@
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 		DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverResults.swift; sourceTree = "<group>"; };
-		DCEA9DB628EDD1B500A9F078 /* WatchedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedButton.swift; sourceTree = "<group>"; };
 		DCF1810128ECA78900F394F5 /* ActorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,7 +184,6 @@
 				DC423EE428F5C911005B91B8 /* Discovery */,
 				DC6E133528E5F4EE00A50AC5 /* ContentView.swift */,
 				DCF1810128ECA78900F394F5 /* ActorView.swift */,
-				DCEA9DB628EDD1B500A9F078 /* WatchedButton.swift */,
 				DC423EEE28F5E2EA005B91B8 /* Settings */,
 				DC88889628E77D42000B9E01 /* Data */,
 			);
@@ -298,7 +295,6 @@
 				DC423EE828F5D38D005B91B8 /* SearchAddToWatchlistButton.swift in Sources */,
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* WatchlistView.swift in Sources */,
-				DCEA9DB728EDD1B500A9F078 /* WatchedButton.swift in Sources */,
 				DC25CA0528F0E41300646BB9 /* MovieSearch.swift in Sources */,
 				DCB6A7DE28F5C6440080B1AB /* DiscoverMedia+CoreDataProperties.swift in Sources */,
 				DC25CA0B28F0E86100646BB9 /* TVSearch.swift in Sources */,

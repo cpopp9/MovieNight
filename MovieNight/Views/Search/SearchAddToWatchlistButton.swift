@@ -59,6 +59,7 @@ struct SearchAddToWatchlistButton: View {
             newItem.overview = media.overview
             newItem.vote_average = media.vote_average
             newItem.vote_count = media.vote_count
+            newItem.watched = false
             
             try? moc.save()
         
