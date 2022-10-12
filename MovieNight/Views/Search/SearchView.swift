@@ -11,7 +11,7 @@ struct SearchView: View {
     @State var searchText = ""
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true")) var searchResults: FetchedResults<Movie>
-//    @Environment(\.isSearching) private var isSearching: Bool
+    @Environment(\.isSearching) private var isSearching: Bool
     
     
     @State var prefix = 3
@@ -28,11 +28,16 @@ struct SearchView: View {
                     await multiSearch()
                 }
             }
+            .onChange(of: searchText) { value in
+                if searchText.isEmpty && !isSearching {
+                    clearSearch()
+                    try? moc.save()
+                }
+            }
         }
     }
     
-    func multiSearch() async {
-        
+    func clearSearch() {
         for media in searchResults {
             if media.watchlist {
                 media.isSearchMedia = false
@@ -40,6 +45,11 @@ struct SearchView: View {
                 moc.delete(media)
             }
         }
+    }
+    
+    func multiSearch() async {
+        
+        clearSearch()
         
         var encoded: String {
             if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
@@ -57,7 +67,6 @@ struct SearchView: View {
             let (data, _) = try await URLSession.shared.data(from: url)
             
             if let decodedResponse = try? JSONDecoder().decode(SearchResults.self, from: data) {
-                    //                search.results = decodedResponse.results
                 
                 if let searchResults = decodedResponse.results {
                     
@@ -94,8 +103,6 @@ struct SearchView: View {
                 newItem.release_date = "\(year)"
             }
         }
-        
-            //        newItem.genre_ids = item.genre_ids
         
         if let vote_average = item.vote_average {
             newItem.vote_average = vote_average

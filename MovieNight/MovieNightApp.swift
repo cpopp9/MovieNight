@@ -39,15 +39,15 @@ struct MovieNightApp: App {
         }
     }
     
-    func clearSearchMedia() {
-        for media in searchResults {
-            moc.delete(media)
-        }
-    }
+//    func clearSearchMedia() {
+//        for media in searchResults {
+//            moc.delete(media)
+//        }
+//    }
     
     func saveContext() {
         
-        clearSearchMedia()
+//        clearSearchMedia()
         
         if moc.hasChanges {
             do {
