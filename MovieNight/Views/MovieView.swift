@@ -1,15 +1,13 @@
-//
-//  SearchMediaView.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 10/11/22.
-//
-
-import CoreData
+    //
+    //  MovieView.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 9/29/22.
+    //
 import SwiftUI
 
-struct SearchMediaView: View {
-    @ObservedObject var media: SearchMedia
+struct MovieView: View {
+    @ObservedObject var media: Movie
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
@@ -57,7 +55,7 @@ struct SearchMediaView: View {
                         }
                         
                         // Save to watchlist button
-                        SearchAddToWatchlistButton(media: media)
+                        AddToWatchListButton(media: media)
                         
                         // Additional Details
                         VStack(alignment: .leading) {
@@ -66,6 +64,7 @@ struct SearchMediaView: View {
                             Text("Sci-fi, Adventure, Action")
                                 .font(.subheadline)
                                 .padding(.bottom)
+                            Text(String(media.isSearchMedia))
                             Text(media.wrappedOverview)
                         }
                         .padding(.top)
@@ -85,4 +84,3 @@ struct SearchMediaView: View {
     //        MovieView()
     //    }
     //}
-

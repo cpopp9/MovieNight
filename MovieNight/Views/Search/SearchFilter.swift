@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct MovieSearch: View {
+struct SearchFilter: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)]) var searchResults: FetchedResults<SearchMedia>
+    
+    @FetchRequest var searchResults: FetchedResults<Movie>
     
     @State private var prefix = 3
     @State private var moreMovies = false
@@ -21,7 +22,7 @@ struct MovieSearch: View {
                 ForEach(searchResults.prefix(prefix)) { media in
                     if media.media_type == "movie" {
                         NavigationLink {
-                            SearchMediaView(media: media)
+                            MovieView(media: media)
                         } label: {
                             HStack {
                                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
@@ -65,10 +66,14 @@ struct MovieSearch: View {
             }
         }
     }
+    
+    init() {
+        _searchResults = FetchRequest<Movie>(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true"))
+    }
 }
 
 struct MovieSearch_Previews: PreviewProvider {
     static var previews: some View {
-        MovieSearch()
+        SearchFilter()
     }
 }

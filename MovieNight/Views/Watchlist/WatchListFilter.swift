@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct WatchListFilter: View {
-    @FetchRequest var WatchlistMedia: FetchedResults<WatchlistMedia>
+    @FetchRequest var WatchlistMedia: FetchedResults<Movie>
     
     var body: some View {
             ForEach(WatchlistMedia) { media in
                 if media.media_type == "movie" {
                     NavigationLink {
-                        WatchlistMediaView(media: media)
+                        MovieView(media: media)
                     } label: {
                         HStack {
                             AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
@@ -46,7 +46,7 @@ struct WatchListFilter: View {
     
     init(media_type: String, watchedSort: Bool, watched: Bool, searchQuery: String) {
             
-        _WatchlistMedia = FetchRequest<WatchlistMedia>(sortDescriptors: [], predicate: NSPredicate(format: "((media_type == %@) || (%@ == 'movie and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
+        _WatchlistMedia = FetchRequest<Movie>(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true && ((media_type == %@) || (%@ == 'movie and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
     }
     
 }

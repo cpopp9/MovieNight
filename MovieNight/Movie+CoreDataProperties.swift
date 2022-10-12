@@ -1,8 +1,8 @@
 //
-//  WatchlistMedia+CoreDataProperties.swift
+//  Movie+CoreDataProperties.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 10/11/22.
+//  Created by Cory Popp on 10/12/22.
 //
 //
 
@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 
 
-extension WatchlistMedia {
+extension Movie {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<WatchlistMedia> {
-        return NSFetchRequest<WatchlistMedia>(entityName: "WatchlistMedia")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Movie> {
+        return NSFetchRequest<Movie>(entityName: "Movie")
     }
 
     @NSManaged public var backdrop_path: String?
@@ -29,6 +29,9 @@ extension WatchlistMedia {
     @NSManaged public var vote_count: Int16
     @NSManaged public var watched: Bool
     @NSManaged public var popularity: Double
+    @NSManaged public var watchlist: Bool
+    @NSManaged public var isSearchMedia: Bool
+    @NSManaged public var isDiscoverMedia: Bool
     
     var wrappedBackdropPath: String {
         backdrop_path ?? "Unknown"
@@ -64,6 +67,6 @@ extension WatchlistMedia {
 
 }
 
-extension WatchlistMedia : Identifiable {
+extension Movie : Identifiable {
 
 }

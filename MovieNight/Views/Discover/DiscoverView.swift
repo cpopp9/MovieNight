@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiscoverView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var discoverResults: FetchedResults<DiscoverMedia>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isDiscoverMedia == true")) var discoverResults: FetchedResults<Movie>
 
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
 
@@ -19,7 +19,7 @@ struct DiscoverView: View {
                 LazyVGrid(columns: columns) {
                     ForEach(discoverResults) { media in
                         NavigationLink {
-                            DiscoverMovieView(media: media)
+                            MovieView(media: media)
                         } label: {
                             VStack {
                                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
@@ -44,9 +44,6 @@ struct DiscoverView: View {
                 }
             }
             .navigationTitle("Discover")
-            .task {
-                await loadDiscovery()
-            }
             .toolbar {
                 Button() {
                     Task {
@@ -62,9 +59,9 @@ struct DiscoverView: View {
 
     func loadDiscovery() async {
 
-        for object in discoverResults {
-                moc.delete(object)
-        }
+//        for object in discoverResults {
+//                moc.delete(object)
+//        }
 
         guard let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {
             fatalError("Invalid URL")
@@ -89,7 +86,7 @@ struct DiscoverView: View {
 
 
     func DiscoverItem(item: DiscoverResult) {
-        let newItem = DiscoverMedia(context: moc)
+        let newItem = Movie(context: moc)
         newItem.title = item.title ?? "Unknown"
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path
@@ -99,6 +96,9 @@ struct DiscoverView: View {
         newItem.original_title = item.original_title
         newItem.overview = item.overview
         newItem.release_date = item.release_date
+        newItem.watchlist = false
+        newItem.isSearchMedia = false
+        newItem.isDiscoverMedia = true
 
         if let date = item.release_date {
             let formatter = DateFormatter()
