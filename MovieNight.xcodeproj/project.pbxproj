@@ -127,7 +127,6 @@
 			children = (
 				DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */,
 				DC88889528E77D21000B9E01 /* Views */,
-				DC88889428E77D15000B9E01 /* Extensions */,
 				DC6E133728E5F4EF00A50AC5 /* Assets.xcassets */,
 				DC6E133928E5F4F000A50AC5 /* Preview Content */,
 			);
@@ -142,15 +141,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		DC88889428E77D15000B9E01 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
-				DCAE02FF28F87CCD008C5DD6 /* Utils */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		DC88889528E77D21000B9E01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +152,7 @@
 				DC25CA0328F0E3C300646BB9 /* Search */,
 				DC423EEE28F5E2EA005B91B8 /* Settings */,
 				DC88889628E77D42000B9E01 /* Data */,
+				DCAE02FF28F87CCD008C5DD6 /* Utils */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -180,6 +171,7 @@
 		DCAE02FF28F87CCD008C5DD6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
 				DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */,
 			);
 			path = Utils;
