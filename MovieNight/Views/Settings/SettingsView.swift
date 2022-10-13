@@ -26,21 +26,6 @@ struct SettingsView: View {
                         showingAlert = true
                     }
                 }
-                
-                Section("Save") {
-                    
-                    
-                    Button() {
-                        do {
-                            try moc.save()
-                            print("moc saved")
-                        } catch {
-                            print("could not save")
-                        }
-                } label: {
-                    Text("Save App Data")
-                }
-            }
             
             Section("About this app") {
                 Text("Rate this app")
@@ -54,8 +39,7 @@ struct SettingsView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100)
-                    
-                        //                            Text("All movie data was provided by The Movie Database")
+
                     Link("All movie data was provided by The Movie Database", destination: URL(string: "http://themoviedb.org")!)
                         .foregroundColor(.primary)
                     
@@ -81,7 +65,6 @@ struct SettingsView: View {
 func deleteCache() {
     for movie in movies {
         moc.delete(movie)
-        try? moc.save()
     }
 }
 }

@@ -42,9 +42,9 @@ struct AddToWatchListButton: View {
         }
     }
 }
-    //
-    //    struct AddToWatchListButton_Previews: PreviewProvider {
-    //        static var previews: some View {
-    //            AddToWatchListButton()
-    //        }
-    //    }
+    
+        struct AddToWatchListButton_Previews: PreviewProvider {
+            static var previews: some View {
+                AddToWatchListButton(media: Movie())
+            }
+        }
