@@ -50,8 +50,8 @@ struct MovieView: View {
                                 Text(media.wrappedReleaseDate)
                                     .foregroundColor(.secondary)
                                 Text("⭐️⭐️⭐️⭐️⭐️")
-                                
                             }
+                            Spacer()
                         }
                         
                         // Save to watchlist button

@@ -16,31 +16,40 @@ struct DiscoverView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(discoverResults) { media in
-                        NavigationLink {
-                            MovieView(media: media)
-                        } label: {
-                            VStack {
-                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    Image("poster_placeholder")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .overlay(Color.black.opacity(0.8))
+                VStack(alignment: .leading) {
+                    
+                        Text("New and upcoming releases:")
+
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+                    
+                    LazyVGrid(columns: columns) {
+                        ForEach(discoverResults) { media in
+                            NavigationLink {
+                                MovieView(media: media)
+                            } label: {
+                                VStack {
+                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
+                                        image.resizable()
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    } placeholder: {
+                                        Image("poster_placeholder")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .overlay(Color.black.opacity(0.8))
+                                    }
+                                    .scaledToFit()
+                                    .frame(maxHeight: 300)
+                                    
+                                    Text(media.wrappedTitle)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .padding(.bottom, 15)
                                 }
-                                .scaledToFit()
-                                .frame(maxHeight: 300)
-                                
-                                Text(media.wrappedTitle)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .padding(.bottom, 10)
-                                Text(media.wrappedReleaseDate)
                             }
                         }
                     }
+                    .padding(.horizontal)
                 }
             }
             .navigationTitle("Discover")
