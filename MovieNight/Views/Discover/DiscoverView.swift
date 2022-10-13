@@ -29,17 +29,13 @@ struct DiscoverView: View {
                                 MovieView(media: media)
                             } label: {
                                 VStack {
-                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
-                                        image.resizable()
-                                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    } placeholder: {
-                                        Image("poster_placeholder")
+                                    if let posterImage = media.posterImage {
+                                        Image(uiImage: posterImage)
                                             .resizable()
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
                                             .scaledToFit()
-                                            .overlay(Color.black.opacity(0.8))
+                                            .frame(maxHeight: 300)
                                     }
-                                    .scaledToFit()
-                                    .frame(maxHeight: 300)
                                     
                                     Text(media.wrappedTitle)
                                         .font(.caption)
@@ -87,13 +83,52 @@ struct DiscoverView: View {
                     for item in searchResults {
                         DiscoverItem(item: item)
                     }
+                    
+//                    downloadBackdrops()
+                }
+                DispatchQueue.main.async {
+                    downloadPosters()
+                    downloadBackdrops()
                 }
             }
         } catch {
             print("Invalid Data")
         }
     }
+    
+    func downloadPosters() {
+        
+            for media in discoverResults {
+                
+                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedPosterPath)")!
+                
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        guard let data = data, error == nil else {
+                            return
+                        }
+                        
+                        media.posterImage = UIImage(data: data)
+                        
+                    }.resume()
+            }
+    }
+    
+    func downloadBackdrops() {
 
+            for media in discoverResults {
+
+                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedBackdropPath)")!
+
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        guard let data = data, error == nil else {
+                            return
+                        }
+
+                        media.backdropImage = UIImage(data: data)
+
+                    }.resume()
+            }
+    }
 
     func DiscoverItem(item: DiscoverResult) {
         let newItem = Movie(context: moc)
@@ -120,7 +155,6 @@ struct DiscoverView: View {
             }
         }
 
-                    //        newItem.genre_ids = item.genre_ids
 
                 if let vote_average = item.vote_average {
                     newItem.vote_average = vote_average

@@ -120,6 +120,7 @@ struct SearchView: View {
                 }
                 DispatchQueue.main.async {
                     downloadImages()
+                    downloadBackdrops()
                 }
                 
             }
@@ -142,7 +143,23 @@ struct SearchView: View {
                         media.posterImage = UIImage(data: data)
                         
                     }.resume()
-                
+            }
+    }
+    
+    func downloadBackdrops() {
+
+            for media in searchResults {
+
+                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedBackdropPath)")!
+
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        guard let data = data, error == nil else {
+                            return
+                        }
+
+                        media.backdropImage = UIImage(data: data)
+
+                    }.resume()
             }
     }
     

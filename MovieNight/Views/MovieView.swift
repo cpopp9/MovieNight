@@ -19,13 +19,12 @@ struct MovieView: View {
                     // Backdrop Header
                     
                     ZStack {
-                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedBackdropPath)")) { image in
-                            image.resizable()
-                        } placeholder: {
-                            ProgressView()
+                        if let backdropImage = media.backdropImage {
+                            Image(uiImage: backdropImage)
+                                .resizable()
+                                .scaledToFit()
+                                .overlay(Color.black.opacity(0.2))
                         }
-                        .scaledToFit()
-                        .overlay(Color.black.opacity(0.2))
                         
                         Image(systemName: "play.circle")
                             .font(.system(size: 40))

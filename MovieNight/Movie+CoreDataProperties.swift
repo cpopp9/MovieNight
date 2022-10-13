@@ -34,9 +34,10 @@ extension Movie {
     @NSManaged public var isSearchMedia: Bool
     @NSManaged public var isDiscoverMedia: Bool
     @NSManaged public var posterImage: UIImage?
+    @NSManaged public var backdropImage: UIImage?
     
     var wrappedBackdropPath: String {
-        backdrop_path ?? "Unknown"
+        backdrop_path ?? "a2n6bKD7qhCPCAEALgsAhWOAQcc.jpg"
     }
     
     var wrappedMediaType: String {

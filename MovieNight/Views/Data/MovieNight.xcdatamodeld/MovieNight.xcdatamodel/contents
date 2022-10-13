@@ -21,6 +21,7 @@
     </entity>
     <entity name="Movie" representedClassName="Movie" syncable="YES">
         <attribute name="backdrop_path" optional="YES" attributeType="String"/>
+        <attribute name="backdropImage" optional="YES" attributeType="Transformable" valueTransformerName="UIImageTransformer" customClassName="UIImage"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isDiscoverMedia" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isSearchMedia" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
