@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State var searchText = ""
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true")) var searchResults: FetchedResults<Movie>
     @Environment(\.isSearching) private var isSearching: Bool
+    @Environment(\.scenePhase) var scenePhase
     
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true")) var searchResults: FetchedResults<Movie>
     
+    @State var searchText = ""
     @State var prefix = 3
     
     var body: some View {
@@ -34,6 +35,17 @@ struct SearchView: View {
                     try? moc.save()
                 }
             }
+            .onChange(of: scenePhase) { phase in
+                switch phase {
+                case .active:
+                    print("active")
+                case .inactive:
+                    print("inactive")
+                case .background:
+                    print("background")
+                    saveContext()
+                }
+            }
         }
     }
     
@@ -43,6 +55,20 @@ struct SearchView: View {
                 media.isSearchMedia = false
             } else {
                 moc.delete(media)
+            }
+        }
+    }
+    
+    func saveContext() {
+        
+        clearSearch()
+        
+        if moc.hasChanges {
+            do {
+                try moc.save()
+            } catch {
+                let error = error as NSError
+                print("Unresolved error \(error), \(error.userInfo)")
             }
         }
     }

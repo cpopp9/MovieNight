@@ -64,7 +64,6 @@ struct MovieView: View {
                             Text("Sci-fi, Adventure, Action")
                                 .font(.subheadline)
                                 .padding(.bottom)
-                            Text(String(media.isSearchMedia))
                             Text(media.wrappedOverview)
                         }
                         .padding(.top)
