@@ -144,6 +144,7 @@ struct DiscoverView: View {
         newItem.watchlist = false
         newItem.isSearchMedia = false
         newItem.isDiscoverMedia = true
+        newItem.posterImage = UIImage(named: "poster_placeholder")
 
         if let date = item.release_date {
             let formatter = DateFormatter()

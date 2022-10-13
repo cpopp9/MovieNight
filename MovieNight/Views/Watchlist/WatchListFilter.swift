@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct WatchListFilter: View {
-    @FetchRequest var WatchlistMedia: FetchedResults<Movie>
+    @FetchRequest var watchlistMedia: FetchedResults<Movie>
+    @Environment(\.managedObjectContext) var moc
+    
+    private var headerText: String
     
     var body: some View {
-            ForEach(WatchlistMedia) { media in
-                if media.media_type == "movie" {
+        Section(headerText) {
+            ForEach(watchlistMedia) { media in
                     NavigationLink {
                         MovieView(media: media)
                     } label: {
@@ -34,13 +37,23 @@ struct WatchListFilter: View {
                             }
                         }
                     }
-                }
             }
+            .onDelete(perform: deleteMedia)
         }
+    }
     
     init(media_type: String, watchedSort: Bool, watched: Bool, searchQuery: String) {
             
-        _WatchlistMedia = FetchRequest<Movie>(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true && ((media_type == %@) || (%@ == 'movie and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
+        _watchlistMedia = FetchRequest<Movie>(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true && ((media_type == %@) || (%@ == 'movies and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
+        
+        headerText = media_type
+    }
+    
+    func deleteMedia(at offsets: IndexSet) {
+        for offset in offsets {
+            let media = watchlistMedia[offset]
+            moc.delete(media)
+        }
     }
     
 }

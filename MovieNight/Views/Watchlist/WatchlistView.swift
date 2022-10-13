@@ -12,62 +12,77 @@ struct WatchListView: View {
     @Environment(\.managedObjectContext) var moc
     
         // Filter data
-    @State private var media_type = "movie and tv"
+    @State private var media_type = "movies and tv"
     @State private var searchText = ""
     @State private var watched = true
     @State private var watchedSort = false
     
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true")) var watchlistResults: FetchedResults<Movie>
+    
     var body: some View {
         NavigationView {
-            List {
-                WatchListFilter(media_type: media_type, watchedSort: watchedSort, watched: watched, searchQuery: searchText)
-            }
-            
-                .navigationTitle("Watchlist")
-                .searchable(text: $searchText)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Menu() {
-                            
-                            Button("All") {
-                                watchedSort = false
-                            }
-                            
-                            Button("Watched") {
-                                watched = true
-                                watchedSort = true
-                            }
-                            
-                            Button("Unwatched") {
-                                watched = false
-                                watchedSort = true
-                            }
-                            
-                        } label: {
-                            Image(systemName: "eye")
-                        }
+            VStack {
+                if watchlistResults.count > 0 {
+                    List {
+                        WatchListFilter(media_type: media_type, watchedSort: watchedSort, watched: watched, searchQuery: searchText)
                     }
                     
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Menu() {
-                            
-                            Button("Movies and TV") {
-                                media_type = "movie and tv"
-                            }
-                            
-                            Button("Movies") {
-                                media_type = "movie"
-                            }
-                            
-                            Button("TV") {
-                                media_type = "tv"
-                            }
-                            
-                        } label: {
-                            Image(systemName: "line.3.horizontal.decrease.circle")
-                        }
+                } else {
+                    VStack {
+                        Image(systemName: "video.badge.plus")
+                            .font(.system(size: 45))
+                            .foregroundColor(Color(.systemPink))
+                            .padding(.vertical)
+                        Text("Add Movies and TV shows to start building a watchlist")
                     }
                 }
+            }
+            
+            .navigationTitle("Watchlist")
+            .searchable(text: $searchText)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Menu() {
+                        
+                        Button("All") {
+                            watchedSort = false
+                        }
+                        
+                        Button("Watched") {
+                            watched = true
+                            watchedSort = true
+                        }
+                        
+                        Button("Unwatched") {
+                            watched = false
+                            watchedSort = true
+                        }
+                        
+                    } label: {
+                        Image(systemName: "eye")
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu() {
+                        
+                        Button("Movies and TV") {
+                            media_type = "movies and tv"
+                        }
+                        
+                        Button("Movies") {
+                            media_type = "movie"
+                        }
+                        
+                        Button("TV") {
+                            media_type = "tv"
+                        }
+                        
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                    }
+                }
+            }
         }
     }
 }

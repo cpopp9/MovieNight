@@ -50,6 +50,22 @@ struct SearchFilter: View {
                         }
                     }
                 }
+                .swipeActions() {
+                    Button() {
+                        media.watchlist.toggle()
+                    } label: {
+                        Image(systemName: media.watchlist ? "minus" : "plus")
+                    }
+                    .tint(media.watchlist ? .red : .green)
+                    
+                    Button() {
+                        media.watched.toggle()
+                    } label: {
+                        Image(systemName: "eye")
+                    }
+                    .tint(media.watched ? .purple : .gray)
+                    .disabled(!media.watchlist)
+                }
             }
             
             NavigationLink {
@@ -66,6 +82,13 @@ struct SearchFilter: View {
     
     init(mediaFilter: String) {
         _searchResults = FetchRequest<Movie>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "isSearchMedia == true && media_type == %@", mediaFilter))
+    }
+    
+    func addMedia(at offsets: IndexSet) {
+        for offset in offsets {
+            let media = searchResults[offset]
+            media.watchlist = true
+        }
     }
 }
 

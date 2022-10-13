@@ -176,8 +176,9 @@ struct SearchView: View {
         newItem.popularity = item.popularity ?? 0.0
         newItem.isSearchMedia = true
         newItem.isDiscoverMedia = false
+        newItem.posterImage = UIImage(named: "poster_placeholder")
         
-        if let date = item.release_date {
+        if let date = item.release_date ?? item.first_air_date {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
             if let parsed = formatter.date(from: date) {
