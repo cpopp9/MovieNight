@@ -50,6 +50,7 @@ struct MovieView: View {
                                 Text(media.wrappedReleaseDate)
                                     .foregroundColor(.secondary)
                                 Text("⭐️⭐️⭐️⭐️⭐️")
+                                Text(media.poster_path ?? "unknown")
                             }
                             Spacer()
                         }

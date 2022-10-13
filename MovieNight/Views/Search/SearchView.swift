@@ -52,31 +52,34 @@ struct SearchView: View {
                         Text("Search for Movies and TV Shows")
                     }
                 }
+                Button("Download images 🙏") {
+                    downloadImages()
+                }
             }
-                .navigationTitle("Search")
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for something")
-                .onSubmit(of: .search) {
-                    Task {
-                        await multiSearch()
-                    }
+            .navigationTitle("Search")
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for something")
+            .onSubmit(of: .search) {
+                Task {
+                    await multiSearch()
                 }
-                .onChange(of: searchText) { value in
-                    if searchText.isEmpty && !isSearching {
-                        clearSearch()
-                        try? moc.save()
-                    }
+            }
+            .onChange(of: searchText) { value in
+                if searchText.isEmpty && !isSearching {
+                    clearSearch()
+                    try? moc.save()
                 }
-                .onChange(of: scenePhase) { phase in
-                    switch phase {
-                    case .active:
-                        print("active")
-                    case .inactive:
-                        print("inactive")
-                    case .background:
-                        print("background")
-                        saveContext()
-                    }
+            }
+            .onChange(of: scenePhase) { phase in
+                switch phase {
+                case .active:
+                    print("active")
+                case .inactive:
+                    print("inactive")
+                case .background:
+                    print("background")
+                    saveContext()
                 }
+            }
         }
     }
     
@@ -131,9 +134,41 @@ struct SearchView: View {
                         searchItem(item: item)
                     }
                 }
+                
+                    downloadImages()
+                
             }
         } catch {
             fatalError("Invalid Data")
+        }
+    }
+    
+    func downloadImages() {
+        DispatchQueue.main.async {
+            for media in searchResults {
+                
+                let url: URL
+                
+                if let hasPoster = media.poster_path {
+                    url = URL(string: "https://image.tmdb.org/t/p/w1280\(hasPoster)")!
+                } else {
+                    url = URL(string: "https://image.tmdb.org/t/p/w1280/wmUeEacsFZzDndaeOtNNmy26rYJ.jpg")!
+                }
+                
+                
+                    // might crash here if poster doesn't exist
+                
+                
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        guard let data = data, error == nil else {
+                            return
+                        }
+                        
+                        media.posterImage = UIImage(data: data)
+                        
+                    }.resume()
+                
+            }
         }
     }
     

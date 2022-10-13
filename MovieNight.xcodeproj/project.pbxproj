@@ -23,6 +23,7 @@
 		DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E135028E6668900A50AC5 /* SettingsView.swift */; };
 		DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E135228E6668E00A50AC5 /* DiscoverView.swift */; };
 		DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */; };
+		DCAE02FE28F87CC6008C5DD6 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */; };
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
@@ -48,6 +49,7 @@
 		DC6E135028E6668900A50AC5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC6E135228E6668E00A50AC5 /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		DC72838128E672490028D4BA /* MovieNight.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieNight.xcdatamodel; sourceTree = "<group>"; };
+		DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageTransformer.swift; sourceTree = "<group>"; };
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
+				DCAE02FF28F87CCD008C5DD6 /* Utils */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -172,6 +175,14 @@
 				DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		DCAE02FF28F87CCD008C5DD6 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +274,7 @@
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* WatchlistView.swift in Sources */,
 				DC25CA0528F0E41300646BB9 /* SearchFilter.swift in Sources */,
+				DCAE02FE28F87CC6008C5DD6 /* UIImageTransformer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

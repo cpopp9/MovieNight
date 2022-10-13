@@ -30,6 +30,7 @@
         <attribute name="overview" optional="YES" attributeType="String"/>
         <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="poster_path" optional="YES" attributeType="String"/>
+        <attribute name="posterImage" optional="YES" attributeType="Transformable" valueTransformerName="UIImageTransformer" customClassName="UIImage"/>
         <attribute name="release_date" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="vote_average" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

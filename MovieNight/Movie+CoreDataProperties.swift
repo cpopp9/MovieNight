@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 extension Movie {
@@ -32,6 +33,7 @@ extension Movie {
     @NSManaged public var watchlist: Bool
     @NSManaged public var isSearchMedia: Bool
     @NSManaged public var isDiscoverMedia: Bool
+    @NSManaged public var posterImage: UIImage?
     
     var wrappedBackdropPath: String {
         backdrop_path ?? "Unknown"
