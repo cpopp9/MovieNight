@@ -15,7 +15,6 @@ struct SearchFilter: View {
     @State private var moreMovies = false
     
     var body: some View {
-        VStack {
             ForEach(searchResults.prefix(3)) { media in
                 NavigationLink {
                     MovieView(media: media)
@@ -45,6 +44,7 @@ struct SearchFilter: View {
                     }
                 }
             }
+            
             NavigationLink {
                 AllSearchResults(searchResults: searchResults)
             } label: {
@@ -55,7 +55,6 @@ struct SearchFilter: View {
                     Image(systemName: "plus")
                 }
             }
-        }
     }
     
     init(mediaFilter: String) {
