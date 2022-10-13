@@ -15,19 +15,6 @@ struct SearchView: View {
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true")) var searchResults: FetchedResults<Movie>
     
     @State var searchText = ""
-    @State var prefix = 3
-    @State var tvCount = 0
-    
-    var tvCounter: Int {
-        var tv = 0
-        
-        for media in searchResults {
-            if media.media_type == "tv" {
-                tv += 1
-            }
-        }
-        return tv
-    }
     
     var body: some View {
         NavigationView {
@@ -51,9 +38,6 @@ struct SearchView: View {
                             .padding(.vertical)
                         Text("Search for Movies and TV Shows")
                     }
-                }
-                Button("Download images 🙏") {
-                    downloadImages()
                 }
             }
             .navigationTitle("Search")
@@ -134,8 +118,9 @@ struct SearchView: View {
                         searchItem(item: item)
                     }
                 }
-                
+                DispatchQueue.main.async {
                     downloadImages()
+                }
                 
             }
         } catch {
@@ -144,20 +129,10 @@ struct SearchView: View {
     }
     
     func downloadImages() {
-        DispatchQueue.main.async {
+        
             for media in searchResults {
                 
-                let url: URL
-                
-                if let hasPoster = media.poster_path {
-                    url = URL(string: "https://image.tmdb.org/t/p/w1280\(hasPoster)")!
-                } else {
-                    url = URL(string: "https://image.tmdb.org/t/p/w1280/wmUeEacsFZzDndaeOtNNmy26rYJ.jpg")!
-                }
-                
-                
-                    // might crash here if poster doesn't exist
-                
+                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedPosterPath)")!
                 
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         guard let data = data, error == nil else {
@@ -169,7 +144,6 @@ struct SearchView: View {
                     }.resume()
                 
             }
-        }
     }
     
     func searchItem(item: SearchResult) {

@@ -39,10 +39,6 @@ extension Movie {
         backdrop_path ?? "Unknown"
     }
     
-    var wrappedPosterPath: String {
-        poster_path ?? "Unknown"
-    }
-    
     var wrappedMediaType: String {
         media_type ?? "Unknown"
     }
@@ -65,6 +61,10 @@ extension Movie {
     
     var wrappedTitle: String {
         title ?? "Unknown"
+    }
+    
+    var wrappedPosterPath: String {
+    poster_path ?? "wmUeEacsFZzDndaeOtNNmy26rYJ.jpg"
     }
 
 }

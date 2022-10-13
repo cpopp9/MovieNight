@@ -10,6 +10,8 @@ struct MovieView: View {
     @ObservedObject var media: Movie
     @Environment(\.managedObjectContext) var moc
     
+    let backupPoster = UIImage(systemName: "gravity")
+    
     var body: some View {
         ScrollView {
                 VStack {
@@ -34,15 +36,14 @@ struct MovieView: View {
                         
                         // Initial details
                         HStack {
-                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
-                                image.resizable()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .scaledToFit()
-                            .frame(height: 150)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                            .padding(.trailing)
+                            if let posterImage = media.posterImage {
+                            Image(uiImage: posterImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 150)
+                                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                                    .padding(.trailing)
+                                  }
                             
                             VStack(alignment: .leading) {
                                 Text(media.wrappedTitle)
@@ -50,7 +51,7 @@ struct MovieView: View {
                                 Text(media.wrappedReleaseDate)
                                     .foregroundColor(.secondary)
                                 Text("⭐️⭐️⭐️⭐️⭐️")
-                                Text(media.poster_path ?? "unknown")
+                                
                             }
                             Spacer()
                         }

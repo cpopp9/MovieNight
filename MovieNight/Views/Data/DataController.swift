@@ -22,5 +22,6 @@ class DataController: ObservableObject {
         }
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
+        
     }
 }
