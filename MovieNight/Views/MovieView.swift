@@ -72,7 +72,6 @@ struct MovieView: View {
                     .padding(.horizontal)
                     Spacer()
                 }
-                
         }
         .ignoresSafeArea()
     }

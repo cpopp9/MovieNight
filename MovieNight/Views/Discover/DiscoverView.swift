@@ -54,6 +54,7 @@ struct DiscoverView: View {
                 }
             }
         }
+        .accentColor(.white)
     }
 
 
