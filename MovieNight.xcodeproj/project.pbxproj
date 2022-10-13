@@ -27,6 +27,7 @@
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 		DCDFAC8328EC93E3008F3672 /* DiscoverResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */; };
+		DCE9740428F83BD9002917F0 /* AllSearchMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9740328F83BD9002917F0 /* AllSearchMoviesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 		DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverResults.swift; sourceTree = "<group>"; };
+		DCE9740328F83BD9002917F0 /* AllSearchMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchMoviesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			children = (
 				DC6E134C28E6664000A50AC5 /* SearchView.swift */,
 				DC25CA0428F0E41300646BB9 /* SearchFilter.swift */,
+				DCE9740328F83BD9002917F0 /* AllSearchMoviesView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				DC2BC11E28F71C5800E12FA5 /* Movie+CoreDataProperties.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
 				DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */,
+				DCE9740428F83BD9002917F0 /* AllSearchMoviesView.swift in Sources */,
 				DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */,
 				DC6E134B28E6662200A50AC5 /* SearchResults.swift in Sources */,
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,

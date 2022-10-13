@@ -16,11 +16,23 @@ struct SearchView: View {
     
     @State var searchText = ""
     @State var prefix = 3
+    @State var tvCount = 0
+    
+    var tvCounter: Int {
+        var tv = 0
+        
+        for media in searchResults {
+            if media.media_type == "tv" {
+                tv += 1
+            }
+        }
+        return tv
+    }
     
     var body: some View {
         NavigationView {
             List {
-                SearchFilter()
+                SearchFilter(tvCounter: tvCounter)
             }
             .navigationTitle("Search")
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for a movie")
@@ -138,6 +150,7 @@ struct SearchView: View {
             newItem.vote_count = Int16(vote_count)
         }
     }
+    
 }
 
 struct SearchView_Previews: PreviewProvider {
