@@ -13,7 +13,6 @@ struct AllSearchResults: View {
     var body: some View {
         List {
             ForEach(searchResults) { media in
-                if media.media_type == "tv" {
                     NavigationLink {
                         MovieView(media: media)
                     } label: {
@@ -41,7 +40,6 @@ struct AllSearchResults: View {
                             }
                         }
                     }
-                }
             }
         }
         .navigationTitle("All Results")

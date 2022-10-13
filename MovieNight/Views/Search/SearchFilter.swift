@@ -49,7 +49,7 @@ struct SearchFilter: View {
                 AllSearchResults(searchResults: searchResults)
             } label: {
                 HStack {
-                    Text("More TV Shows")
+                    Text("See More")
                     Spacer()
                     Text(String(searchResults.count))
                     Image(systemName: "plus")

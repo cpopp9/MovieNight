@@ -42,6 +42,7 @@ struct SearchView: View {
                             SearchFilter(mediaFilter: "tv")
                         }
                     }
+                    .listStyle(.grouped)
                 } else {
                     VStack {
                         Image(systemName: "text.magnifyingglass")
