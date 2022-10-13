@@ -31,33 +31,51 @@ struct SearchView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                SearchFilter(tvCounter: tvCounter)
-            }
-            .navigationTitle("Search")
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for a movie")
-            .onSubmit(of: .search) {
-                Task {
-                    await multiSearch()
+            VStack {
+                if searchResults.count > 0 {
+                    List {
+                        Section("Movies") {
+                            SearchFilter(mediaFilter: "movie")
+                        }
+                        
+                        Section("TV") {
+                            SearchFilter(mediaFilter: "tv")
+                        }
+                    }
+                } else {
+                    VStack {
+                        Image(systemName: "text.magnifyingglass")
+                            .font(.system(size: 45))
+                            .foregroundColor(Color(.systemPink))
+                            .padding(.vertical)
+                        Text("Search for Movies and TV Shows")
+                    }
                 }
             }
-            .onChange(of: searchText) { value in
-                if searchText.isEmpty && !isSearching {
-                    clearSearch()
-                    try? moc.save()
+                .navigationTitle("Search")
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for something")
+                .onSubmit(of: .search) {
+                    Task {
+                        await multiSearch()
+                    }
                 }
-            }
-            .onChange(of: scenePhase) { phase in
-                switch phase {
-                case .active:
-                    print("active")
-                case .inactive:
-                    print("inactive")
-                case .background:
-                    print("background")
-                    saveContext()
+                .onChange(of: searchText) { value in
+                    if searchText.isEmpty && !isSearching {
+                        clearSearch()
+                        try? moc.save()
+                    }
                 }
-            }
+                .onChange(of: scenePhase) { phase in
+                    switch phase {
+                    case .active:
+                        print("active")
+                    case .inactive:
+                        print("inactive")
+                    case .background:
+                        print("background")
+                        saveContext()
+                    }
+                }
         }
     }
     
@@ -109,7 +127,7 @@ struct SearchView: View {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                            searchItem(item: item)
+                        searchItem(item: item)
                     }
                 }
             }
@@ -150,8 +168,8 @@ struct SearchView: View {
             newItem.vote_count = Int16(vote_count)
         }
     }
-    
 }
+
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {

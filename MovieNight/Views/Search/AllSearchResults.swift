@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-struct AllSearchMoviesView: View {
+struct AllSearchResults: View {
     var searchResults: FetchedResults<Movie>
-    var mediaType: String
     
     var body: some View {
         List {
@@ -45,7 +44,7 @@ struct AllSearchMoviesView: View {
                 }
             }
         }
-        .navigationTitle("More \(mediaType)")
+        .navigationTitle("All Results")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
