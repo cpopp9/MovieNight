@@ -19,14 +19,6 @@ struct AddToWatchListButton: View {
                 
                 media.watchlist.toggle()
                 
-                if moc.hasChanges {
-                    do {
-                        try moc.save()
-                    } catch {
-                        print("no changes - button")
-                    }
-                }
-                
             } label: {
                 HStack {
                     Image(systemName: media.watchlist ? "minus" : "plus")
