@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-class SearchModel: ObservableObject {
-    
-}
-
 struct SearchView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.isSearching) private var isSearching: Bool
