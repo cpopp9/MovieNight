@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+class SearchModel: ObservableObject {
+    
+}
+
 struct SearchView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.isSearching) private var isSearching: Bool
@@ -150,7 +154,7 @@ struct SearchView: View {
 
             for media in searchResults {
 
-                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedBackdropPath)")!
+                let url = URL(string: "https://image.tmdb.org/t/p/w92\(media.wrappedBackdropPath)")!
 
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         guard let data = data, error == nil else {

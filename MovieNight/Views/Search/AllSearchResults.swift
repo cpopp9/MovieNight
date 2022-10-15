@@ -13,33 +13,27 @@ struct AllSearchResults: View {
     var body: some View {
         List {
             ForEach(searchResults) { media in
-                    NavigationLink {
-                        MovieView(media: media)
-                    } label: {
-                        HStack {
-                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
-                                image.resizable()
-                            } placeholder: {
-                                Image("poster_placeholder")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 75, height: 75)
-                                    .overlay(Color.black.opacity(0.8))
-                                
-                            }
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 75, height: 75)
-                            .clipped()
-                            
-                            VStack(alignment: .leading) {
-                                Text(media.wrappedTitle)
-                                    .font(.headline)
-                                Text(media.wrappedReleaseDate)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
+                NavigationLink {
+                    MovieView(media: media)
+                } label: {
+                    HStack {
+                        if let poster = media.posterImage {
+                            Image(uiImage: poster)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 75, height: 75)
+                                .clipped()
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text(media.wrappedTitle)
+                                .font(.headline)
+                            Text(media.wrappedReleaseDate)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
                     }
+                }
             }
         }
         .navigationTitle("All Results")
@@ -47,8 +41,8 @@ struct AllSearchResults: View {
     }
 }
 
-    //struct AllSearchMoviesView_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        AllSearchMoviesView()
-    //    }
-    //}
+//    struct AllSearchResults_Previews: PreviewProvider {
+//        static var previews: some View {
+//            AllSearchResults(searchResults: <#T##FetchedResults<Movie>#>)
+//        }
+//    }

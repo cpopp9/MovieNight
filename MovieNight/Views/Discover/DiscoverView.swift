@@ -100,7 +100,7 @@ struct DiscoverView: View {
         
             for media in discoverResults {
                 
-                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedPosterPath)")!
+                let url = URL(string: "https://image.tmdb.org/t/p/w300\(media.wrappedPosterPath)")!
                 
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         guard let data = data, error == nil else {

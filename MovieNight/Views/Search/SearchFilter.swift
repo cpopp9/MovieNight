@@ -27,19 +27,6 @@ struct SearchFilter: View {
                                 .frame(width: 75, height: 75)
                                 .clipped()
                         }
-//                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(media.wrappedPosterPath)")) { image in
-//                            image.resizable()
-//                        } placeholder: {
-//                            Image("poster_placeholder")
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fill)
-//                                .frame(width: 75, height: 75)
-//                                .overlay(Color.black.opacity(0.8))
-//
-//                        }
-//                        .aspectRatio(contentMode: .fill)
-//                        .frame(width: 75, height: 75)
-//                        .clipped()
                         
                         VStack(alignment: .leading) {
                             Text(media.wrappedTitle)
