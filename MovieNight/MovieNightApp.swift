@@ -12,6 +12,7 @@ struct MovieNightApp: App {
     
     @Environment(\.managedObjectContext) var moc
     @Environment(\.scenePhase) var scenePhase
+    @StateObject private var searchModel = SearchModel()
     
     @StateObject private var dataController = DataController()
     
@@ -21,6 +22,7 @@ struct MovieNightApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, dataController.container.viewContext)
+                .environmentObject(searchModel)
                 .preferredColorScheme(isDarkMode ? .light : .dark)
                 .onChange(of: scenePhase) { newPhase in
                                 if newPhase == .inactive {
