@@ -11,6 +11,7 @@ import SwiftUI
 struct MovieNightApp: App {
     
     @Environment(\.managedObjectContext) var moc
+    @Environment(\.scenePhase) var scenePhase
     
     @StateObject private var dataController = DataController()
     
@@ -21,6 +22,16 @@ struct MovieNightApp: App {
             ContentView()
                 .environment(\.managedObjectContext, dataController.container.viewContext)
                 .preferredColorScheme(isDarkMode ? .light : .dark)
+                .onChange(of: scenePhase) { newPhase in
+                                if newPhase == .inactive {
+                                    print("Inactive")
+                                } else if newPhase == .active {
+                                    print("Active")
+                                } else if newPhase == .background {
+                                    print("Background")
+                                    try? dataController.container.viewContext.save()
+                                }
+                            }
         }
     }
 }
