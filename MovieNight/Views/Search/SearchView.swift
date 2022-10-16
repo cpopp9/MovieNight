@@ -10,7 +10,6 @@ import SwiftUI
 struct SearchView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.isSearching) private var isSearching: Bool
-    @Environment(\.scenePhase) var scenePhase
     
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true")) var searchResults: FetchedResults<Movie>
     
@@ -51,17 +50,6 @@ struct SearchView: View {
                 if searchText.isEmpty && !isSearching {
                     clearSearch()
                     try? moc.save()
-                }
-            }
-            .onChange(of: scenePhase) { phase in
-                switch phase {
-                case .active:
-                    print("active")
-                case .inactive:
-                    print("inactive")
-                case .background:
-                    print("background")
-                    saveContext()
                 }
             }
         }
