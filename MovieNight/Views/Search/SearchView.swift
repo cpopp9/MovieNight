@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.isSearching) private var isSearching: Bool
-    @EnvironmentObject var searchModel: SearchModel
+
     
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true")) var searchResults: FetchedResults<Movie>
     
@@ -19,10 +19,6 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack {
-                
-                Button("save test") {
-                    searchModel.saveMedia()
-                }
                 
                 if searchResults.count > 0 {
                     List {

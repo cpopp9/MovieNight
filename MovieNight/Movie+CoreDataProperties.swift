@@ -36,6 +36,14 @@ extension Movie {
     @NSManaged public var posterImage: UIImage?
     @NSManaged public var backdropImage: UIImage?
     
+    var wrappedChillTitle: String {
+        if let encoded = wrappedTitle.stringByAddingPercentEncodingForRFC3986() {
+            return encoded
+        } else {
+            return wrappedTitle
+        }
+    }
+    
     var wrappedBackdropPath: String {
         backdrop_path ?? "a2n6bKD7qhCPCAEALgsAhWOAQcc.jpg"
     }

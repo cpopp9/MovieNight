@@ -45,8 +45,15 @@ struct MovieView: View {
                                   }
                             
                             VStack(alignment: .leading) {
-                                Text(media.wrappedTitle)
-                                    .font(.title.bold())
+                                HStack {
+                                    Text(media.wrappedTitle)
+                                        .font(.title.bold())
+                                    
+                                    Link(destination: URL(string: "https://chill.institute/#/search?keyword=\(media.wrappedChillTitle)")!) {
+                                            Image(systemName: "link")
+                                    }
+                                }
+                                
                                 Text(media.wrappedReleaseDate)
                                     .foregroundColor(.secondary)
                                 Text("⭐️⭐️⭐️⭐️⭐️")
