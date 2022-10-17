@@ -14,72 +14,72 @@ struct MovieView: View {
     
     var body: some View {
         ScrollView {
+            VStack {
+                
+                    // Backdrop Header
+                
+                ZStack {
+                    if let backdropImage = media.backdropImage {
+                        Image(uiImage: backdropImage)
+                            .resizable()
+                            .scaledToFit()
+                            .overlay(Color.black.opacity(0.2))
+                    }
+                    
+                    Image(systemName: "play.circle")
+                        .font(.system(size: 40))
+                        .foregroundColor(.white)
+                }
+                
                 VStack {
                     
-                    // Backdrop Header
-                    
-                    ZStack {
-                        if let backdropImage = media.backdropImage {
-                            Image(uiImage: backdropImage)
+                        // Initial details
+                    HStack {
+                        if let posterImage = media.posterImage {
+                            Image(uiImage: posterImage)
                                 .resizable()
                                 .scaledToFit()
-                                .overlay(Color.black.opacity(0.2))
+                                .frame(height: 150)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .padding(.trailing)
                         }
                         
-                        Image(systemName: "play.circle")
-                            .font(.system(size: 40))
-                            .foregroundColor(.white)
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(media.wrappedTitle)
+                                    .font(.title.bold())
+                                
+                                Link(destination: URL(string: "https://chill.institute/#/search?keyword=\(media.wrappedChillTitle)")!) {
+                                    Image(systemName: "link")
+                                }
+                            }
+                            
+                            Text(media.wrappedReleaseDate)
+                                .foregroundColor(.secondary)
+                            Text("⭐️⭐️⭐️⭐️⭐️")
+                            
+                        }
+                        Spacer()
                     }
                     
-                    VStack {
-                        
-                        // Initial details
-                        HStack {
-                            if let posterImage = media.posterImage {
-                            Image(uiImage: posterImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 150)
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                                    .padding(.trailing)
-                                  }
-                            
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text(media.wrappedTitle)
-                                        .font(.title.bold())
-                                    
-                                    Link(destination: URL(string: "https://chill.institute/#/search?keyword=\(media.wrappedChillTitle)")!) {
-                                            Image(systemName: "link")
-                                    }
-                                }
-                                
-                                Text(media.wrappedReleaseDate)
-                                    .foregroundColor(.secondary)
-                                Text("⭐️⭐️⭐️⭐️⭐️")
-                                
-                            }
-                            Spacer()
-                        }
-                        
                         // Save to watchlist button
-                        AddToWatchListButton(media: media)
-                        
+                    AddToWatchListButton(media: media)
+                    
                         // Additional Details
-                        VStack(alignment: .leading) {
-                            Text("Overview")
-                                .font(.title2.bold())
-                            Text("Sci-fi, Adventure, Action")
-                                .font(.subheadline)
-                                .padding(.bottom)
-                            Text(media.wrappedOverview)
-                        }
-                        .padding(.top)
+                    VStack(alignment: .leading) {
+                        Text("Overview")
+                            .font(.title2.bold())
+                        Text("Sci-fi, Adventure, Action")
+                            .font(.subheadline)
+                            .padding(.bottom)
+                        Text(media.wrappedOverview)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    Spacer()
+                    .padding(.top)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+                Spacer()
+            }
         }
         .ignoresSafeArea()
     }

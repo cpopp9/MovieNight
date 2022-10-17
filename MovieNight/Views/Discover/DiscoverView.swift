@@ -84,11 +84,10 @@ struct DiscoverView: View {
                         DiscoverItem(item: item)
                     }
                     
-//                    downloadBackdrops()
                 }
-                DispatchQueue.main.async {
-                    downloadPosters()
-                    downloadBackdrops()
+                Task {
+                    await downloadPosters()
+                    await downloadBackdrops()
                 }
             }
         } catch {
@@ -96,11 +95,11 @@ struct DiscoverView: View {
         }
     }
     
-    func downloadPosters() {
+    func downloadPosters() async {
         
             for media in discoverResults {
                 
-                let url = URL(string: "https://image.tmdb.org/t/p/w300\(media.wrappedPosterPath)")!
+                let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedPosterPath)")!
                 
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         guard let data = data, error == nil else {
@@ -113,21 +112,19 @@ struct DiscoverView: View {
             }
     }
     
-    func downloadBackdrops() {
-
-            for media in discoverResults {
-
-                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedBackdropPath)")!
-
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        guard let data = data, error == nil else {
-                            return
-                        }
-
-                        media.backdropImage = UIImage(data: data)
-
-                    }.resume()
-            }
+    func downloadBackdrops() async {
+        for media in discoverResults {
+            let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
+            
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                guard let data = data, error == nil else {
+                    return
+                }
+                
+                media.backdropImage = UIImage(data: data)
+                
+            }.resume()
+        }
     }
 
     func DiscoverItem(item: DiscoverResult) {

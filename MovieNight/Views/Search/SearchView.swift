@@ -108,9 +108,10 @@ struct SearchView: View {
                         searchItem(item: item)
                     }
                 }
-                DispatchQueue.main.async {
-                    downloadImages()
-                    downloadBackdrops()
+//                DispatchQueue.main.async {
+                Task {
+                    await downloadImages()
+                    await downloadBackdrops()
                 }
                 
             }
@@ -119,11 +120,11 @@ struct SearchView: View {
         }
     }
     
-    func downloadImages() {
+    func downloadImages() async {
         
             for media in searchResults {
                 
-                let url = URL(string: "https://image.tmdb.org/t/p/w1280\(media.wrappedPosterPath)")!
+                let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedPosterPath)")!
                 
                     URLSession.shared.dataTask(with: url) { data, _, error in
                         guard let data = data, error == nil else {
@@ -136,21 +137,19 @@ struct SearchView: View {
             }
     }
     
-    func downloadBackdrops() {
-
-            for media in searchResults {
-
-                let url = URL(string: "https://image.tmdb.org/t/p/w92\(media.wrappedBackdropPath)")!
-
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        guard let data = data, error == nil else {
-                            return
-                        }
-
-                        media.backdropImage = UIImage(data: data)
-
-                    }.resume()
-            }
+    func downloadBackdrops() async {
+        for media in searchResults {
+            let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
+            
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                guard let data = data, error == nil else {
+                    return
+                }
+                
+                media.backdropImage = UIImage(data: data)
+                
+            }.resume()
+        }
     }
     
     func searchItem(item: SearchResult) {
