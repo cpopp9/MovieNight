@@ -13,7 +13,7 @@ struct SearchView: View {
     
     @EnvironmentObject var dataController: DataController
     
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "search")) var searchResults: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "search")) var searchResults: FetchedResults<Media>
     
     @State var searchText = ""
     

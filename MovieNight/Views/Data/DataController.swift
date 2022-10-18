@@ -92,7 +92,7 @@ class DataController: ObservableObject {
     }
     
     func clearMedia(filterKey: String) {
-        let request = NSFetchRequest<Movie>(entityName: "Movie")
+        let request = NSFetchRequest<Media>(entityName: "Media")
         request.predicate = NSPredicate(format: "filterKey == %@", filterKey)
         
         do {
@@ -110,7 +110,7 @@ class DataController: ObservableObject {
         }
     }
     
-    func downloadPoster(media: Movie) async {
+    func downloadPoster(media: Media) async {
         
         let url = URL(string: "https://image.tmdb.org/t/p/w500\(media.wrappedPosterPath)")!
         
@@ -124,7 +124,7 @@ class DataController: ObservableObject {
         }.resume()
     }
     
-    func downloadBackdrop(media: Movie) async {
+    func downloadBackdrop(media: Media) async {
     
             let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
             
@@ -139,7 +139,7 @@ class DataController: ObservableObject {
     }
     
     func CreateMediaObject(item: SearchResult, filterKey: String) {
-        let newItem = Movie(context: container.viewContext)
+        let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path

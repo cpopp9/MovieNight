@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AllSearchResults: View {
-    var searchResults: FetchedResults<Movie>
+    var searchResults: FetchedResults<Media>
     
     var body: some View {
         List {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WatchListFilter: View {
-    @FetchRequest var watchlistMedia: FetchedResults<Movie>
+    @FetchRequest var watchlistMedia: FetchedResults<Media>
     @Environment(\.managedObjectContext) var moc
     
     private var headerText: String
@@ -44,7 +44,7 @@ struct WatchListFilter: View {
     
     init(media_type: String, watchedSort: Bool, watched: Bool, searchQuery: String) {
             
-        _watchlistMedia = FetchRequest<Movie>(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true && ((media_type == %@) || (%@ == 'movies and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
+        _watchlistMedia = FetchRequest<Media>(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true && ((media_type == %@) || (%@ == 'movies and tv')) && ((%@ == false) || (watched == %@)) && ((%@ == '') || (title CONTAINS[C] %@))", media_type, media_type, NSNumber(value: watchedSort), NSNumber(value: watched), searchQuery, searchQuery))
         
         headerText = media_type
     }

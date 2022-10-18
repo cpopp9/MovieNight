@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AddToWatchListButton: View {
     @Environment(\.managedObjectContext) var moc
-    @ObservedObject var media: Movie
+    @ObservedObject var media: Media
     
     var body: some View {
         
@@ -45,6 +45,6 @@ struct AddToWatchListButton: View {
     
         struct AddToWatchListButton_Previews: PreviewProvider {
             static var previews: some View {
-                AddToWatchListButton(media: Movie())
+                AddToWatchListButton(media: Media())
             }
         }

@@ -1,5 +1,5 @@
 //
-//  Movie+CoreDataClass.swift
+//  Media+CoreDataClass.swift
 //  MovieNight
 //
 //  Created by Cory Popp on 10/12/22.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(Movie)
-public class Movie: NSManagedObject {
+@objc(Media)
+public class Media: NSManagedObject {
 
 }

@@ -11,10 +11,10 @@ import CoreData
 import UIKit
 
 
-extension Movie {
+extension Media {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Movie> {
-        return NSFetchRequest<Movie>(entityName: "Movie")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Media> {
+        return NSFetchRequest<Media>(entityName: "Media")
     }
 
     @NSManaged public var backdrop_path: String?
@@ -79,6 +79,6 @@ extension Movie {
 
 }
 
-extension Movie : Identifiable {
+extension Media : Identifiable {
 
 }

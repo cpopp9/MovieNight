@@ -17,7 +17,7 @@ struct WatchListView: View {
     @State private var watched = true
     @State private var watchedSort = false
     
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true")) var watchlistResults: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true")) var watchlistResults: FetchedResults<Media>
     
     var body: some View {
         NavigationView {

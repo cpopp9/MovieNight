@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchFilter: View {
     
-    @FetchRequest var searchResults: FetchedResults<Movie>
+    @FetchRequest var searchResults: FetchedResults<Media>
     
     var body: some View {
             ForEach(searchResults.prefix(3)) { media in
@@ -65,7 +65,7 @@ struct SearchFilter: View {
     }
     
     init(mediaFilter: String) {
-        _searchResults = FetchRequest<Movie>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "filterKey == %@ && media_type == %@", "search", mediaFilter))
+        _searchResults = FetchRequest<Media>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "filterKey == %@ && media_type == %@", "search", mediaFilter))
     }
     
     func addMedia(at offsets: IndexSet) {

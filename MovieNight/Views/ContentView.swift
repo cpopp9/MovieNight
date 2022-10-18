@@ -15,7 +15,7 @@ struct ContentView: View {
                 DiscoverView()
                     .tabItem {
                         VStack {
-                            Image(systemName: "person.fill.viewfinder")
+                            Image(systemName: "sparkles.tv.fill")
                             Text("Discover")
                         }
                     }
@@ -24,7 +24,7 @@ struct ContentView: View {
                 WatchListView()
                     .tabItem {
                         VStack {
-                            Image(systemName: "tv")
+                            Image(systemName: "popcorn.fill")
                             Text("Watch List")
                         }
                     }

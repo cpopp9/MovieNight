@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiscoverView: View {
         //    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "discover")) var discoverResults: FetchedResults<Movie>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "discover")) var discoverResults: FetchedResults<Media>
     @EnvironmentObject var dataController: DataController
     
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]

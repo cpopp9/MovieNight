@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct MovieView: View {
-    @ObservedObject var media: Movie
+    @ObservedObject var media: Media
     @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var moc
     
@@ -59,7 +59,7 @@ struct MovieView: View {
                                 .foregroundColor(.secondary)
                             HStack {
                                 MediaRatingView(rating: 4)
-                                Text("(\(String(media.vote_count)) ratings)")
+                                Text("(\(media.vote_count) ratings)")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
