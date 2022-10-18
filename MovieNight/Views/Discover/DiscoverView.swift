@@ -11,6 +11,7 @@ struct DiscoverView: View {
         //    @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "discover")) var discoverResults: FetchedResults<Media>
     @EnvironmentObject var dataController: DataController
+    @State var pageCount = 1
     
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
@@ -45,18 +46,29 @@ struct DiscoverView: View {
                                 }
                             }
                         }
+                        Text("")
+                            .onAppear {
+                                pageCount += 1
+                                Task {
+                                    await dataController.loadDiscovery(filterKey: "discover", year: 2022, page: pageCount)
+                                }
+                            }
                     }
                     .padding(.horizontal)
                 }
             }
-            .navigationTitle("Discover")
+            .navigationTitle("Discover - \(String(discoverResults.count))")
             .toolbar {
-                Button() {
-                    Task {
-                        await dataController.loadDiscovery(filterKey: "discover", year: 2020, searchText: nil)
+                Menu() {
+                    
+                    Button() {
+                        
+                    } label: {
+                        Text("Year")
                     }
+                    
                 } label: {
-                    Image(systemName: "plus")
+                    Image(systemName: "calendar")
                 }
             }
         }
