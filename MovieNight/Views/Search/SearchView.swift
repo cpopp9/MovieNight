@@ -10,9 +10,10 @@ import SwiftUI
 struct SearchView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.isSearching) private var isSearching: Bool
-
     
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchMedia == true")) var searchResults: FetchedResults<Movie>
+    @EnvironmentObject var dataController: DataController
+    
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "search")) var searchResults: FetchedResults<Movie>
     
     @State var searchText = ""
     
@@ -45,146 +46,131 @@ struct SearchView: View {
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for something")
             .onSubmit(of: .search) {
                 Task {
-                    await multiSearch()
+                    await dataController.multiSearch(searchText: searchText)
                 }
             }
             .onChange(of: searchText) { value in
                 if searchText.isEmpty && !isSearching {
-                    clearSearch()
-                    try? moc.save()
+                    dataController.clearSearch()
                 }
             }
         }
     }
     
-    func clearSearch() {
-        for media in searchResults {
-            if media.watchlist {
-                media.isSearchMedia = false
-            } else {
-                moc.delete(media)
-            }
-        }
-    }
-    
-    func saveContext() {
-        
-        clearSearch()
-        
-        if moc.hasChanges {
-            do {
-                try moc.save()
-            } catch {
-                let error = error as NSError
-                print("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-    }
-    
-    func multiSearch() async {
-        
-        clearSearch()
-        
-        var encoded: String {
-            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
-                return encodedText
-            } else {
-                return "Failed"
-            }
-        }
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
-            fatalError("Invalid URL")
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(SearchResults.self, from: data) {
-                
-                if let searchResults = decodedResponse.results {
-                    
-                    for item in searchResults {
-                        searchItem(item: item)
-                    }
-                }
-//                DispatchQueue.main.async {
-                Task {
-                    await downloadImages()
-                    await downloadBackdrops()
-                }
-                
-            }
-        } catch {
-            fatalError("Invalid Data")
-        }
-    }
-    
-    func downloadImages() async {
-        
-            for media in searchResults {
-                
-                let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedPosterPath)")!
-                
-                    URLSession.shared.dataTask(with: url) { data, _, error in
-                        guard let data = data, error == nil else {
-                            return
-                        }
-                        
-                        media.posterImage = UIImage(data: data)
-                        
-                    }.resume()
-            }
-    }
-    
-    func downloadBackdrops() async {
-        for media in searchResults {
-            let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
-            
-            URLSession.shared.dataTask(with: url) { data, _, error in
-                guard let data = data, error == nil else {
-                    return
-                }
-                
-                media.backdropImage = UIImage(data: data)
-                
-            }.resume()
-        }
-    }
-    
-    func searchItem(item: SearchResult) {
-        let newItem = Movie(context: moc)
-        newItem.title = item.title ?? item.name ?? "Unknown"
-        newItem.id = Int32(item.id)
-        newItem.backdrop_path = item.backdrop_path
-        newItem.poster_path = item.poster_path ?? item.profile_path
-        newItem.media_type = item.media_type
-        newItem.original_language = item.original_language
-        newItem.original_title = item.original_title ?? item.original_name
-        newItem.overview = item.overview
-        newItem.popularity = item.popularity ?? 0.0
-        newItem.isSearchMedia = true
-        newItem.isDiscoverMedia = false
-        newItem.posterImage = UIImage(named: "poster_placeholder")
-        
-        if let date = item.release_date ?? item.first_air_date {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            if let parsed = formatter.date(from: date) {
-                let calendar = Calendar.current
-                let year = calendar.component(.year, from: parsed)
-                newItem.release_date = "\(year)"
-            }
-        }
-        
-        if let vote_average = item.vote_average {
-            newItem.vote_average = vote_average
-        }
-        
-        if let vote_count = item.vote_count {
-            newItem.vote_count = Int16(vote_count)
-        }
-    }
+//    func clearSearch() {
+//        for media in searchResults {
+//            if media.watchlist {
+//                media.isSearchMedia = false
+//            } else {
+//                dataController.container.viewContext.delete(media)
+//            }
+//        }
+//    }
+//
+//    func multiSearch() async {
+//
+//        clearSearch()
+//
+//        var encoded: String {
+//            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
+//                return encodedText
+//            } else {
+//                return "Failed"
+//            }
+//        }
+//
+//        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
+//            fatalError("Invalid URL")
+//        }
+//
+//        do {
+//            let (data, _) = try await URLSession.shared.data(from: url)
+//
+//            if let decodedResponse = try? JSONDecoder().decode(SearchResults.self, from: data) {
+//
+//                if let searchResults = decodedResponse.results {
+//
+//                    for item in searchResults {
+//                        searchItem(item: item)
+//                    }
+//                }
+////                DispatchQueue.main.async {
+//                Task {
+//                    await downloadImages()
+//                    await downloadBackdrops()
+//                }
+//
+//            }
+//        } catch {
+//            fatalError("Invalid Data")
+//        }
+//    }
+//
+//    func downloadImages() async {
+//
+//            for media in searchResults {
+//
+//                let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedPosterPath)")!
+//
+//                    URLSession.shared.dataTask(with: url) { data, _, error in
+//                        guard let data = data, error == nil else {
+//                            return
+//                        }
+//
+//                        media.posterImage = UIImage(data: data)
+//
+//                    }.resume()
+//            }
+//    }
+//
+//    func downloadBackdrops() async {
+//        for media in searchResults {
+//            let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
+//
+//            URLSession.shared.dataTask(with: url) { data, _, error in
+//                guard let data = data, error == nil else {
+//                    return
+//                }
+//
+//                media.backdropImage = UIImage(data: data)
+//
+//            }.resume()
+//        }
+//    }
+//
+//    func searchItem(item: SearchResult) {
+//        let newItem = Movie(context: moc)
+//        newItem.title = item.title ?? item.name ?? "Unknown"
+//        newItem.id = Int32(item.id)
+//        newItem.backdrop_path = item.backdrop_path
+//        newItem.poster_path = item.poster_path ?? item.profile_path
+//        newItem.media_type = item.media_type
+//        newItem.original_language = item.original_language
+//        newItem.original_title = item.original_title ?? item.original_name
+//        newItem.overview = item.overview
+//        newItem.popularity = item.popularity ?? 0.0
+//        newItem.isSearchMedia = true
+//        newItem.isDiscoverMedia = false
+//        newItem.posterImage = UIImage(named: "poster_placeholder")
+//
+//        if let date = item.release_date ?? item.first_air_date {
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "yyyy-MM-dd"
+//            if let parsed = formatter.date(from: date) {
+//                let calendar = Calendar.current
+//                let year = calendar.component(.year, from: parsed)
+//                newItem.release_date = "\(year)"
+//            }
+//        }
+//
+//        if let vote_average = item.vote_average {
+//            newItem.vote_average = vote_average
+//        }
+//
+//        if let vote_count = item.vote_count {
+//            newItem.vote_count = Int16(vote_count)
+//        }
+//    }
 }
 
 

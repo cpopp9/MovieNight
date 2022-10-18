@@ -68,7 +68,7 @@ struct SearchFilter: View {
     }
     
     init(mediaFilter: String) {
-        _searchResults = FetchRequest<Movie>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "isSearchMedia == true && media_type == %@", mediaFilter))
+        _searchResults = FetchRequest<Movie>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "filterKey == %@ && media_type == %@", "search", mediaFilter))
     }
     
     func addMedia(at offsets: IndexSet) {

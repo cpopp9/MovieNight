@@ -13,6 +13,7 @@ struct MovieNightApp: App {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.scenePhase) var scenePhase
     
+    
     @StateObject private var dataController = DataController()
     
     @AppStorage("isDarkMode") private var isDarkMode = true
@@ -20,6 +21,7 @@ struct MovieNightApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(dataController)
                 .environment(\.managedObjectContext, dataController.container.viewContext)
                 .preferredColorScheme(isDarkMode ? .light : .dark)
                 .onChange(of: scenePhase) { newPhase in
