@@ -8,6 +8,7 @@ import SwiftUI
 
 struct MovieView: View {
     @ObservedObject var media: Movie
+    @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var moc
     
     let backupPoster = UIImage(systemName: "gravity")
@@ -82,6 +83,9 @@ struct MovieView: View {
             }
         }
         .ignoresSafeArea()
+        .task {
+            await dataController.downloadBackdrop(media: media)
+        }
     }
 }
 

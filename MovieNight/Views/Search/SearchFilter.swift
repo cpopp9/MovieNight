@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct SearchFilter: View {
-    @Environment(\.managedObjectContext) var moc
     
     @FetchRequest var searchResults: FetchedResults<Movie>
-    
-    @State private var moreMovies = false
     
     var body: some View {
             ForEach(searchResults.prefix(3)) { media in
