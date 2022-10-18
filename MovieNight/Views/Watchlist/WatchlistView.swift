@@ -44,38 +44,61 @@ struct WatchListView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Menu() {
                         
-                        Button("All") {
-                            watchedSort = false
+                        Menu() {
+                            Button {
+                                watched = true
+                                watchedSort = true
+                            } label: {
+                                Text("Watched")
+                            }
+                            Button {
+                                watched = false
+                                watchedSort = true
+                            } label: {
+                                Text("Unwatched")
+                            }
+                            
+                            Button {
+                                watchedSort = false
+                            } label: {
+                                Text("All")
+                            }
+                            
+                        } label: {
+                            HStack {
+                                Text("Watch Status")
+                                Image(systemName: "eye")
+                            }
                         }
                         
-                        Button("Watched") {
-                            watched = true
-                            watchedSort = true
-                        }
-                        
-                        Button("Unwatched") {
-                            watched = false
-                            watchedSort = true
-                        }
-                        
-                    } label: {
-                        Image(systemName: "eye")
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu() {
-                        
-                        Button("Movies and TV") {
-                            media_type = "movies and tv"
-                        }
-                        
-                        Button("Movies") {
-                            media_type = "movie"
-                        }
-                        
-                        Button("TV") {
-                            media_type = "tv"
+                        Menu() {
+                            
+                            Button {
+                                media_type = "movie"
+                            } label: {
+                                Text("Show Movies")
+                            }
+                            
+                            Button {
+                                media_type = "tv"
+                            } label: {
+                                Text("Show TV")
+                            }
+                            
+                            Button {
+                                media_type = "movies and tv"
+                            } label: {
+                                Text("Show All")
+                            }
+
+                            
+                        } label: {
+                            HStack {
+                                HStack {
+                                    Text("Media Type")
+                                    Image(systemName: "tv")
+                                }
+                            }
                         }
                         
                     } label: {

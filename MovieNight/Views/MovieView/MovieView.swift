@@ -57,8 +57,12 @@ struct MovieView: View {
                             
                             Text(media.wrappedReleaseDate)
                                 .foregroundColor(.secondary)
-                            Text("⭐️⭐️⭐️⭐️⭐️")
-                            
+                            HStack {
+                                MediaRatingView(rating: 4)
+                                Text("(\(String(media.vote_count)) ratings)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                         Spacer()
                     }

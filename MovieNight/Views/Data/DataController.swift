@@ -24,6 +24,10 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
+        Task {
+            await loadDiscovery(filterKey: "discover", year: 2022, searchText: nil)
+        }
+        
     }
     
     func multiSearch(searchText: String) async {
@@ -140,7 +144,7 @@ class DataController: ObservableObject {
         newItem.id = Int32(item.id)
         newItem.backdrop_path = item.backdrop_path
         newItem.poster_path = item.poster_path ?? item.profile_path
-        newItem.media_type = item.media_type
+        newItem.media_type = item.media_type ?? "movie"
         newItem.original_language = item.original_language
         newItem.original_title = item.original_title ?? item.original_name
         newItem.overview = item.overview

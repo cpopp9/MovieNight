@@ -10,6 +10,7 @@
 		DC25CA0528F0E41300646BB9 /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC25CA0428F0E41300646BB9 /* SearchFilter.swift */; };
 		DC2BC11D28F71C5800E12FA5 /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BC11B28F71C5800E12FA5 /* Movie+CoreDataClass.swift */; };
 		DC2BC11E28F71C5800E12FA5 /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BC11C28F71C5800E12FA5 /* Movie+CoreDataProperties.swift */; };
+		DC5C891F28FF23D700850DF3 /* FiveStarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C891E28FF23D700850DF3 /* FiveStarView.swift */; };
 		DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */; };
 		DC6E133628E5F4EE00A50AC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E133528E5F4EE00A50AC5 /* ContentView.swift */; };
 		DC6E133828E5F4EF00A50AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC6E133728E5F4EF00A50AC5 /* Assets.xcassets */; };
@@ -27,7 +28,6 @@
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
-		DCDFAC8328EC93E3008F3672 /* DiscoverResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */; };
 		DCE9740428F83BD9002917F0 /* AllSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9740328F83BD9002917F0 /* AllSearchResults.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +35,7 @@
 		DC25CA0428F0E41300646BB9 /* SearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
 		DC2BC11B28F71C5800E12FA5 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "MovieNight/Movie+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DC2BC11C28F71C5800E12FA5 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "MovieNight/Movie+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DC5C891E28FF23D700850DF3 /* FiveStarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveStarView.swift; sourceTree = "<group>"; };
 		DC6E133028E5F4EE00A50AC5 /* MovieNight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieNight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightApp.swift; sourceTree = "<group>"; };
 		DC6E133528E5F4EE00A50AC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
-		DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverResults.swift; sourceTree = "<group>"; };
 		DCE9740328F83BD9002917F0 /* AllSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchResults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +104,16 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DC5C891D28FF238500850DF3 /* MovieView */ = {
+			isa = PBXGroup;
+			children = (
+				DC6E134628E665E200A50AC5 /* MovieView.swift */,
+				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
+				DC5C891E28FF23D700850DF3 /* FiveStarView.swift */,
+			);
+			path = MovieView;
+			sourceTree = "<group>";
+		};
 		DC6E132728E5F4EE00A50AC5 = {
 			isa = PBXGroup;
 			children = (
@@ -145,8 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				DC6E133528E5F4EE00A50AC5 /* ContentView.swift */,
-				DC6E134628E665E200A50AC5 /* MovieView.swift */,
-				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
+				DC5C891D28FF238500850DF3 /* MovieView */,
 				DC2BC11F28F7740600E12FA5 /* Discover */,
 				DC423EE928F5D508005B91B8 /* Watchlist */,
 				DC25CA0328F0E3C300646BB9 /* Search */,
@@ -163,7 +172,6 @@
 				DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */,
 				DC6E134428E603F900A50AC5 /* DataController.swift */,
 				DC6E134A28E6662200A50AC5 /* SearchResults.swift */,
-				DCDFAC8228EC93E3008F3672 /* DiscoverResults.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -249,7 +257,6 @@
 			files = (
 				DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */,
 				DC2BC11D28F71C5800E12FA5 /* Movie+CoreDataClass.swift in Sources */,
-				DCDFAC8328EC93E3008F3672 /* DiscoverResults.swift in Sources */,
 				DC6E134928E6660900A50AC5 /* Percent-Encoding.swift in Sources */,
 				DC6E134728E665E200A50AC5 /* MovieView.swift in Sources */,
 				DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */,
@@ -260,6 +267,7 @@
 				DC2BC11E28F71C5800E12FA5 /* Movie+CoreDataProperties.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
 				DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */,
+				DC5C891F28FF23D700850DF3 /* FiveStarView.swift in Sources */,
 				DCE9740428F83BD9002917F0 /* AllSearchResults.swift in Sources */,
 				DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */,
 				DC6E134B28E6662200A50AC5 /* SearchResults.swift in Sources */,
