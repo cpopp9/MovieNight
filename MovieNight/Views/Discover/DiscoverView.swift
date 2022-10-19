@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DiscoverView: View {
-        //    @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "discover")) var discoverResults: FetchedResults<Media>
     @EnvironmentObject var dataController: DataController
     @State var pageCount = 1
@@ -46,18 +45,20 @@ struct DiscoverView: View {
                                 }
                             }
                         }
-                        Text("")
-                            .onAppear {
-                                pageCount += 1
-                                Task {
-                                    await dataController.loadDiscovery(filterKey: "discover", year: 2022, page: pageCount)
-                                }
-                            }
                     }
                     .padding(.horizontal)
                 }
+                Image(systemName: "plus")
+                    .padding()
+                    .font(.system(size: 25))
+                    .onTapGesture {
+                        pageCount += 1
+                        Task {
+                            await dataController.loadDiscovery(filterKey: "discover", year: 2022, page: pageCount)
+                        }
+                    }
             }
-            .navigationTitle("Discover - \(String(discoverResults.count))")
+            .navigationTitle("Discover")
             .toolbar {
                 Menu() {
                     
