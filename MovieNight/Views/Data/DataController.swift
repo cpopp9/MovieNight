@@ -65,8 +65,6 @@ class DataController: ObservableObject {
     
     func loadDiscovery(filterKey: String, year: Int, page: Int) async {
         
-//        clearMedia(filterKey: "discover")
-        
         let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=2021&with_watch_monetization_types=flatrate")
         
         
@@ -89,6 +87,7 @@ class DataController: ObservableObject {
         } catch {
             print("Invalid Data")
         }
+        
     }
     
     func clearMedia(filterKey: String) {
@@ -124,19 +123,19 @@ class DataController: ObservableObject {
         }.resume()
     }
     
-    func downloadBackdrop(media: Media) async {
-    
-            let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
-            
-            URLSession.shared.dataTask(with: url) { data, _, error in
-                guard let data = data, error == nil else {
-                    return
-                }
-                
-                media.backdropImage = UIImage(data: data)
-                
-            }.resume()
-    }
+//    func downloadBackdrop(media: Media) async {
+//
+//            let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
+//
+//            URLSession.shared.dataTask(with: url) { data, _, error in
+//                guard let data = data, error == nil else {
+//                    return
+//                }
+//
+//                media.backdropImage = UIImage(data: data)
+//
+//            }.resume()
+//    }
     
     func CreateMediaObject(item: SearchResult, filterKey: String) {
         let newItem = Media(context: container.viewContext)
