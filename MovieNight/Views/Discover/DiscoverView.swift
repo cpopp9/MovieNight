@@ -59,19 +59,19 @@ struct DiscoverView: View {
                     }
             }
             .navigationTitle("Discover")
-            .toolbar {
-                Menu() {
-                    
-                    Button() {
-                        
-                    } label: {
-                        Text("Year")
-                    }
-                    
-                } label: {
-                    Image(systemName: "calendar")
-                }
-            }
+//            .toolbar {
+//                Menu() {
+//                    
+//                    Button() {
+//                        
+//                    } label: {
+//                        Text("Year")
+//                    }
+//                    
+//                } label: {
+//                    Image(systemName: "calendar")
+//                }
+//            }
         }
         .accentColor(.white)
     }

@@ -15,9 +15,6 @@ struct MovieView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                
-                    // Backdrop Header
                 
                 VStack {
                     if let posterImage = media.posterImage {
@@ -29,14 +26,12 @@ struct MovieView: View {
                             .padding(.trailing)
                     }
                         // Initial details
-                    VStack(alignment: .center) {
-                        HStack {
-                            
-                            Link(destination: URL(string: "https://chill.institute/#/search?keyword=\(media.wrappedChillTitle)")!) {
-                                Text(media.wrappedTitle)
-                                    .font(.title.bold())
-                            }
-                        }
+                    VStack {
+                        
+                            Text(media.wrappedTitle)
+                                .font(.title.bold())
+                                .multilineTextAlignment(.center)
+                        
                         
                         Text(media.wrappedReleaseDate)
                             .foregroundColor(.secondary)
@@ -66,7 +61,6 @@ struct MovieView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 Spacer()
-            }
         }
         
         .background(
@@ -76,7 +70,6 @@ struct MovieView: View {
                 .blur(radius: 50)
                 .ignoresSafeArea()
         )
-            //        .ignoresSafeArea()
     }
 }
 

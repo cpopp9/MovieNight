@@ -139,7 +139,7 @@ class DataController: ObservableObject {
 //            }.resume()
 //    }
     
-    func CreateMediaObject(item: SearchResult, filterKey: String) {
+    func CreateMediaObject(item: MovieResult, filterKey: String) {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
