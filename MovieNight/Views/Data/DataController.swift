@@ -112,7 +112,7 @@ class DataController: ObservableObject {
     
     func downloadPoster(media: Media) async {
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w500\(media.wrappedPosterPath)")!
+        let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {

@@ -19,53 +19,35 @@ struct MovieView: View {
                 
                     // Backdrop Header
                 
-                ZStack {
-                    if let backdropImage = media.backdropImage {
-                        Image(uiImage: backdropImage)
+                VStack {
+                    if let posterImage = media.posterImage {
+                        Image(uiImage: posterImage)
                             .resizable()
                             .scaledToFit()
-                            .overlay(Color.black.opacity(0.2))
+                            .frame(height: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .padding(.trailing)
                     }
-                    
-                    Image(systemName: "play.circle")
-                        .font(.system(size: 40))
-                        .foregroundColor(.white)
-                }
-                
-                VStack {
-                    
                         // Initial details
-                    HStack {
-                        if let posterImage = media.posterImage {
-                            Image(uiImage: posterImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 150)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .padding(.trailing)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            HStack {
+                    VStack(alignment: .center) {
+                        HStack {
+                            
+                            Link(destination: URL(string: "https://chill.institute/#/search?keyword=\(media.wrappedChillTitle)")!) {
                                 Text(media.wrappedTitle)
                                     .font(.title.bold())
-                                
-                                Link(destination: URL(string: "https://chill.institute/#/search?keyword=\(media.wrappedChillTitle)")!) {
-                                    Image(systemName: "link")
-                                }
-                            }
-                            
-                            Text(media.wrappedReleaseDate)
-                                .foregroundColor(.secondary)
-                            HStack {
-                                MediaRatingView(rating: 4)
-                                Text("(\(media.vote_count) ratings)")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
                             }
                         }
-                        Spacer()
+                        
+                        Text(media.wrappedReleaseDate)
+                            .foregroundColor(.secondary)
+                        HStack {
+                            MediaRatingView(rating: 4)
+                            Text("(\(media.vote_count) ratings)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    Spacer()
                     
                         // Save to watchlist button
                     AddToWatchListButton(media: media)
@@ -86,10 +68,15 @@ struct MovieView: View {
                 Spacer()
             }
         }
-        .ignoresSafeArea()
-        .task {
-            await dataController.downloadBackdrop(media: media)
-        }
+        
+        .background(
+            Image(uiImage: media.posterImage!)
+                .resizable()
+                .scaledToFill()
+                .blur(radius: 50)
+                .ignoresSafeArea()
+        )
+            //        .ignoresSafeArea()
     }
 }
 

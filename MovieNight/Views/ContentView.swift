@@ -21,11 +21,11 @@ struct ContentView: View {
                     }
                     .tag(0)
                 
-                WatchListView()
+                MyMoviesView()
                     .tabItem {
                         VStack {
                             Image(systemName: "popcorn.fill")
-                            Text("Watch List")
+                            Text("My Movies")
                         }
                     }
                     .tag(1)

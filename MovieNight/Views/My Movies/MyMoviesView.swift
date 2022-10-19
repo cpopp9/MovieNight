@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct WatchListView: View {
+struct MyMoviesView: View {
     @Environment(\.managedObjectContext) var moc
     
         // Filter data
@@ -38,7 +38,7 @@ struct WatchListView: View {
                 }
             }
             
-            .navigationTitle("Watchlist")
+            .navigationTitle("My Movies")
             .searchable(text: $searchText)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -113,6 +113,6 @@ struct WatchListView: View {
 
 struct WatchlistView_Previews: PreviewProvider {
     static var previews: some View {
-        WatchListView()
+        MyMoviesView()
     }
 }
