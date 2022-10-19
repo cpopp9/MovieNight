@@ -151,6 +151,7 @@ class DataController: ObservableObject {
         newItem.release_date = item.release_date ?? item.first_air_date
         newItem.popularity = item.popularity ?? 0.0
         newItem.watchlist = false
+        newItem.watched = false
         newItem.filterKey = filterKey
         newItem.posterImage = UIImage(named: "poster_placeholder")
         

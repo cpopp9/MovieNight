@@ -16,28 +16,34 @@ struct AddToWatchListButton: View {
         
         VStack {
             Button() {
-                
                 media.watchlist.toggle()
-                
             } label: {
                 HStack {
                     Image(systemName: media.watchlist ? "minus" : "plus")
-                    Text(media.watchlist ? "Remove from Watchlist" : "Add to watchlist")
+                    Text(media.watchlist ? "Remove from My Movies" : "Add to My Movies")
                 }
                 .frame(maxWidth: .infinity)
             }
-            .tint(media.watchlist ? .red : .blue)
+            .tint(media.watchlist ? Color(.systemRed) : Color(.systemBlue))
+//            .tint(media.watchlist ? Color(.systemRed) : Color("add"))
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.roundedRectangle(radius: 10))
             .controlSize(.large)
-            .padding()
+            .padding(.top)
             
             Button() {
                 media.watched.toggle()
             } label: {
-                Text("Watched")
-                Image(systemName: media.watched ? "checkmark.circle.fill" : "checkmark.circle")
+                HStack {
+                    Image(systemName: media.watched ? "checkmark.circle.fill" : "checkmark.circle")
+                    Text(media.watched ? "Watched" : "Not Watched")
+                }
+                .frame(maxWidth: .infinity)
             }
+            .tint(media.watched ? Color(.systemGreen) : Color(.gray))
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.roundedRectangle(radius: 10))
+            .controlSize(.large)
             .disabled(!media.watchlist)
         }
     }
