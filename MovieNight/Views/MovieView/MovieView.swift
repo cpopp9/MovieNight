@@ -11,20 +11,16 @@ struct MovieView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var moc
     
-    let backupPoster = UIImage(systemName: "gravity")
-    
     var body: some View {
         ScrollView {
                 
                 VStack {
-                    if let posterImage = media.posterImage {
-                        Image(uiImage: posterImage)
+                    Image(uiImage: media.wrappedPosterImage)
                             .resizable()
                             .scaledToFit()
                             .frame(height: 300)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                             .padding(.trailing)
-                    }
                         // Initial details
                     VStack {
                         
@@ -64,7 +60,7 @@ struct MovieView: View {
         }
         
         .background(
-            Image(uiImage: media.posterImage!)
+            Image(uiImage: media.wrappedPosterImage)
                 .resizable()
                 .scaledToFill()
                 .blur(radius: 50)

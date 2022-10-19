@@ -12,11 +12,11 @@ import UIKit
 
 
 extension Media {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Media> {
         return NSFetchRequest<Media>(entityName: "Media")
     }
-
+    
     @NSManaged public var backdrop_path: String?
     @NSManaged public var id: Int32
     @NSManaged public var media_type: String?
@@ -37,12 +37,10 @@ extension Media {
     @NSManaged public var posterImage: UIImage?
     @NSManaged public var backdropImage: UIImage?
     
-    var wrappedChillTitle: String {
-        if let encoded = wrappedTitle.stringByAddingPercentEncodingForRFC3986() {
-            return encoded
-        } else {
-            return wrappedTitle
-        }
+    var wrappedPosterImage: UIImage {
+        
+//        posterImage ?? UIImage(systemName: "circle.fill")!
+        posterImage ?? UIImage(named: "poster_placeholder")!
     }
     
     var wrappedBackdropPath: String {
