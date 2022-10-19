@@ -9,30 +9,30 @@ import Foundation
 
 struct MovieResult: Codable {
     
-    var id: Int
-    var backdrop_path: String?
-    var poster_path: String?
-    var genre_ids: [Int]?
-    var media_type: String?
-    var original_language: String?
-    var overview: String?
-    var vote_average: Double?
-    var vote_count: Int?
-    var popularity: Double?
+    let id: Int
+    let backdrop_path: String?
+    let poster_path: String?
+    let genre_ids: [Int]?
+    let media_type: String?
+    let original_language: String?
+    let overview: String?
+    let vote_average: Double?
+    let vote_count: Int?
+    let popularity: Double?
     
     // Movie Details
-    var title: String?
-    var original_title: String?
-    var release_date: String?
+    let title: String?
+    let original_title: String?
+    let release_date: String?
     
     // TV Details
-    var name: String?
-    var original_name: String?
-    var first_air_date: String?
+    let name: String?
+    let original_name: String?
+    let first_air_date: String?
     
     // Person Details
-    var known_for_department: String?
-    var profile_path: String?
+    let known_for_department: String?
+    let profile_path: String?
     
 }
 

@@ -25,7 +25,6 @@ struct AddToWatchListButton: View {
                 .frame(maxWidth: .infinity)
             }
             .tint(media.watchlist ? Color(.systemRed) : Color(.systemBlue))
-//            .tint(media.watchlist ? Color(.systemRed) : Color("add"))
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.roundedRectangle(radius: 10))
             .controlSize(.large)
