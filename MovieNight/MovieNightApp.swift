@@ -32,7 +32,6 @@ struct MovieNightApp: App {
                                 } else if newPhase == .background {
                                     print("Background")
                                     dataController.clearMedia(filterKey: "search")
-                                    dataController.clearMedia(filterKey: "discover")
                                     try? dataController.container.viewContext.save()
                                 }
                             }

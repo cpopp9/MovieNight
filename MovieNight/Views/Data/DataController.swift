@@ -24,6 +24,8 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
+        clearMedia(filterKey: "discover")
+        
         Task {
             await loadDiscovery(filterKey: "discover", year: 2022, page: 1)
         }
