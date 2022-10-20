@@ -8,15 +8,23 @@
 import Foundation
 
 struct MediaDetails: Codable {
-    var genres: [genre]
-    let imdb_id: String
-    let revenue: Int
-    let runtime: Int
-    let status: String
-    let tagline: String
     
+    // Movie and TV Details
+    var genres: [Genre]?
+    let status: String?
+    let tagline: String?
     
-    struct genre: Codable {
+    // Movie Details
+    let revenue: Int?
+    let runtime: Int?
+    let imdb_id: String?
+    
+    // TV Details
+//    let type: String?
+//    let number_of_seasons: Int?
+//    let episode_run_time: Int?
+    
+    struct Genre: Codable {
         let name: String
     }
 }

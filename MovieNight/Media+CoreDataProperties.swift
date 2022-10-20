@@ -1,10 +1,10 @@
-//
-//  Movie+CoreDataProperties.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 10/12/22.
-//
-//
+    //
+    //  Movie+CoreDataProperties.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 10/12/22.
+    //
+    //
 
 import Foundation
 import CoreData
@@ -36,6 +36,24 @@ extension Media {
     @NSManaged public var isDiscoverMedia: Bool
     @NSManaged public var posterImage: UIImage?
     @NSManaged public var backdropImage: UIImage?
+    @NSManaged public var status: String?
+    @NSManaged public var tagline: String?
+    @NSManaged public var revenue: Int64
+    @NSManaged public var runtime: Int16
+    @NSManaged public var imdb_id: String?
+    
+    
+    var wrappedIMDBUrl: String {
+    "https://www.imdb.com/title/\(imdb_id ?? "tt1454468")"
+    }
+    
+    var wrappedTagline: String {
+        tagline ?? "Unknown"
+    }
+    
+    var wrappedStatus: String {
+        status ?? "Unknown"
+    }
     
     var wrappedPosterImage: UIImage {
         posterImage ?? UIImage(named: "poster_placeholder")!
@@ -70,11 +88,11 @@ extension Media {
     }
     
     var wrappedPosterPath: String {
-    poster_path ?? "wmUeEacsFZzDndaeOtNNmy26rYJ.jpg"
+        poster_path ?? "wmUeEacsFZzDndaeOtNNmy26rYJ.jpg"
     }
-
+    
 }
 
 extension Media : Identifiable {
-
+    
 }

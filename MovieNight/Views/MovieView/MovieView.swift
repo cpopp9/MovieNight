@@ -10,62 +10,86 @@ struct MovieView: View {
     @ObservedObject var media: Media
     @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var moc
-    @State var mediaDetails = MediaDetails(genres: [], imdb_id: "", revenue: 0, runtime: 0, status: "", tagline: "")
+    
+        //    @State var moreMediaDetails = MediaDetails(imdb_id: "", status: "", tagline: "", revenue: 0, runtime: 0, type: "", number_of_seasons: 0, episode_run_time: 0)
     
     var body: some View {
         ScrollView {
-                
+            
+            VStack {
+                Image(uiImage: media.wrappedPosterImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 300)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .padding(.trailing)
+                    // Initial details
                 VStack {
-                    Image(uiImage: media.wrappedPosterImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 300)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                            .padding(.trailing)
-                        // Initial details
-                    VStack {
-                        
-                            Text(media.wrappedTitle)
-                                .font(.title.bold())
-                                .multilineTextAlignment(.center)
-                        
-                        
+                    
+                    Text(media.wrappedTitle)
+                        .font(.title.bold())
+                        .multilineTextAlignment(.center)
+                    
+                    HStack {
                         Text(media.wrappedReleaseDate)
                             .foregroundColor(.secondary)
-                        HStack {
-                            MediaRatingView(rating: 4)
-                            Text("(\(media.vote_count) ratings)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
+                        Text("·")
+                        Text(media.wrappedStatus)
+                            .foregroundColor(.secondary)
                     }
-                    Spacer()
                     
-                        // Save to watchlist button
-                    AddToWatchListButton(media: media)
-                    
-                        // Additional Details
+                    HStack {
+                        MediaRatingView(rating: 4)
+                        Text("(\(media.vote_count) ratings)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                Spacer()
+                
+                    // Save to watchlist button
+                AddToWatchListButton(media: media)
+                    .padding(.bottom)
+                
+                    // Additional Details
+                HStack(alignment: .top) {
                     VStack(alignment: .leading) {
                         Text("Overview")
                             .font(.title2.bold())
                         Text("Sci-fi, Adventure, Action")
                             .font(.subheadline)
+                        Text("\(media.runtime) minutes")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                             .padding(.bottom)
-                        Text(media.wrappedOverview)
-                        ForEach(mediaDetails.genres, id:\.name) { genre in
-                            Text(genre.name)
-                        }
-                        Text(mediaDetails.status)
-                        Text(mediaDetails.tagline)
-                        Text(String(mediaDetails.revenue))
-                        Text(String(mediaDetails.runtime))
-                        Text(mediaDetails.imdb_id)
                     }
-                    .padding(.top)
+                    Spacer()
+                    
+                    Link(destination: URL(string: media.wrappedIMDBUrl)!) {
+                        Image("imdb_logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 75)
+                            .padding(.trailing)
+                    }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-                Spacer()
+                VStack(alignment: .leading) {
+                    Text(media.wrappedTagline)
+                        .font(.title3.bold())
+                        .padding(.bottom)
+                    Text(media.wrappedOverview)
+                        .padding(.bottom)
+                    
+                    
+                        Text("Revenue: $\(media.revenue)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                }
+                .padding(.top)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
+            Spacer()
         }
         
         .background(
@@ -92,14 +116,12 @@ struct MovieView: View {
             
             if let decodedResponse = try? JSONDecoder().decode(MediaDetails.self, from: data) {
                 
-                mediaDetails = decodedResponse
+                media.imdb_id = decodedResponse.imdb_id
+                media.runtime = Int16(decodedResponse.runtime ?? 0)
+                media.revenue = Int64(decodedResponse.revenue ?? 0)
+                media.tagline = decodedResponse.tagline
+                media.status = decodedResponse.status
                 
-//                if let searchResults = decodedResponse.results {
-//
-//                    for item in searchResults {
-//                        detectExistingObjects(item: item, filterKey: "search")
-//                    }
-//                }
             }
         } catch {
             fatalError("Invalid Data")
