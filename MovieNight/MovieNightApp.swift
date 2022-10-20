@@ -13,7 +13,6 @@ struct MovieNightApp: App {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.scenePhase) var scenePhase
     
-    
     @StateObject private var dataController = DataController()
     
     @AppStorage("isDarkMode") private var isDarkMode = true

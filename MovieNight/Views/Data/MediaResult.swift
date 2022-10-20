@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieResult: Codable {
+struct MediaResult: Codable {
     
     let id: Int
     let backdrop_path: String?
@@ -37,6 +37,6 @@ struct MovieResult: Codable {
 }
 
 struct SearchResults: Codable {
-    var results: [MovieResult]?
+    var results: [MediaResult]?
 }
 

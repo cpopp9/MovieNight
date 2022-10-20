@@ -38,8 +38,6 @@ extension Media {
     @NSManaged public var backdropImage: UIImage?
     
     var wrappedPosterImage: UIImage {
-        
-//        posterImage ?? UIImage(systemName: "circle.fill")!
         posterImage ?? UIImage(named: "poster_placeholder")!
     }
     

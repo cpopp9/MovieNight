@@ -32,6 +32,19 @@ class DataController: ObservableObject {
         
     }
     
+    func detectExistingObjects(item: MediaResult, filterKey: String) {
+        let request: NSFetchRequest<Media> = Media.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "id == %i", item.id)
+        
+        
+        if let object = try? container.viewContext.fetch(request).first {
+            object.filterKey = filterKey
+        } else {
+            CreateMediaObject(item: item, filterKey: filterKey)
+        }
+    }
+    
     func multiSearch(searchText: String) async {
         
         clearMedia(filterKey: "search")
@@ -56,7 +69,7 @@ class DataController: ObservableObject {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        CreateMediaObject(item: item, filterKey: "search")
+                        detectExistingObjects(item: item, filterKey: "search")
                     }
                 }
             }
@@ -82,7 +95,7 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        CreateMediaObject(item: item, filterKey: filterKey)
+                        detectExistingObjects(item: item, filterKey: filterKey)
                     }
                 }
             }
@@ -125,21 +138,7 @@ class DataController: ObservableObject {
         }.resume()
     }
     
-//    func downloadBackdrop(media: Media) async {
-//
-//            let url = URL(string: "https://image.tmdb.org/t/p/w780\(media.wrappedBackdropPath)")!
-//
-//            URLSession.shared.dataTask(with: url) { data, _, error in
-//                guard let data = data, error == nil else {
-//                    return
-//                }
-//
-//                media.backdropImage = UIImage(data: data)
-//
-//            }.resume()
-//    }
-    
-    func CreateMediaObject(item: MovieResult, filterKey: String) {
+    func CreateMediaObject(item: MediaResult, filterKey: String) {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
