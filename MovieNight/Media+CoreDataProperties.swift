@@ -48,7 +48,16 @@ extension Media {
     }
     
     var wrappedTagline: String {
-        tagline ?? "Unknown"
+        
+        if let tag = tagline {
+            if tag == "" {
+                return wrappedTitle
+            } else {
+                return tag
+            }
+        } else {
+            return wrappedTitle
+        }
     }
     
     var wrappedStatus: String {

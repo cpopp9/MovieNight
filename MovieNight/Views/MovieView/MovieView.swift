@@ -11,8 +11,6 @@ struct MovieView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var moc
     
-        //    @State var moreMediaDetails = MediaDetails(imdb_id: "", status: "", tagline: "", revenue: 0, runtime: 0, type: "", number_of_seasons: 0, episode_run_time: 0)
-    
     var body: some View {
         ScrollView {
             
@@ -69,7 +67,7 @@ struct MovieView: View {
                         Image("imdb_logo")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 75)
+                            .frame(width: 50)
                             .padding(.trailing)
                     }
                 }
@@ -100,13 +98,13 @@ struct MovieView: View {
                 .ignoresSafeArea()
         )
         .task {
-            await mediaDetails(mediaID: Int(media.id))
+            await mediaDetails(mediaID: Int(media.id), media_type: media.wrappedMediaType)
         }
     }
     
-    func mediaDetails(mediaID: Int) async {
+    func mediaDetails(mediaID: Int, media_type: String) async {
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(mediaID)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media_type)/\(mediaID)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
             return
         }
