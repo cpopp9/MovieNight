@@ -142,7 +142,6 @@ class DataController: ObservableObject {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
-        newItem.backdrop_path = item.backdrop_path
         newItem.poster_path = item.poster_path ?? item.profile_path
         newItem.media_type = item.media_type ?? "movie"
         newItem.original_language = item.original_language
