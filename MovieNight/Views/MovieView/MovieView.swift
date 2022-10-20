@@ -72,9 +72,15 @@ struct MovieView: View {
                     }
                 }
                 VStack(alignment: .leading) {
-                    Text(media.wrappedTagline)
-                        .font(.title3.bold())
-                        .padding(.bottom)
+                    
+                    if let tagline = media.tagline {
+                        if tagline != "" {
+                            Text(tagline)
+                                .font(.title3.bold())
+                                .padding(.bottom)
+                        }
+                    }
+                    
                     Text(media.wrappedOverview)
                         .padding(.bottom)
                     

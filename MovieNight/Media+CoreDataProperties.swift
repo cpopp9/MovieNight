@@ -50,6 +50,14 @@ extension Media {
     var wrappedTagline: String {
         
         if let tag = tagline {
+            
+        } else {
+            
+        }
+        
+        
+        
+        if let tag = tagline {
             if tag == "" {
                 return wrappedTitle
             } else {
