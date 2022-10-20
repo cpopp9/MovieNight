@@ -9,7 +9,9 @@ import SwiftUI
 
 struct DiscoverView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "filterKey == %@", "discover")) var discoverResults: FetchedResults<Media>
+    
     @EnvironmentObject var dataController: DataController
+    
     @State var pageCount = 1
     
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
@@ -59,19 +61,6 @@ struct DiscoverView: View {
                     }
             }
             .navigationTitle("Discover")
-//            .toolbar {
-//                Menu() {
-//                    
-//                    Button() {
-//                        
-//                    } label: {
-//                        Text("Year")
-//                    }
-//                    
-//                } label: {
-//                    Image(systemName: "calendar")
-//                }
-//            }
         }
         .accentColor(.white)
     }
