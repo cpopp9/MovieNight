@@ -64,7 +64,7 @@ class DataController: ObservableObject {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             
-            if let decodedResponse = try? JSONDecoder().decode(SearchResults.self, from: data) {
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
                 if let searchResults = decodedResponse.results {
                     
@@ -90,7 +90,7 @@ class DataController: ObservableObject {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             
-            if let decodedResponse = try? JSONDecoder().decode(SearchResults.self, from: data) {
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
                 if let discoverResults = decodedResponse.results {
                     

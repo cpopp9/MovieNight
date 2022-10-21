@@ -36,7 +36,7 @@ struct MediaResult: Codable {
     
 }
 
-struct SearchResults: Codable {
+struct MediaResults: Codable {
     var results: [MediaResult]?
 }
 

@@ -84,15 +84,12 @@ struct MovieView: View {
                     Text(media.wrappedOverview)
                         .padding(.bottom)
                     
-                    
-                        Text("Revenue: $\(media.revenue)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
                 }
                 .padding(.top)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            RecommendedMoviesView(mediaID: String(media.id))
             Spacer()
         }
         
@@ -105,6 +102,7 @@ struct MovieView: View {
         )
         .task {
             await mediaDetails(mediaID: Int(media.id), media_type: media.wrappedMediaType)
+            await mediaRecommendations(mediaID: Int(media.id), media_type: media.wrappedMediaType)
         }
     }
     
@@ -127,6 +125,31 @@ struct MovieView: View {
                 media.status = decodedResponse.status
                 
             }
+        } catch {
+            fatalError("Invalid Data")
+        }
+    }
+    
+    func mediaRecommendations(mediaID: Int, media_type: String) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media_type)/\(mediaID)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+                
+                if let discoverResults = decodedResponse.results {
+                    
+                    for item in discoverResults {
+                        dataController.detectExistingObjects(item: item, filterKey: String(media.id))
+                    }
+                }
+            }
+            
         } catch {
             fatalError("Invalid Data")
         }

@@ -22,7 +22,6 @@ struct MediaDetails: Codable {
 //    TV Details
     let type: String?
     let number_of_seasons: Int?
-    let episode_run_time: Int?
     
     struct Genre: Codable {
         let name: String
