@@ -101,8 +101,8 @@ struct MovieView: View {
                 .ignoresSafeArea()
         )
         .task {
-//            await mediaDetails(mediaID: Int(media.id), media_type: media.wrappedMediaType)
-//            await mediaRecommendations(mediaID: Int(media.id), media_type: media.wrappedMediaType)
+            await mediaDetails(mediaID: Int(media.id), media_type: media.wrappedMediaType)
+            await mediaRecommendations(mediaID: Int(media.id), media_type: media.wrappedMediaType)
         }
     }
     

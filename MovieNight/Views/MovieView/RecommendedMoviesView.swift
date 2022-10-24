@@ -11,30 +11,33 @@ struct RecommendedMoviesView: View {
     @FetchRequest var recommendedMedia: FetchedResults<Media>
     
     var body: some View {
-        VStack(alignment: .leading) {
-            
-            
+        
+        if recommendedMedia.count > 0 {
             VStack(alignment: .leading) {
-                Text("Recommended:")
-                    .font(.title.bold())
-            }
-            
-            .padding(.horizontal)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 15) {
-                    ForEach(recommendedMedia) { media in
-                        NavigationLink {
-                            MovieView(media: media)
-                        } label: {
-                            Image(uiImage: media.wrappedPosterImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 200)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                
+                
+                VStack(alignment: .leading) {
+                    Text("Similar")
+                        .font(.title.bold())
+                }
+                
+                .padding(.horizontal)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 15) {
+                        ForEach(recommendedMedia) { media in
+                            NavigationLink {
+                                MovieView(media: media)
+                            } label: {
+                                Image(uiImage: media.wrappedPosterImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 200)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
                         }
                     }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
             }
         }
     }
