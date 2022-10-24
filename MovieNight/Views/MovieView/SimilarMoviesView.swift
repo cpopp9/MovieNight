@@ -7,24 +7,24 @@
 
 import SwiftUI
 
-struct RecommendedMoviesView: View {
-    @FetchRequest var recommendedMedia: FetchedResults<Media>
+struct SimilarMoviesView: View {
+    @FetchRequest var similarMedia: FetchedResults<Media>
     
     var body: some View {
         
-        if recommendedMedia.count > 0 {
+        if similarMedia.count > 0 {
             VStack(alignment: .leading) {
                 
                 
                 VStack(alignment: .leading) {
-                    Text("Similar")
+                    Text("You might also like")
                         .font(.title.bold())
                 }
                 
                 .padding(.horizontal)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
-                        ForEach(recommendedMedia) { media in
+                        ForEach(similarMedia) { media in
                             NavigationLink {
                                 MovieView(media: media)
                             } label: {
@@ -44,7 +44,7 @@ struct RecommendedMoviesView: View {
     
     init(mediaID: String) {
         
-        _recommendedMedia = FetchRequest<Media>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "filterKey == %@", mediaID))
+        _similarMedia = FetchRequest<Media>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "filterKey == %@", mediaID))
         
     }
     

@@ -89,7 +89,7 @@ struct MovieView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
-            RecommendedMoviesView(mediaID: String(media.id))
+            SimilarMoviesView(mediaID: String(media.id))
             Spacer()
         }
         
