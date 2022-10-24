@@ -16,88 +16,13 @@ struct MovieView: View {
     var body: some View {
         ScrollView {
             
-            VStack {
-                Image(uiImage: media.wrappedPosterImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 300)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .padding(.trailing)
-                    // Initial details
-                VStack {
-                    
-                    Text(media.wrappedTitle)
-                        .font(.title.bold())
-                        .multilineTextAlignment(.center)
-                    
-                    HStack {
-                        Text(media.wrappedReleaseDate)
-                            .foregroundColor(.secondary)
-                        Text("·")
-                        Text(media.wrappedStatus)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    HStack {
-                        MediaRatingView(rating: 4)
-                        Text("(\(media.vote_count) ratings)")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                Spacer()
-                
-                    // Save to watchlist button
-                AddToWatchListButton(media: media)
-                    .padding(.bottom)
-                
-                    // Additional Details
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading) {
-                        Text("Overview")
-                            .font(.title2.bold())
-                        Text("Sci-fi, Adventure, Action")
-                            .font(.subheadline)
-                        Text("\(media.runtime) minutes")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .padding(.bottom)
-                    }
-                    Spacer()
-                    
-                    Link(destination: URL(string: media.wrappedIMDBUrl)!) {
-                        Image("imdb_logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50)
-                            .padding(.trailing)
-                    }
-                }
-                VStack(alignment: .leading) {
-                    
-                    if let tagline = media.tagline {
-                        if tagline != "" {
-                            Text(tagline)
-                                .font(.title3.bold())
-                                .padding(.bottom)
-                        }
-                    }
-                    
-                    Text(media.wrappedOverview)
-                        .padding(.bottom)
-                    
-                }
-                .padding(.top)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal)
+            MovieTopDetails(media: media)
             
             CreditsView(credits: credits)
             
             SimilarMoviesView(mediaID: String(media.id))
             
         }
-        
         .background(
             Image(uiImage: media.wrappedPosterImage)
                 .resizable()
@@ -132,7 +57,7 @@ struct MovieView: View {
                 
             }
         } catch {
-            fatalError("Invalid Data")
+            print("Invalid Data")
         }
     }
     
@@ -181,7 +106,6 @@ struct MovieView: View {
             fatalError("Invalid Data")
         }
     }
-    
     
 }
 

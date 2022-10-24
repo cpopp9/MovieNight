@@ -14,6 +14,8 @@
 		DC6DB7D12902D4F000F7BCDD /* SimilarMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DB7D02902D4F000F7BCDD /* SimilarMoviesView.swift */; };
 		DC6DB7D3290701BF00F7BCDD /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DB7D2290701BF00F7BCDD /* Credits.swift */; };
 		DC6DB7D52907078A00F7BCDD /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DB7D42907078A00F7BCDD /* CreditsView.swift */; };
+		DC6DB7D7290720AE00F7BCDD /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DB7D6290720AE00F7BCDD /* MovieDetailView.swift */; };
+		DC6DB7D92907219B00F7BCDD /* MovieTopDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DB7D82907219B00F7BCDD /* MovieTopDetails.swift */; };
 		DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */; };
 		DC6E133628E5F4EE00A50AC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6E133528E5F4EE00A50AC5 /* ContentView.swift */; };
 		DC6E133828E5F4EF00A50AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC6E133728E5F4EF00A50AC5 /* Assets.xcassets */; };
@@ -43,6 +45,8 @@
 		DC6DB7D02902D4F000F7BCDD /* SimilarMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMoviesView.swift; sourceTree = "<group>"; };
 		DC6DB7D2290701BF00F7BCDD /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
 		DC6DB7D42907078A00F7BCDD /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
+		DC6DB7D6290720AE00F7BCDD /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
+		DC6DB7D82907219B00F7BCDD /* MovieTopDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTopDetails.swift; sourceTree = "<group>"; };
 		DC6E133028E5F4EE00A50AC5 /* MovieNight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieNight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6E133328E5F4EE00A50AC5 /* MovieNightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightApp.swift; sourceTree = "<group>"; };
 		DC6E133528E5F4EE00A50AC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,10 +120,12 @@
 			isa = PBXGroup;
 			children = (
 				DC6E134628E665E200A50AC5 /* MovieView.swift */,
+				DC6DB7D82907219B00F7BCDD /* MovieTopDetails.swift */,
+				DC5C891E28FF23D700850DF3 /* FiveStarView.swift */,
+				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
+				DC6DB7D6290720AE00F7BCDD /* MovieDetailView.swift */,
 				DC6DB7D42907078A00F7BCDD /* CreditsView.swift */,
 				DC6DB7D02902D4F000F7BCDD /* SimilarMoviesView.swift */,
-				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
-				DC5C891E28FF23D700850DF3 /* FiveStarView.swift */,
 			);
 			path = MovieView;
 			sourceTree = "<group>";
@@ -277,6 +283,7 @@
 				DC6E134D28E6664000A50AC5 /* SearchView.swift in Sources */,
 				DC881816290040520066C8FB /* MediaDetails.swift in Sources */,
 				DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */,
+				DC6DB7D7290720AE00F7BCDD /* MovieDetailView.swift in Sources */,
 				DC6DB7D3290701BF00F7BCDD /* Credits.swift in Sources */,
 				DC2BC11E28F71C5800E12FA5 /* Media+CoreDataProperties.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
@@ -285,6 +292,7 @@
 				DCE9740428F83BD9002917F0 /* AllSearchResults.swift in Sources */,
 				DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */,
 				DC6E134B28E6662200A50AC5 /* MediaResult.swift in Sources */,
+				DC6DB7D92907219B00F7BCDD /* MovieTopDetails.swift in Sources */,
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
 				DC6DB7D12902D4F000F7BCDD /* SimilarMoviesView.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* MyMoviesView.swift in Sources */,
