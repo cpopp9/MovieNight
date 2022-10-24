@@ -86,12 +86,13 @@ struct MovieView: View {
                     Text(media.wrappedOverview)
                         .padding(.bottom)
                     
-                    CreditsView(credits: credits)
                 }
                 .padding(.top)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            
+            CreditsView(credits: credits)
             
             SimilarMoviesView(mediaID: String(media.id))
             

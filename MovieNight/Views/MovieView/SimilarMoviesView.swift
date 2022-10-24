@@ -19,9 +19,9 @@ struct SimilarMoviesView: View {
                 VStack(alignment: .leading) {
                     Text("You might also like")
                         .font(.title.bold())
+                        .padding(.horizontal)
                 }
                 
-                .padding(.horizontal)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
                         ForEach(similarMedia) { media in

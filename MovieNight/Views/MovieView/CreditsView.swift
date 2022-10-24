@@ -14,39 +14,40 @@ struct CreditsView: View {
         if let credits = credits.cast {
             
             VStack(alignment: .leading) {
-                Text("Credits")
-                    .font(.title2.bold())
-            }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
                 
-                HStack(alignment: .top, spacing: 10) {
-                    ForEach(credits.prefix(10), id: \.name) { credit in
-                        if let profile = credit.profile_path {
-                            
-                            VStack {
-                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(profile)")) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    Color.red
-                                }
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                
-                                Text(credit.name)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.center)
-                            }
-                            .frame(width: 100)
-                        }
-                    }
-                    
+                VStack(alignment: .leading) {
+                    Text("Credits")
+                        .font(.title2.bold())
+                        .padding(.horizontal)
                 }
                 
-                
-                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    
+                    HStack(alignment: .top, spacing: 10) {
+                        ForEach(credits.prefix(10), id: \.name) { credit in
+                            if let profile = credit.profile_path {
+                                
+                                VStack {
+                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(profile)")) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        Color.red
+                                    }
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    
+                                    Text(credit.name)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .multilineTextAlignment(.center)
+                                }
+                                .frame(width: 100)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
             }
         }
     }
