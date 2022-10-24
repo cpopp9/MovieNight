@@ -11,6 +11,8 @@ struct MovieView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var moc
     
+    @State var credits = Credits(cast: [])
+    
     var body: some View {
         ScrollView {
             
@@ -84,6 +86,15 @@ struct MovieView: View {
                     Text(media.wrappedOverview)
                         .padding(.bottom)
                     
+                    if let credits = credits.cast {
+                        Text("Credits")
+                        Group {
+                                ForEach(credits, id: \.name) { actor in
+                                    Text(actor.name)
+                                    Text(actor.character)
+                                }
+                        }
+                    }
                 }
                 .padding(.top)
             }
@@ -103,6 +114,7 @@ struct MovieView: View {
         .task {
             await mediaDetails(mediaID: Int(media.id), media_type: media.wrappedMediaType)
             await mediaRecommendations(mediaID: Int(media.id), media_type: media.wrappedMediaType)
+            await getCredits(mediaID: Int(media.id), media_type: media.wrappedMediaType)
         }
     }
     
@@ -155,11 +167,32 @@ struct MovieView: View {
         }
     }
     
+    func getCredits(mediaID: Int, media_type: String) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media_type)/\(mediaID)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(Credits.self, from: data) {
+                
+                credits = decodedResponse
+                
+                
+            }
+        } catch {
+            fatalError("Invalid Data")
+        }
+    }
+    
     
 }
 
-    //struct DiscoverMovieView_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        MovieView()
-    //    }
-    //}
+struct DiscoverMovieView_Previews: PreviewProvider {
+    static var previews: some View {
+        MovieView(media: Media())
+    }
+}
