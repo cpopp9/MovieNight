@@ -27,13 +27,7 @@ struct MovieNightApp: App {
                     if newPhase == .inactive {
                     } else if newPhase == .active {
                     } else if newPhase == .background {
-                        do {
-                            if dataController.container.viewContext.hasChanges {
-                                try dataController.container.viewContext.save()
-                            }
-                        } catch {
-                            print("Persistent Store Not Saved")
-                        }
+                        dataController.saveMedia()
                     }
                 }
         }

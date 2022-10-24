@@ -9,7 +9,6 @@ import CoreData
 import SwiftUI
 
 struct AddToWatchListButton: View {
-    @Environment(\.managedObjectContext) var moc
     @ObservedObject var media: Media
     
     var body: some View {

@@ -86,6 +86,16 @@ class DataController: ObservableObject {
         }
     }
     
+    func saveMedia() {
+        do {
+            if container.viewContext.hasChanges {
+                try container.viewContext.save()
+            }
+        } catch {
+            print("Persistent Store Not Saved")
+        }
+    }
+    
     func loadDiscovery(filterKey: String, year: Int?, page: Int) async {
         
         let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=2021&with_watch_monetization_types=flatrate")
