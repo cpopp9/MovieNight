@@ -35,7 +35,7 @@ class DataController: ObservableObject {
     func detectExistingObjects(item: MediaResult, filterKey: String) {
         let request: NSFetchRequest<Media> = Media.fetchRequest()
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "id == %i", item.id)
+        request.predicate = NSPredicate(format: "id == %i && watchlist == true", item.id)
         
         
         if let object = try? container.viewContext.fetch(request).first {

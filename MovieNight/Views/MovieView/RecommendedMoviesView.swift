@@ -11,11 +11,17 @@ struct RecommendedMoviesView: View {
     @FetchRequest var recommendedMedia: FetchedResults<Media>
     
     var body: some View {
-        VStack {
-            Text("Recommended:")
-                .font(.title.bold())
-            ScrollView(.horizontal) {
-                LazyHStack(spacing: 20) {
+        VStack(alignment: .leading) {
+            
+            
+            VStack(alignment: .leading) {
+                Text("Recommended:")
+                    .font(.title.bold())
+            }
+            
+            .padding(.horizontal)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 15) {
                     ForEach(recommendedMedia) { media in
                         NavigationLink {
                             MovieView(media: media)
@@ -23,11 +29,12 @@ struct RecommendedMoviesView: View {
                             Image(uiImage: media.wrappedPosterImage)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 250)
+                                .frame(height: 200)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
                     }
                 }
+                .padding(.horizontal)
             }
         }
     }
