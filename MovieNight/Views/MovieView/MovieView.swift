@@ -86,22 +86,15 @@ struct MovieView: View {
                     Text(media.wrappedOverview)
                         .padding(.bottom)
                     
-                    if let credits = credits.cast {
-                        Text("Credits")
-                        Group {
-                                ForEach(credits, id: \.name) { actor in
-                                    Text(actor.name)
-                                    Text(actor.character)
-                                }
-                        }
-                    }
+                    CreditsView(credits: credits)
                 }
                 .padding(.top)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            
             SimilarMoviesView(mediaID: String(media.id))
-            Spacer()
+            
         }
         
         .background(

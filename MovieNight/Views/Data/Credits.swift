@@ -17,8 +17,7 @@ struct Cast: Codable {
     
     let name: String
     let popularity: Double
-    let profile_path: String
-    let character: String
+    let profile_path: String?
     let credit_id: String
     
 }
