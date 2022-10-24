@@ -4,6 +4,8 @@
         <attribute name="filterKey" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imdb_id" optional="YES" attributeType="String"/>
+        <attribute name="isDiscoverObject" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isSearchObject" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="media_type" optional="YES" attributeType="String"/>
         <attribute name="original_language" optional="YES" attributeType="String"/>
         <attribute name="original_title" optional="YES" attributeType="String"/>

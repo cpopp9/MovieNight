@@ -24,16 +24,18 @@ struct MovieNightApp: App {
                 .environment(\.managedObjectContext, dataController.container.viewContext)
                 .preferredColorScheme(isDarkMode ? .light : .dark)
                 .onChange(of: scenePhase) { newPhase in
-                                if newPhase == .inactive {
-                                    print("Inactive")
-                                } else if newPhase == .active {
-                                    print("Active")
-                                } else if newPhase == .background {
-                                    print("Background")
-                                    dataController.clearMedia(filterKey: "search")
-                                    try? dataController.container.viewContext.save()
-                                }
+                    if newPhase == .inactive {
+                    } else if newPhase == .active {
+                    } else if newPhase == .background {
+                        do {
+                            if dataController.container.viewContext.hasChanges {
+                                try dataController.container.viewContext.save()
                             }
+                        } catch {
+                            print("Persistent Store Not Saved")
+                        }
+                    }
+                }
         }
     }
 }

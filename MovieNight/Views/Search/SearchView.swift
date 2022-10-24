@@ -13,7 +13,7 @@ struct SearchView: View {
     
     @EnvironmentObject var dataController: DataController
     
-    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "filterKey == %@", "search")) var searchResults: FetchedResults<Media>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchObject == true")) var searchResults: FetchedResults<Media>
     
     @State var searchText = ""
     
@@ -51,7 +51,7 @@ struct SearchView: View {
             }
             .onChange(of: searchText) { value in
                 if searchText.isEmpty && !isSearching {
-                    dataController.clearMedia(filterKey: "search")
+                    dataController.clearMedia(clearDiscover: false, clearSearch: true)
                 }
             }
         }

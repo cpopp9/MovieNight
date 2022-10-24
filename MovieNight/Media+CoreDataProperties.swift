@@ -41,6 +41,9 @@ extension Media {
     @NSManaged public var revenue: Int64
     @NSManaged public var runtime: Int16
     @NSManaged public var imdb_id: String?
+    @NSManaged public var isDiscoverObject: Bool
+    @NSManaged public var isSearchObject: Bool
+    
     
     
     var wrappedIMDBUrl: String {

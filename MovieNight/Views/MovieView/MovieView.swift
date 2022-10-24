@@ -101,8 +101,8 @@ struct MovieView: View {
                 .ignoresSafeArea()
         )
         .task {
-            await mediaDetails(mediaID: Int(media.id), media_type: media.wrappedMediaType)
-            await mediaRecommendations(mediaID: Int(media.id), media_type: media.wrappedMediaType)
+//            await mediaDetails(mediaID: Int(media.id), media_type: media.wrappedMediaType)
+//            await mediaRecommendations(mediaID: Int(media.id), media_type: media.wrappedMediaType)
         }
     }
     
@@ -145,7 +145,7 @@ struct MovieView: View {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        dataController.detectExistingObjects(item: item, filterKey: String(media.id))
+                        dataController.detectExistingObjects(item: item, filterKey: String(media.id), isDiscoverObject: nil, isSearchObject: nil)
                     }
                 }
             }

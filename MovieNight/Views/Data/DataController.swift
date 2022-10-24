@@ -24,7 +24,7 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
-        clearMedia(filterKey: "discover")
+        clearMedia(clearDiscover: true, clearSearch: true)
         
         Task {
             await loadDiscovery(filterKey: "discover", year: nil, page: 1)
@@ -32,22 +32,30 @@ class DataController: ObservableObject {
         
     }
     
-    func detectExistingObjects(item: MediaResult, filterKey: String) {
+    func detectExistingObjects(item: MediaResult, filterKey: String, isDiscoverObject: Bool?, isSearchObject: Bool?) {
         let request: NSFetchRequest<Media> = Media.fetchRequest()
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "id == %i && watchlist == true", item.id)
+        request.predicate = NSPredicate(format: "id == %i", item.id)
         
         
         if let object = try? container.viewContext.fetch(request).first {
             object.filterKey = filterKey
+            
+            if let isDiscoverObject = isDiscoverObject {
+                object.isDiscoverObject = isDiscoverObject
+            }
+            
+            if let isSearchObject = isSearchObject {
+                object.isSearchObject = isSearchObject
+            }
         } else {
-            CreateMediaObject(item: item, filterKey: filterKey)
+            CreateMediaObject(item: item, filterKey: filterKey, isDiscoverObject: isDiscoverObject, isSearchObject: isSearchObject)
         }
     }
     
     func multiSearch(searchText: String) async {
         
-        clearMedia(filterKey: "search")
+        clearMedia(clearDiscover: false, clearSearch: true)
         
         var encoded: String {
             if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
@@ -69,7 +77,7 @@ class DataController: ObservableObject {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        detectExistingObjects(item: item, filterKey: "search")
+                        detectExistingObjects(item: item, filterKey: "search", isDiscoverObject: nil, isSearchObject: true)
                     }
                 }
             }
@@ -95,7 +103,7 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        detectExistingObjects(item: item, filterKey: filterKey)
+                        detectExistingObjects(item: item, filterKey: filterKey, isDiscoverObject: true, isSearchObject: nil)
                     }
                 }
             }
@@ -105,16 +113,25 @@ class DataController: ObservableObject {
         
     }
     
-    func clearMedia(filterKey: String) {
+    func clearMedia(clearDiscover: Bool, clearSearch: Bool) {
         let request = NSFetchRequest<Media>(entityName: "Media")
-        request.predicate = NSPredicate(format: "filterKey == %@", filterKey)
+        request.predicate = NSPredicate(format: "(isDiscoverObject == %@) || (isSearchObject == %@)", NSNumber(value: clearDiscover), NSNumber(value: clearSearch))
+
         
         do {
             let mediaResults = try container.viewContext.fetch(request)
             
             for media in mediaResults {
                 if media.watchlist {
-                    media.filterKey = ""
+                    
+                    if clearDiscover {
+                        media.isDiscoverObject = false
+                    }
+                    
+                    if clearSearch {
+                        media.isSearchObject = false
+                    }
+                    
                 } else {
                     container.viewContext.delete(media)
                 }
@@ -138,7 +155,7 @@ class DataController: ObservableObject {
         }.resume()
     }
     
-    func CreateMediaObject(item: MediaResult, filterKey: String) {
+    func CreateMediaObject(item: MediaResult, filterKey: String, isDiscoverObject: Bool?, isSearchObject: Bool?) {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -153,6 +170,14 @@ class DataController: ObservableObject {
         newItem.watched = false
         newItem.filterKey = filterKey
         newItem.posterImage = UIImage(named: "poster_placeholder")
+        
+        if let isDiscoverObject = isDiscoverObject {
+            newItem.isDiscoverObject = isDiscoverObject
+        }
+        
+        if let isSearchObject = isSearchObject {
+            newItem.isSearchObject = isSearchObject
+        }
         
         if let date = item.release_date ?? item.first_air_date {
             let formatter = DateFormatter()

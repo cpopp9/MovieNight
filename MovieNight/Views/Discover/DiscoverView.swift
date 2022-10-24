@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DiscoverView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "filterKey == %@", "discover")) var discoverResults: FetchedResults<Media>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "isDiscoverObject == true")) var discoverResults: FetchedResults<Media>
     
     @EnvironmentObject var dataController: DataController
     
