@@ -17,13 +17,11 @@ struct SearchFilter: View {
                     MovieView(media: media)
                 } label: {
                     HStack {
-                        if let poster = media.posterImage {
-                            Image(uiImage: poster)
+                        Image(uiImage: media.wrappedPosterImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 75, height: 75)
                                 .clipped()
-                        }
                         
                         VStack(alignment: .leading) {
                             Text(media.wrappedTitle)

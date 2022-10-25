@@ -1,9 +1,9 @@
-    //
-    //  DataController.swift
-    //  MovieNight
-    //
-    //  Created by Cory Popp on 9/29/22.
-    //
+//
+//  DataController.swift
+//  MovieNight
+//
+//  Created by Cory Popp on 9/29/22.
+//
 
 import Foundation
 import CoreData
@@ -126,7 +126,7 @@ class DataController: ObservableObject {
     func clearMedia(clearDiscover: Bool, clearSearch: Bool) {
         let request = NSFetchRequest<Media>(entityName: "Media")
         request.predicate = NSPredicate(format: "(isDiscoverObject == %@) || (isSearchObject == %@)", NSNumber(value: clearDiscover), NSNumber(value: clearSearch))
-
+        
         
         do {
             let mediaResults = try container.viewContext.fetch(request)
@@ -211,4 +211,97 @@ class DataController: ObservableObject {
             await downloadPoster(media: newItem)
         }
     }
+    
+    func additionalMediaDetails(media: Media) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaDetails.self, from: data) {
+                
+                media.imdb_id = decodedResponse.imdb_id
+                media.runtime = Int16(decodedResponse.runtime ?? 0)
+                media.tagline = decodedResponse.tagline
+                media.status = decodedResponse.status
+                
+            }
+        } catch {
+            print("Invalid Data")
+        }
+    }
+    
+    func mediaRecommendations(media: Media) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+                
+                if let discoverResults = decodedResponse.results {
+                    
+                    for item in discoverResults {
+                        detectExistingObjects(item: item, filterKey: String(media.id), isDiscoverObject: nil, isSearchObject: nil)
+                    }
+                }
+            }
+            
+        } catch {
+            fatalError("Invalid Data")
+        }
+    }
+    
+    func getCredits(media: Media) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(Credits.self, from: data) {
+                
+                if let cast = decodedResponse.cast {
+                    for person in cast {
+                        
+                        if detectExistingPerson(credit_id: person.credit_id) {
+                            
+                        } else {
+                            let newPerson = Person(context: container.viewContext)
+                            newPerson.name = person.name
+                            newPerson.credit_id = person.credit_id
+                            newPerson.popularity = person.popularity
+                            newPerson.profile_path = person.profile_path
+                        }
+                    }
+                }
+            }
+        } catch {
+            fatalError("Invalid Data")
+        }
+    }
+    
+    func detectExistingPerson(credit_id: String) -> Bool {
+        let request: NSFetchRequest<Person> = Person.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "credit_id == %@", credit_id)
+        
+        if let person = try? container.viewContext.fetch(request).first {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 }

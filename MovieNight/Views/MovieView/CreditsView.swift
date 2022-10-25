@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct CreditsView: View {
-    let credits: Credits
+    @FetchRequest var credits: FetchedResults<Person>
+    
     var body: some View {
         
-        if let credits = credits.cast {
+        if credits.count > 0 {
             
             VStack(alignment: .leading) {
                 
@@ -25,24 +26,29 @@ struct CreditsView: View {
                     
                     HStack(alignment: .top, spacing: 10) {
                         ForEach(credits.prefix(10), id: \.name) { credit in
-                            if let profile = credit.profile_path {
-                                
-                                VStack {
-                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(profile)")) { image in
-                                        image.resizable()
-                                    } placeholder: {
-                                        Color.red
-                                    }
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            
+                            NavigationLink {
+                                PersonView(person: credit)
+                            } label: {
+                                if let profile = credit.profile_path {
                                     
-                                    Text(credit.name)
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                        .multilineTextAlignment(.center)
+                                    VStack {
+                                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(profile)")) { image in
+                                            image.resizable()
+                                        } placeholder: {
+                                            Color.red
+                                        }
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 100)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        
+                                        Text(credit.name ?? "--")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    .frame(width: 100)
                                 }
-                                .frame(width: 100)
                             }
                         }
                     }
@@ -51,6 +57,13 @@ struct CreditsView: View {
             }
         }
     }
+    
+    init() {
+        
+        _credits = FetchRequest<Person>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)])
+        
+    }
+    
 }
 
     //struct CreditsView_Previews: PreviewProvider {

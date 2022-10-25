@@ -15,7 +15,6 @@ struct MediaDetails: Codable {
     let tagline: String?
     
         // Movie Details
-    let revenue: Int?
     let runtime: Int?
     let imdb_id: String?
     

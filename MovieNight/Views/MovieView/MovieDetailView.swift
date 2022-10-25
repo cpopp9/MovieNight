@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieDetailView: View {
-    let media: Media
+    @ObservedObject var media: Media
     
     var body: some View {
         

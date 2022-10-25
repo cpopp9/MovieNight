@@ -10,7 +10,7 @@ import Foundation
 struct Credits: Codable {
     
     var cast: [Cast]?
-    
+
 }
 
 struct Cast: Codable {
