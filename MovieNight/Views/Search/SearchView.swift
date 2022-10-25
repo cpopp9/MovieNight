@@ -23,13 +23,9 @@ struct SearchView: View {
                 
                 if searchResults.count > 0 {
                     List {
-                        Section("Movies") {
                             SearchFilter(mediaFilter: "movie")
-                        }
                         
-                        Section("TV") {
                             SearchFilter(mediaFilter: "tv")
-                        }
                     }
                     .listStyle(.automatic)
                 } else {
