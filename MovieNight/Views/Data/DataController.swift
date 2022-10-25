@@ -165,6 +165,20 @@ class DataController: ObservableObject {
         }.resume()
     }
     
+    func downloadProfile(person: Person) async {
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")!
+        
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            person.profileImage = UIImage(data: data)
+            
+        }.resume()
+    }
+    
     func CreateMediaObject(item: MediaResult, filterKey: String, isDiscoverObject: Bool?, isSearchObject: Bool?) {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
@@ -283,6 +297,11 @@ class DataController: ObservableObject {
                             newPerson.credit_id = person.credit_id
                             newPerson.popularity = person.popularity
                             newPerson.profile_path = person.profile_path
+                            
+                            Task {
+                                await downloadProfile(person: newPerson)
+                            }
+                            
                         }
                     }
                 }

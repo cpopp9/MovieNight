@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 extension Person {
@@ -20,6 +21,11 @@ extension Person {
     @NSManaged public var name: String?
     @NSManaged public var popularity: Double
     @NSManaged public var profile_path: String?
+    @NSManaged public var profileImage: UIImage?
+    
+    var wrappedPosterImage: UIImage {
+        profileImage ?? UIImage(named: "profile_placeholder")!
+    }
     
     var wrappedName: String {
         name ?? "--"
