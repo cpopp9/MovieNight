@@ -297,6 +297,8 @@ class DataController: ObservableObject {
                             newPerson.credit_id = person.credit_id
                             newPerson.popularity = person.popularity
                             newPerson.profile_path = person.profile_path
+                            newPerson.knownFor = person.known_for_department
+                            newPerson.id = Int(person.id)
                             
                             Task {
                                 await downloadProfile(person: newPerson)
@@ -308,6 +310,29 @@ class DataController: ObservableObject {
             }
         } catch {
             fatalError("Invalid Data")
+        }
+    }
+    
+    func additionalPersonDetails(person: Person) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(PersonResult.self, from: data) {
+                
+                person.biography = decodedResponse.biography
+                person.place_of_birth = decodedResponse.place_of_birth
+                person.birthday = decodedResponse.birthday
+//                person.deathday = decodedResponse.deathday
+                
+            }
+        } catch {
+            print("Invalid Data")
         }
     }
     

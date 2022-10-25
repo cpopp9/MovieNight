@@ -15,9 +15,11 @@ struct Credits: Codable {
 
 struct Cast: Codable {
     
+    let id: Int
     let name: String
     let popularity: Double
     let profile_path: String?
     let credit_id: String
+    let known_for_department: String?
     
 }

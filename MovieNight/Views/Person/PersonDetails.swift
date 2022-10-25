@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PersonDetails: View {
     @ObservedObject var person: Person
+    @State var expandBiography = false
     
     var body: some View {
         
@@ -16,14 +17,35 @@ struct PersonDetails: View {
             Image(uiImage: person.wrappedPosterImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 100)
+                .frame(width: 75)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
             
             Text(person.wrappedName)
                 .font(.title.bold())
                 .multilineTextAlignment(.center)
+            
+            Text(person.wrappedKnownFor)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding(.bottom)
+            
+            VStack(alignment: .leading) {
+                
+                Text(person.wrappedBiography)
+                    .lineLimit(expandBiography ? 20 : 3)
+                
+                
+                Button() {
+                    expandBiography.toggle()
+                } label: {
+                    Text(expandBiography ? "Read Less" : "Read More")
+                        .font(.body.bold())
+                        .foregroundColor(.blue)
+                        .multilineTextAlignment(.leading)
+                }
+            }
         }
-        .padding(.horizontal)
+        .padding()
     }
 }
 

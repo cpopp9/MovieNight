@@ -9,11 +9,15 @@ import SwiftUI
 
 struct PersonView: View {
     @ObservedObject var person: Person
+    @EnvironmentObject var dataController: DataController
     
     var body: some View {
         ScrollView {
             PersonDetails(person: person)
             PersonFilmography()
+        }
+        .task {
+            await dataController.additionalPersonDetails(person: person)
         }
     }
 }

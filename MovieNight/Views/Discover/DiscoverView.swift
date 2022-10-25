@@ -1,9 +1,9 @@
-    //
-    //  DiscoverView.swift
-    //  MovieNight
-    //
-    //  Created by Cory Popp on 9/29/22.
-    //
+//
+//  DiscoverView.swift
+//  MovieNight
+//
+//  Created by Cory Popp on 9/29/22.
+//
 
 import SwiftUI
 
@@ -32,13 +32,13 @@ struct DiscoverView: View {
                                 MovieView(media: media)
                             } label: {
                                 VStack {
-                                    if let posterImage = media.posterImage {
-                                        Image(uiImage: posterImage)
-                                            .resizable()
-                                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                                            .scaledToFit()
-                                            .frame(maxHeight: 300)
-                                    }
+                                    
+                                    Image(uiImage: media.wrappedPosterImage)
+                                        .resizable()
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .scaledToFit()
+                                        .frame(maxHeight: 300)
+                                    
                                     
                                     Text(media.wrappedTitle)
                                         .font(.caption)
