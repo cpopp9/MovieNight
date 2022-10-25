@@ -18,6 +18,10 @@ struct MovieView: View {
             
             MovieTopDetails(media: media)
             
+            AddToWatchListButton(media: media)
+            
+            MovieDetailView(media: media)
+            
             CreditsView()
             
             SimilarMoviesView(mediaID: String(media.id))

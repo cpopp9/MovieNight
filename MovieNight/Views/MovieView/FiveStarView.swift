@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct MediaRatingView: View {
-    let rating: Int
+    let voteAverage: Double
     
     var body: some View {
-        switch rating {
-        case 1:
+        switch Int(voteAverage) {
+        case 0..<2:
             return Text("★☆☆☆☆")
                 .foregroundColor(.yellow)
-        case 2:
+        case 2..<4:
             return Text("★★☆☆☆")
                 .foregroundColor(.yellow)
-        case 3:
+        case 4..<6:
             return Text("★★★☆☆")
                 .foregroundColor(.yellow)
-        case 4:
+        case 6..<8:
             return Text("★★★★☆")
                 .foregroundColor(.yellow)
         default:

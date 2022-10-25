@@ -44,6 +44,7 @@ struct AddToWatchListButton: View {
             .controlSize(.large)
             .disabled(!media.watchlist)
         }
+        .padding(.horizontal)
     }
 }
     

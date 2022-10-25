@@ -11,7 +11,7 @@ struct MovieTopDetails: View {
     @ObservedObject var media: Media
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             Image(uiImage: media.wrappedPosterImage)
                 .resizable()
                 .scaledToFit()
@@ -19,9 +19,7 @@ struct MovieTopDetails: View {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .padding(.trailing)
             
-                // Initial details
             VStack {
-                
                 Text(media.wrappedTitle)
                     .font(.title.bold())
                     .multilineTextAlignment(.center)
@@ -35,27 +33,20 @@ struct MovieTopDetails: View {
                 }
                 
                 HStack {
-                    MediaRatingView(rating: 4)
+                    MediaRatingView(voteAverage: media.vote_average)
                     Text("(\(media.vote_count) ratings)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-            }
-            
-            AddToWatchListButton(media: media)
-                .padding(.bottom)
-            
-            MovieDetailView(media: media)
-            
-                
+            }   
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .center)
         .padding(.horizontal)
     }
 }
 
-//struct MovieTopDetails_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MovieTopDetails()
-//    }
-//}
+struct MovieTopDetails_Previews: PreviewProvider {
+    static var previews: some View {
+        MovieTopDetails(media: Media())
+    }
+}
