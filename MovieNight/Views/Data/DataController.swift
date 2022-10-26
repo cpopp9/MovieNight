@@ -24,12 +24,16 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
-        clearMedia(clearDiscover: true, clearSearch: true)
+        deleteMediaObjects(filter: .nonWatchlist)
         
         Task {
             await loadDiscovery(filterKey: "discover", year: 2022, page: 1)
         }
         
+    }
+    
+    enum DeleteFilter {
+        case all, nonWatchlist
     }
     
     func detectExistingObjects(item: MediaResult, filterKey: String, isDiscoverObject: Bool?, isSearchObject: Bool?) {
@@ -148,6 +152,26 @@ class DataController: ObservableObject {
             }
         } catch let error {
             print("Error fetching. \(error)")
+        }
+    }
+    
+    func deleteMediaObjects(filter: DeleteFilter) {
+        let request = NSFetchRequest<Media>(entityName: "Media")
+        
+        do {
+            let mediaResults = try container.viewContext.fetch(request)
+            
+            for media in mediaResults {
+                if filter == DeleteFilter.all {
+                    container.viewContext.delete(media)
+                } else if filter == DeleteFilter.nonWatchlist{
+                    if !media.watchlist {
+                        container.viewContext.delete(media)
+                    }
+                }
+            }
+        } catch let error {
+           print("Error fetching. \(error)")
         }
     }
     
