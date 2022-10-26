@@ -47,7 +47,7 @@ struct SearchView: View {
             }
             .onChange(of: searchText) { value in
                 if searchText.isEmpty && !isSearching {
-                    dataController.clearMedia(clearDiscover: false, clearSearch: true)
+                    dataController.clearMedia(filter: .search)
                 }
             }
         }

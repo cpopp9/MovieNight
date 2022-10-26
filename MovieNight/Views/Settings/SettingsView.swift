@@ -9,8 +9,7 @@ import SwiftUI
 import SafariServices
 
 struct SettingsView: View {
-    @FetchRequest(sortDescriptors: []) var movies: FetchedResults<Media>
-    @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var dataController: DataController
     @State private var showingAlert = false
     @AppStorage("isDarkMode") private var isDarkMode = true
     
@@ -26,47 +25,41 @@ struct SettingsView: View {
                         showingAlert = true
                     }
                 }
-            
-            Section("About this app") {
-                Text("Rate this app")
-                Link("App Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
-            }
-            
-            Section("Attributions") {
                 
-                HStack {
-                    Image("tmdb_logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100)
-
-                    Link("All movie data was provided by The Movie Database", destination: URL(string: "http://themoviedb.org")!)
-                        .foregroundColor(.primary)
+                Section("About this app") {
+                    Text("Rate this app")
+                    Link("App Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
+                }
+                
+                Section("Attributions") {
                     
-                        .padding()
+                    HStack {
+                        Image("tmdb_logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100)
+                        
+                        Link("All movie data was provided by The Movie Database", destination: URL(string: "http://themoviedb.org")!)
+                            .foregroundColor(.primary)
+                        
+                            .padding()
+                    }
+                    
+                    NavigationLink {
+                        AttributionsView()
+                    } label: {
+                        Text("Software Attributions")
+                    }
                 }
-                
-                NavigationLink {
-                    AttributionsView()
-                } label: {
-                    Text("Software Attributions")
+            }
+            .navigationTitle("Settings")
+            .alert("Delete all movies?", isPresented: $showingAlert) {
+                Button("Confirm", role: .destructive) {
+                    dataController.deleteMediaObjects(filter: .all)
                 }
             }
         }
-        .navigationTitle("Settings")
-        .alert("Delete all movies?", isPresented: $showingAlert) {
-            Button("Confirm", role: .destructive) {
-                deleteCache()
-            }
-        }
     }
-}
-
-func deleteCache() {
-    for movie in movies {
-        moc.delete(movie)
-    }
-}
 }
 
 struct SettingsView_Previews: PreviewProvider {

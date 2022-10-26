@@ -36,6 +36,10 @@ class DataController: ObservableObject {
         case all, nonWatchlist
     }
     
+    enum ClearFilter {
+        case search, discover, all
+    }
+    
     func detectExistingObjects(item: MediaResult, filterKey: String, isDiscoverObject: Bool?, isSearchObject: Bool?) {
         let request: NSFetchRequest<Media> = Media.fetchRequest()
         request.fetchLimit = 1
@@ -59,7 +63,7 @@ class DataController: ObservableObject {
     
     func multiSearch(searchText: String) async {
         
-        clearMedia(clearDiscover: false, clearSearch: true)
+        clearMedia(filter: .search)
         
         var encoded: String {
             if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
@@ -127,31 +131,27 @@ class DataController: ObservableObject {
         
     }
     
-    func clearMedia(clearDiscover: Bool, clearSearch: Bool) {
+    func clearMedia(filter: ClearFilter) {
         let request = NSFetchRequest<Media>(entityName: "Media")
-        request.predicate = NSPredicate(format: "(isDiscoverObject == %@) || (isSearchObject == %@)", NSNumber(value: clearDiscover), NSNumber(value: clearSearch))
-        
         
         do {
             let mediaResults = try container.viewContext.fetch(request)
             
             for media in mediaResults {
-                if media.watchlist {
+                if filter == .search {
+                    media.isSearchObject = false
+                } else if filter == .discover {
+                    media.isDiscoverObject = false
+                        
                     
-                    if clearDiscover {
-                        media.isDiscoverObject = false
-                    }
-                    
-                    if clearSearch {
-                        media.isSearchObject = false
-                    }
-                    
-                } else {
-                    container.viewContext.delete(media)
+                } else if filter == .all {
+                    media.isSearchObject = false
+                    media.isDiscoverObject = false
                 }
             }
+            
         } catch let error {
-            print("Error fetching. \(error)")
+            print("Error fetching media to clear. \(error)")
         }
     }
     
