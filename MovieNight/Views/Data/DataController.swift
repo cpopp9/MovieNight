@@ -1,9 +1,9 @@
-//
-//  DataController.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 9/29/22.
-//
+    //
+    //  DataController.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 9/29/22.
+    //
 
 import Foundation
 import CoreData
@@ -32,6 +32,8 @@ class DataController: ObservableObject {
         
     }
     
+        // Enums
+    
     enum DeleteFilter {
         case all, nonWatchlist
     }
@@ -40,26 +42,11 @@ class DataController: ObservableObject {
         case search, discover, all
     }
     
-    func detectExistingObjects(item: MediaResult, filterKey: String, isDiscoverObject: Bool?, isSearchObject: Bool?) {
-        let request: NSFetchRequest<Media> = Media.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "id == %i", item.id)
-        
-        
-        if let object = try? container.viewContext.fetch(request).first {
-            object.filterKey = filterKey
-            
-            if let isDiscoverObject = isDiscoverObject {
-                object.isDiscoverObject = isDiscoverObject
-            }
-            
-            if let isSearchObject = isSearchObject {
-                object.isSearchObject = isSearchObject
-            }
-        } else {
-            CreateMediaObject(item: item, filterKey: filterKey, isDiscoverObject: isDiscoverObject, isSearchObject: isSearchObject)
-        }
+    enum DetectFilter {
+        case search, discover, none
     }
+    
+        // API Requests
     
     func multiSearch(searchText: String) async {
         
@@ -85,7 +72,9 @@ class DataController: ObservableObject {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        detectExistingObjects(item: item, filterKey: "search", isDiscoverObject: nil, isSearchObject: true)
+                        if !detectObjects(mediaID: item.id, filter: .search) {
+                            CreateMediaObject(item: item, filterKey: nil, filter: .search)
+                        }
                     }
                 }
             }
@@ -94,17 +83,7 @@ class DataController: ObservableObject {
         }
     }
     
-    func saveMedia() {
-        do {
-            if container.viewContext.hasChanges {
-                try container.viewContext.save()
-            }
-        } catch {
-            print("Persistent Store Not Saved")
-        }
-    }
-    
-    func loadDiscovery(filterKey: String, year: Int?, page: Int) async {
+    func loadDiscovery(filterKey: String, year: Int, page: Int) async {
         
         let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate")
         
@@ -121,7 +100,9 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        detectExistingObjects(item: item, filterKey: filterKey, isDiscoverObject: true, isSearchObject: nil)
+                        if !detectObjects(mediaID: item.id, filter: .discover) {
+                            CreateMediaObject(item: item, filterKey: nil, filter: .discover)
+                        }
                     }
                 }
             }
@@ -129,125 +110,6 @@ class DataController: ObservableObject {
             print("Invalid Data")
         }
         
-    }
-    
-    func clearMedia(filter: ClearFilter) {
-        let request = NSFetchRequest<Media>(entityName: "Media")
-        
-        do {
-            let mediaResults = try container.viewContext.fetch(request)
-            
-            for media in mediaResults {
-                if filter == .search {
-                    media.isSearchObject = false
-                } else if filter == .discover {
-                    media.isDiscoverObject = false
-                        
-                    
-                } else if filter == .all {
-                    media.isSearchObject = false
-                    media.isDiscoverObject = false
-                }
-            }
-            
-        } catch let error {
-            print("Error fetching media to clear. \(error)")
-        }
-    }
-    
-    func deleteMediaObjects(filter: DeleteFilter) {
-        let request = NSFetchRequest<Media>(entityName: "Media")
-        
-        do {
-            let mediaResults = try container.viewContext.fetch(request)
-            
-            for media in mediaResults {
-                if filter == DeleteFilter.all {
-                    container.viewContext.delete(media)
-                } else if filter == DeleteFilter.nonWatchlist{
-                    if !media.watchlist {
-                        container.viewContext.delete(media)
-                    }
-                }
-            }
-        } catch let error {
-           print("Error fetching. \(error)")
-        }
-    }
-    
-    func downloadPoster(media: Media) async {
-        
-        let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            media.posterImage = UIImage(data: data)
-            
-        }.resume()
-    }
-    
-    func downloadProfile(person: Person) async {
-        
-        let url = URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")!
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            person.profileImage = UIImage(data: data)
-            
-        }.resume()
-    }
-    
-    func CreateMediaObject(item: MediaResult, filterKey: String, isDiscoverObject: Bool?, isSearchObject: Bool?) {
-        let newItem = Media(context: container.viewContext)
-        newItem.title = item.title ?? item.name ?? "Unknown"
-        newItem.id = Int32(item.id)
-        newItem.poster_path = item.poster_path ?? item.profile_path
-        newItem.media_type = item.media_type ?? "movie"
-        newItem.original_language = item.original_language
-        newItem.original_title = item.original_title ?? item.original_name
-        newItem.overview = item.overview
-        newItem.release_date = item.release_date ?? item.first_air_date
-        newItem.popularity = item.popularity ?? 0.0
-        newItem.watchlist = false
-        newItem.watched = false
-        newItem.filterKey = filterKey
-        newItem.posterImage = UIImage(named: "poster_placeholder")
-        
-        if let isDiscoverObject = isDiscoverObject {
-            newItem.isDiscoverObject = isDiscoverObject
-        }
-        
-        if let isSearchObject = isSearchObject {
-            newItem.isSearchObject = isSearchObject
-        }
-        
-        if let date = item.release_date ?? item.first_air_date {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            if let parsed = formatter.date(from: date) {
-                let calendar = Calendar.current
-                let year = calendar.component(.year, from: parsed)
-                newItem.release_date = "\(year)"
-            }
-        }
-        
-        if let vote_average = item.vote_average {
-            newItem.vote_average = vote_average
-        }
-        
-        if let vote_count = item.vote_count {
-            newItem.vote_count = Int16(vote_count)
-        }
-        
-        Task {
-            await downloadPoster(media: newItem)
-        }
     }
     
     func additionalMediaDetails(media: Media) async {
@@ -288,7 +150,11 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        detectExistingObjects(item: item, filterKey: String(media.id), isDiscoverObject: nil, isSearchObject: nil)
+                        if detectObjects(mediaID: item.id, filter: .none) {
+                            return
+                        } else {
+                            CreateMediaObject(item: item, filterKey: nil, filter: .none)
+                        }
                     }
                 }
             }
@@ -352,7 +218,7 @@ class DataController: ObservableObject {
                 person.biography = decodedResponse.biography
                 person.place_of_birth = decodedResponse.place_of_birth
                 person.birthday = decodedResponse.birthday
-//                person.deathday = decodedResponse.deathday
+                    //                person.deathday = decodedResponse.deathday
                 
             }
         } catch {
@@ -360,15 +226,173 @@ class DataController: ObservableObject {
         }
     }
     
+        // Media Download
+    
+    func downloadPoster(media: Media) async {
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
+        
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            media.posterImage = UIImage(data: data)
+            
+        }.resume()
+    }
+    
+    func downloadProfile(person: Person) async {
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")!
+        
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            person.profileImage = UIImage(data: data)
+            
+        }.resume()
+    }
+    
+        // Object Functions
+    
+    func detectObjects(mediaID: Int, filter: DetectFilter) -> Bool {
+        let request: NSFetchRequest<Media> = Media.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "id == %i", mediaID)
+        
+        do {
+            if let object = try container.viewContext.fetch(request).first {
+                if filter == .search {
+                    object.isSearchObject = true
+                } else if filter == .discover {
+                    object.isDiscoverObject = true
+                }
+                return true
+            }
+        } catch let error {
+            print("Error fetching object. \(error)")
+        }
+        return false
+    }
+    
     func detectExistingPerson(credit_id: String) -> Bool {
         let request: NSFetchRequest<Person> = Person.fetchRequest()
         request.fetchLimit = 1
         request.predicate = NSPredicate(format: "credit_id == %@", credit_id)
-        
+
         if let person = try? container.viewContext.fetch(request).first {
             return true
         } else {
             return false
+        }
+    }
+    
+    func CreateMediaObject(item: MediaResult, filterKey: String?, filter: DetectFilter) {
+        let newItem = Media(context: container.viewContext)
+        newItem.title = item.title ?? item.name ?? "Unknown"
+        newItem.id = Int32(item.id)
+        newItem.poster_path = item.poster_path ?? item.profile_path
+        newItem.media_type = item.media_type ?? "movie"
+        newItem.original_language = item.original_language
+        newItem.original_title = item.original_title ?? item.original_name
+        newItem.overview = item.overview
+        newItem.release_date = item.release_date ?? item.first_air_date
+        newItem.popularity = item.popularity ?? 0.0
+        newItem.watchlist = false
+        newItem.watched = false
+        newItem.posterImage = UIImage(named: "poster_placeholder")
+        
+        if let filterKey = filterKey {
+            newItem.filterKey = filterKey
+        }
+        
+        if filter == .discover {
+            newItem.isDiscoverObject = true
+        }
+        
+        if filter == .search {
+            newItem.isSearchObject = true
+        }
+        
+        if let date = item.release_date ?? item.first_air_date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            if let parsed = formatter.date(from: date) {
+                let calendar = Calendar.current
+                let year = calendar.component(.year, from: parsed)
+                newItem.release_date = "\(year)"
+            }
+        }
+        
+        if let vote_average = item.vote_average {
+            newItem.vote_average = vote_average
+        }
+        
+        if let vote_count = item.vote_count {
+            newItem.vote_count = Int16(vote_count)
+        }
+        
+        Task {
+            await downloadPoster(media: newItem)
+        }
+    }
+    
+        // Persistent Store Functions
+    
+    func saveMedia() {
+        do {
+            if container.viewContext.hasChanges {
+                try container.viewContext.save()
+            }
+        } catch {
+            print("Persistent Store Not Saved")
+        }
+    }
+    
+    func clearMedia(filter: ClearFilter) {
+        let request = NSFetchRequest<Media>(entityName: "Media")
+        
+        do {
+            let mediaResults = try container.viewContext.fetch(request)
+            
+            for media in mediaResults {
+                if filter == .search {
+                    media.isSearchObject = false
+                } else if filter == .discover {
+                    media.isDiscoverObject = false
+                    
+                    
+                } else if filter == .all {
+                    media.isSearchObject = false
+                    media.isDiscoverObject = false
+                }
+            }
+            
+        } catch let error {
+            print("Error fetching media to clear. \(error)")
+        }
+    }
+    
+    func deleteMediaObjects(filter: DeleteFilter) {
+        let request = NSFetchRequest<Media>(entityName: "Media")
+        
+        do {
+            let mediaResults = try container.viewContext.fetch(request)
+            
+            for media in mediaResults {
+                if filter == DeleteFilter.all {
+                    container.viewContext.delete(media)
+                } else if filter == DeleteFilter.nonWatchlist{
+                    if !media.watchlist {
+                        container.viewContext.delete(media)
+                    }
+                }
+            }
+        } catch let error {
+            print("Error fetching. \(error)")
         }
     }
     
