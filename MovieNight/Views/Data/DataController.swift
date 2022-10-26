@@ -27,7 +27,7 @@ class DataController: ObservableObject {
         clearMedia(clearDiscover: true, clearSearch: true)
         
         Task {
-            await loadDiscovery(filterKey: "discover", year: nil, page: 1)
+            await loadDiscovery(filterKey: "discover", year: 2022, page: 1)
         }
         
     }
@@ -98,7 +98,7 @@ class DataController: ObservableObject {
     
     func loadDiscovery(filterKey: String, year: Int?, page: Int) async {
         
-        let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=2021&with_watch_monetization_types=flatrate")
+        let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate")
         
         
         guard let url = discover else {

@@ -32,6 +32,7 @@ struct MovieView: View {
                 .resizable()
                 .scaledToFill()
                 .blur(radius: 50)
+                .overlay(Color.gray.opacity(0.1))
                 .ignoresSafeArea()
         )
         .task {
