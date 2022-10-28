@@ -72,7 +72,9 @@ class DataController: ObservableObject {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        if !detectObjects(mediaID: item.id, filter: .search) {
+                        if let existing = detectObjects(mediaID: item.id) {
+                            existing.isSearchObject = true
+                        } else {
                             CreateMediaObject(item: item, relatedMediaID: nil, filter: .search)
                         }
                     }
@@ -100,7 +102,9 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        if !detectObjects(mediaID: item.id, filter: .discover) {
+                        if let existing = detectObjects(mediaID: item.id) {
+                            existing.isDiscoverObject = true
+                        } else {
                             CreateMediaObject(item: item, relatedMediaID: nil, filter: .discover)
                         }
                     }
@@ -150,10 +154,10 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        if detectObjects(mediaID: item.id, filter: .similar) {
-                            
+                        if let existing = detectObjects(mediaID: item.id) {
+                            existing.relatedMediaID = item.id
                         } else {
-                            CreateMediaObject(item: item, relatedMediaID: Int(media.id), filter: .similar)
+                            CreateMediaObject(item: item, relatedMediaID: nil, filter: .similar)
                         }
                     }
                 }
@@ -258,27 +262,17 @@ class DataController: ObservableObject {
     
         // Object Functions
     
-    func detectObjects(mediaID: Int, filter: DetectFilter) -> Bool {
+    func detectObjects(mediaID: Int) -> Media? {
         let request: NSFetchRequest<Media> = Media.fetchRequest()
         request.fetchLimit = 1
         request.predicate = NSPredicate(format: "id == %i", mediaID)
         
         if let object = try? container.viewContext.fetch(request).first {
-            
-            if filter == .search {
-                object.isSearchObject = true
-            } else if filter == .discover {
-                object.isDiscoverObject = true
-            } else if filter == .similar {
-                object.relatedMediaID = mediaID
-            }
-            
-            return true
-        } else {
-            return false
+            return object
         }
+        
+        return nil
     }
-    
     
     func detectExistingPerson(credit_id: String) -> Bool {
         let request: NSFetchRequest<Person> = Person.fetchRequest()
