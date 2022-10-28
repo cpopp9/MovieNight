@@ -75,7 +75,7 @@ class DataController: ObservableObject {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isSearchObject = true
                         } else {
-                            CreateMediaObject(item: item, uniqueTitle: searchText, filter: .search)
+                            CreateMediaObject(item: item, uniqueTitle: nil, filter: .search)
                         }
                     }
                 }
@@ -105,7 +105,7 @@ class DataController: ObservableObject {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isDiscoverObject = true
                         } else {
-                            CreateMediaObject(item: item, uniqueTitle: "Adam Black", filter: .discover)
+                            CreateMediaObject(item: item, uniqueTitle: nil, filter: .discover)
                         }
                     }
                 }
@@ -155,6 +155,7 @@ class DataController: ObservableObject {
                     
                     for item in discoverResults {
                         if let existing = detectExistingMedia(mediaID: item.id) {
+                            
                         } else {
                             CreateMediaObject(item: item, uniqueTitle: media.wrappedTitle, filter: .similar)
                         }
@@ -285,7 +286,7 @@ class DataController: ObservableObject {
         }
     }
     
-    func CreateMediaObject(item: MediaResult, uniqueTitle: String, filter: DetectFilter) {
+    func CreateMediaObject(item: MediaResult, uniqueTitle: String?, filter: DetectFilter) {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -300,7 +301,10 @@ class DataController: ObservableObject {
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
         newItem.similarMedia = SimilarMedia(context: container.viewContext)
-        newItem.similarMedia?.title = uniqueTitle
+        
+        if let uniqueTitle = uniqueTitle {
+            newItem.similarMedia?.title = uniqueTitle
+        }
         
         if filter == .discover {
             newItem.isDiscoverObject = true

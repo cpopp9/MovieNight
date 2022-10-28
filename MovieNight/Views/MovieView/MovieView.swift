@@ -24,7 +24,7 @@ struct MovieView: View {
             
                 //            CreditsView()
             
-            SimilarMoviesView(similarTo: media.title ?? "unknown")
+            SimilarMoviesView(similarTo: media.wrappedTitle)
             
 //            SimilarTest(media: media)
             Button("Similar? ") {

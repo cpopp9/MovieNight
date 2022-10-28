@@ -44,7 +44,7 @@ struct SimilarMoviesView: View {
     
     init(similarTo: String) {
         
-        _similarMedia = FetchRequest<Media>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "similarMedia.title CONTAINS %@", "Titanic"))
+        _similarMedia = FetchRequest<Media>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "similarMedia.title CONTAINS %@", similarTo))
         
     }
     
