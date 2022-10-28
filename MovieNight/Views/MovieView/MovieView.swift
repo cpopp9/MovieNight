@@ -22,9 +22,9 @@ struct MovieView: View {
             
             MovieDetailView(media: media)
             
-            CreditsView()
+//            CreditsView()
             
-            SimilarMoviesView(mediaID: String(media.id))
+            SimilarMoviesView(mediaID: Int(media.id))
             
         }
         .background(
@@ -37,8 +37,8 @@ struct MovieView: View {
         )
         .task {
             await dataController.additionalMediaDetails(media: media)
-            await dataController.getCredits(media: media)
-            await dataController.mediaRecommendations(media: media)
+//            await dataController.getCredits(media: media)
+            await dataController.loadSimilarMedia(media: media)
         }
     }
 }

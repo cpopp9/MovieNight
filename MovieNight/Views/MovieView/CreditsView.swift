@@ -57,7 +57,7 @@ struct CreditsView: View {
     
     
     init() {
-        
+    
         _credits = FetchRequest<Person>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)])
         
     }

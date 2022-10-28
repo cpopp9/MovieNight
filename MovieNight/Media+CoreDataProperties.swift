@@ -26,7 +26,7 @@ extension Media {
     @NSManaged public var poster_path: String?
     @NSManaged public var release_date: String?
     @NSManaged public var title: String?
-    @NSManaged public var filterKey: String?
+    @NSManaged public var relatedMediaID: Int
     @NSManaged public var vote_average: Double
     @NSManaged public var vote_count: Int16
     @NSManaged public var watched: Bool

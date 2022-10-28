@@ -43,7 +43,7 @@ class DataController: ObservableObject {
     }
     
     enum DetectFilter {
-        case search, discover, none
+        case search, discover, similar
     }
     
         // API Requests
@@ -73,7 +73,7 @@ class DataController: ObservableObject {
                     
                     for item in searchResults {
                         if !detectObjects(mediaID: item.id, filter: .search) {
-                            CreateMediaObject(item: item, filterKey: nil, filter: .search)
+                            CreateMediaObject(item: item, relatedMediaID: nil, filter: .search)
                         }
                     }
                 }
@@ -101,7 +101,7 @@ class DataController: ObservableObject {
                     
                     for item in discoverResults {
                         if !detectObjects(mediaID: item.id, filter: .discover) {
-                            CreateMediaObject(item: item, filterKey: nil, filter: .discover)
+                            CreateMediaObject(item: item, relatedMediaID: nil, filter: .discover)
                         }
                     }
                 }
@@ -135,7 +135,7 @@ class DataController: ObservableObject {
         }
     }
     
-    func mediaRecommendations(media: Media) async {
+    func loadSimilarMedia(media: Media) async {
         
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
@@ -150,10 +150,10 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        if detectObjects(mediaID: item.id, filter: .none) {
-                            return
+                        if detectObjects(mediaID: item.id, filter: .similar) {
+                            
                         } else {
-                            CreateMediaObject(item: item, filterKey: nil, filter: .none)
+                            CreateMediaObject(item: item, relatedMediaID: Int(media.id), filter: .similar)
                         }
                     }
                 }
@@ -179,22 +179,22 @@ class DataController: ObservableObject {
                 if let cast = decodedResponse.cast {
                     for person in cast {
                         
-                        if detectExistingPerson(credit_id: person.credit_id) {
-                            
-                        } else {
-                            let newPerson = Person(context: container.viewContext)
-                            newPerson.name = person.name
-                            newPerson.credit_id = person.credit_id
-                            newPerson.popularity = person.popularity
-                            newPerson.profile_path = person.profile_path
-                            newPerson.knownFor = person.known_for_department
-                            newPerson.id = Int(person.id)
-                            
-                            Task {
-                                await downloadProfile(person: newPerson)
-                            }
-                            
+                            //                        if detectExistingPerson(credit_id: person.credit_id) {
+                        
+                            //                        } else {
+                        let newPerson = Person(context: container.viewContext)
+                        newPerson.name = person.name
+                        newPerson.credit_id = person.credit_id
+                        newPerson.popularity = person.popularity
+                        newPerson.profile_path = person.profile_path
+                        newPerson.knownFor = person.known_for_department
+                        newPerson.id = Int(person.id)
+                        
+                        Task {
+                            await downloadProfile(person: newPerson)
                         }
+                        
+                            //                        }
                     }
                 }
             }
@@ -263,26 +263,28 @@ class DataController: ObservableObject {
         request.fetchLimit = 1
         request.predicate = NSPredicate(format: "id == %i", mediaID)
         
-        do {
-            if let object = try container.viewContext.fetch(request).first {
-                if filter == .search {
-                    object.isSearchObject = true
-                } else if filter == .discover {
-                    object.isDiscoverObject = true
-                }
-                return true
+        if let object = try? container.viewContext.fetch(request).first {
+            
+            if filter == .search {
+                object.isSearchObject = true
+            } else if filter == .discover {
+                object.isDiscoverObject = true
+            } else if filter == .similar {
+                object.relatedMediaID = mediaID
             }
-        } catch let error {
-            print("Error fetching object. \(error)")
+            
+            return true
+        } else {
+            return false
         }
-        return false
     }
+    
     
     func detectExistingPerson(credit_id: String) -> Bool {
         let request: NSFetchRequest<Person> = Person.fetchRequest()
         request.fetchLimit = 1
         request.predicate = NSPredicate(format: "credit_id == %@", credit_id)
-
+        
         if let person = try? container.viewContext.fetch(request).first {
             return true
         } else {
@@ -290,7 +292,7 @@ class DataController: ObservableObject {
         }
     }
     
-    func CreateMediaObject(item: MediaResult, filterKey: String?, filter: DetectFilter) {
+    func CreateMediaObject(item: MediaResult, relatedMediaID: Int?, filter: DetectFilter) {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -305,8 +307,8 @@ class DataController: ObservableObject {
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
         
-        if let filterKey = filterKey {
-            newItem.filterKey = filterKey
+        if let relatedMediaID = relatedMediaID {
+            newItem.relatedMediaID = relatedMediaID
         }
         
         if filter == .discover {

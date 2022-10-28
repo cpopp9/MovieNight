@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddToWatchListButton: View {
     @ObservedObject var media: Media
+    @EnvironmentObject var dataController: DataController
     
     var body: some View {
         
@@ -28,7 +29,7 @@ struct AddToWatchListButton: View {
             .buttonBorderShape(.roundedRectangle(radius: 10))
             .controlSize(.large)
             .padding(.top)
-            
+
             Button() {
                 media.watched.toggle()
             } label: {
@@ -46,10 +47,20 @@ struct AddToWatchListButton: View {
         }
         .padding(.horizontal)
     }
+    
+//    func overwriteObject(media: Media) {
+//        let request: NSFetchRequest<Media> = Media.fetchRequest()
+//        request.fetchLimit = 1
+//        request.predicate = NSPredicate(format: "id == %i && watchlist == true", Int(media.id))
+//        
+//        if let object = try? dataController.container.viewContext.fetch(request).first {
+//            watchlistObject = object
+//        }
+//    }
 }
     
-        struct AddToWatchListButton_Previews: PreviewProvider {
-            static var previews: some View {
-                AddToWatchListButton(media: Media())
-            }
-        }
+//        struct AddToWatchListButton_Previews: PreviewProvider {
+//            static var previews: some View {
+//                AddToWatchListButton(media: Media())
+//            }
+//        }
