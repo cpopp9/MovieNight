@@ -23,6 +23,7 @@
         <attribute name="vote_count" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="watched" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="watchlist" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="similarMedia" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SimilarMedia" inverseName="media" inverseEntity="SimilarMedia"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -47,6 +48,15 @@
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="credit_id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="SimilarMedia" representedClassName="SimilarMedia" syncable="YES">
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="media" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Media" inverseName="similarMedia" inverseEntity="Media"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="title"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>

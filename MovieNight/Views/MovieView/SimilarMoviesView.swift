@@ -42,9 +42,9 @@ struct SimilarMoviesView: View {
         }
     }
     
-    init(mediaID: Int) {
+    init(similarTo: String) {
         
-        _similarMedia = FetchRequest<Media>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "relatedMediaID == %i", mediaID))
+        _similarMedia = FetchRequest<Media>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "similarMedia.title CONTAINS %@", "Titanic"))
         
     }
     

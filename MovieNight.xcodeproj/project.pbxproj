@@ -33,6 +33,7 @@
 		DCAE02FE28F87CC6008C5DD6 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */; };
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
 		DCB5F171290C18C400A75DDA /* MediaExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5F170290C18C400A75DDA /* MediaExtension.swift */; };
+		DCBD2E97290C38BE0072C14D /* SimilarTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBD2E96290C38BE0072C14D /* SimilarTest.swift */; };
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 		DCD021EC290842AF00C5BF54 /* PersonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021EB290842AF00C5BF54 /* PersonDetails.swift */; };
@@ -42,6 +43,8 @@
 		DCD021F829089B7100C5BF54 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F729089B7100C5BF54 /* Person+CoreDataProperties.swift */; };
 		DCD021FA29089DD000C5BF54 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F929089DD000C5BF54 /* Person+CoreDataClass.swift */; };
 		DCE9740428F83BD9002917F0 /* AllSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9740328F83BD9002917F0 /* AllSearchResults.swift */; };
+		DCF11736290C372A00A59059 /* SimilarMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF11734290C372A00A59059 /* SimilarMedia+CoreDataClass.swift */; };
+		DCF11737290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF11735290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +75,7 @@
 		DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageTransformer.swift; sourceTree = "<group>"; };
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
 		DCB5F170290C18C400A75DDA /* MediaExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaExtension.swift; sourceTree = "<group>"; };
+		DCBD2E96290C38BE0072C14D /* SimilarTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarTest.swift; sourceTree = "<group>"; };
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 		DCD021EB290842AF00C5BF54 /* PersonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetails.swift; sourceTree = "<group>"; };
@@ -81,6 +85,8 @@
 		DCD021F729089B7100C5BF54 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Person+CoreDataProperties.swift"; path = "MovieNight/Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DCD021F929089DD000C5BF54 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Person+CoreDataClass.swift"; path = "MovieNight/Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DCE9740328F83BD9002917F0 /* AllSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchResults.swift; sourceTree = "<group>"; };
+		DCF11734290C372A00A59059 /* SimilarMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SimilarMedia+CoreDataClass.swift"; path = "MovieNight/SimilarMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DCF11735290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SimilarMedia+CoreDataProperties.swift"; path = "MovieNight/SimilarMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +146,7 @@
 				DC6DB7D6290720AE00F7BCDD /* MovieDetailView.swift */,
 				DC6DB7D42907078A00F7BCDD /* CreditsView.swift */,
 				DC6DB7D02902D4F000F7BCDD /* SimilarMoviesView.swift */,
+				DCBD2E96290C38BE0072C14D /* SimilarTest.swift */,
 			);
 			path = MovieView;
 			sourceTree = "<group>";
@@ -147,6 +154,8 @@
 		DC6E132728E5F4EE00A50AC5 = {
 			isa = PBXGroup;
 			children = (
+				DCF11734290C372A00A59059 /* SimilarMedia+CoreDataClass.swift */,
+				DCF11735290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift */,
 				DCD021F929089DD000C5BF54 /* Person+CoreDataClass.swift */,
 				DCD021F729089B7100C5BF54 /* Person+CoreDataProperties.swift */,
 				DC2BC11B28F71C5800E12FA5 /* Media+CoreDataClass.swift */,
@@ -304,6 +313,7 @@
 			files = (
 				DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */,
 				DC2BC11D28F71C5800E12FA5 /* Media+CoreDataClass.swift in Sources */,
+				DCF11736290C372A00A59059 /* SimilarMedia+CoreDataClass.swift in Sources */,
 				DC6E134928E6660900A50AC5 /* Percent-Encoding.swift in Sources */,
 				DC6E134728E665E200A50AC5 /* MovieView.swift in Sources */,
 				DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */,
@@ -315,8 +325,10 @@
 				DCD021F829089B7100C5BF54 /* Person+CoreDataProperties.swift in Sources */,
 				DC881816290040520066C8FB /* MediaDetails.swift in Sources */,
 				DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */,
+				DCF11737290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift in Sources */,
 				DC6DB7D7290720AE00F7BCDD /* MovieDetailView.swift in Sources */,
 				DC6DB7D3290701BF00F7BCDD /* Credits.swift in Sources */,
+				DCBD2E97290C38BE0072C14D /* SimilarTest.swift in Sources */,
 				DC2BC11E28F71C5800E12FA5 /* Media+CoreDataProperties.swift in Sources */,
 				DCD021FA29089DD000C5BF54 /* Person+CoreDataClass.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,

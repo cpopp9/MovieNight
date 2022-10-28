@@ -22,10 +22,16 @@ struct MovieView: View {
             
             MovieDetailView(media: media)
             
-//            CreditsView()
+                //            CreditsView()
             
-            SimilarMoviesView(mediaID: Int(media.id))
+            SimilarMoviesView(similarTo: media.title ?? "unknown")
             
+//            SimilarTest(media: media)
+            Button("Similar? ") {
+                Task {
+                    await dataController.loadSimilarMedia(media: media)
+                }
+            }
         }
         .background(
             Image(uiImage: media.wrappedPosterImage)
@@ -37,7 +43,7 @@ struct MovieView: View {
         )
         .task {
             await dataController.additionalMediaDetails(media: media)
-//            await dataController.getCredits(media: media)
+                //            await dataController.getCredits(media: media)
             await dataController.loadSimilarMedia(media: media)
         }
     }

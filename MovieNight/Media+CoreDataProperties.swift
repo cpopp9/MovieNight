@@ -42,7 +42,7 @@ extension Media {
     @NSManaged public var imdb_id: String?
     @NSManaged public var isDiscoverObject: Bool
     @NSManaged public var isSearchObject: Bool
-    
+    @NSManaged public var similarMedia: SimilarMedia?
     
     
     var wrappedIMDBUrl: String {
