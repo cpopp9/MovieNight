@@ -72,7 +72,7 @@ class DataController: ObservableObject {
                 if let searchResults = decodedResponse.results {
                     
                     for item in searchResults {
-                        if let existing = detectObjects(mediaID: item.id) {
+                        if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isSearchObject = true
                         } else {
                             CreateMediaObject(item: item, relatedMediaID: nil, filter: .search)
@@ -102,7 +102,7 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        if let existing = detectObjects(mediaID: item.id) {
+                        if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isDiscoverObject = true
                         } else {
                             CreateMediaObject(item: item, relatedMediaID: nil, filter: .discover)
@@ -154,7 +154,7 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        if let existing = detectObjects(mediaID: item.id) {
+                        if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.relatedMediaID = item.id
                         } else {
                             CreateMediaObject(item: item, relatedMediaID: nil, filter: .similar)
@@ -262,7 +262,7 @@ class DataController: ObservableObject {
     
         // Object Functions
     
-    func detectObjects(mediaID: Int) -> Media? {
+    func detectExistingMedia(mediaID: Int) -> Media? {
         let request: NSFetchRequest<Media> = Media.fetchRequest()
         request.fetchLimit = 1
         request.predicate = NSPredicate(format: "id == %i", mediaID)

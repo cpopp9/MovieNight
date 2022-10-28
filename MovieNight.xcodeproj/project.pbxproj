@@ -32,6 +32,7 @@
 		DC881816290040520066C8FB /* MediaDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC881815290040520066C8FB /* MediaDetails.swift */; };
 		DCAE02FE28F87CC6008C5DD6 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */; };
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
+		DCB5F171290C18C400A75DDA /* MediaExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5F170290C18C400A75DDA /* MediaExtension.swift */; };
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 		DCD021EC290842AF00C5BF54 /* PersonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021EB290842AF00C5BF54 /* PersonDetails.swift */; };
@@ -70,6 +71,7 @@
 		DC881815290040520066C8FB /* MediaDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetails.swift; sourceTree = "<group>"; };
 		DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageTransformer.swift; sourceTree = "<group>"; };
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
+		DCB5F170290C18C400A75DDA /* MediaExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaExtension.swift; sourceTree = "<group>"; };
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 		DCD021EB290842AF00C5BF54 /* PersonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetails.swift; sourceTree = "<group>"; };
@@ -192,7 +194,7 @@
 				DC25CA0328F0E3C300646BB9 /* Search */,
 				DC423EEE28F5E2EA005B91B8 /* Settings */,
 				DC88889628E77D42000B9E01 /* Data */,
-				DCAE02FF28F87CCD008C5DD6 /* Utils */,
+				DCAE02FF28F87CCD008C5DD6 /* Extensions */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -210,13 +212,14 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		DCAE02FF28F87CCD008C5DD6 /* Utils */ = {
+		DCAE02FF28F87CCD008C5DD6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
 				DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */,
+				DCB5F170290C18C400A75DDA /* MediaExtension.swift */,
 			);
-			path = Utils;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DCD021EA2908429C00C5BF54 /* Person */ = {
@@ -328,6 +331,7 @@
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
 				DC6DB7D12902D4F000F7BCDD /* SimilarMoviesView.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* MyMoviesView.swift in Sources */,
+				DCB5F171290C18C400A75DDA /* MediaExtension.swift in Sources */,
 				DC6DB7D52907078A00F7BCDD /* CreditsView.swift in Sources */,
 				DC25CA0528F0E41300646BB9 /* SearchFilter.swift in Sources */,
 				DCAE02FE28F87CC6008C5DD6 /* UIImageTransformer.swift in Sources */,
