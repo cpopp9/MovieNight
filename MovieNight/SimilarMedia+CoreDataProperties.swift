@@ -2,7 +2,7 @@
 //  SimilarMedia+CoreDataProperties.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 10/28/22.
+//  Created by Cory Popp on 11/1/22.
 //
 //
 
@@ -16,16 +16,11 @@ extension SimilarMedia {
         return NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
     }
 
-    @NSManaged public var title: String?
+    @NSManaged public var id: Int32
     @NSManaged public var media: NSSet?
     
-    public var wrappedTitle: String {
-        title ?? "--"
-    }
-    
-    public var mediaArray: [Media] {
+    public var similarMedia: [Media] {
         let set = media as? Set<Media> ?? []
-        
         return set.sorted {
             $0.wrappedTitle < $1.wrappedTitle
         }

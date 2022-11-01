@@ -10,7 +10,7 @@ import CoreData
 import SwiftUI
 
 class DataController: ObservableObject {
-    let container = NSPersistentContainer(name: "MovieNight")
+    lazy var container = NSPersistentContainer(name: "MovieNight")
     
     init() {
         container.loadPersistentStores { description, error in
@@ -75,7 +75,7 @@ class DataController: ObservableObject {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isSearchObject = true
                         } else {
-                            CreateMediaObject(item: item, uniqueTitle: nil, filter: .search)
+                            CreateMediaObject(item: item, filter: .search)
                         }
                     }
                 }
@@ -105,7 +105,7 @@ class DataController: ObservableObject {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isDiscoverObject = true
                         } else {
-                            CreateMediaObject(item: item, uniqueTitle: nil, filter: .discover)
+                            CreateMediaObject(item: item, filter: .discover)
                         }
                     }
                 }
@@ -113,6 +113,10 @@ class DataController: ObservableObject {
         } catch {
             print("Invalid Data")
         }
+        
+//        DispatchQueue.main.async {
+//            try? self.container.viewContext.save()
+//        }
         
     }
     
@@ -141,6 +145,8 @@ class DataController: ObservableObject {
     
     func loadSimilarMedia(media: Media) async {
         
+        var similarMedia = [Media]()
+        
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
@@ -155,9 +161,11 @@ class DataController: ObservableObject {
                     
                     for item in discoverResults {
                         if let existing = detectExistingMedia(mediaID: item.id) {
-                            
+                            similarMedia.append(existing)
                         } else {
-                            CreateMediaObject(item: item, uniqueTitle: media.wrappedTitle, filter: .similar)
+                            if let new = CreateMediaObject(item: item, filter: .similar) {
+                                similarMedia.append(new)
+                            }
                         }
                     }
                 }
@@ -165,6 +173,17 @@ class DataController: ObservableObject {
             
         } catch {
             fatalError("Invalid Data")
+        }
+        writeToSimilarMedia(media: media, similarMedia: similarMedia)
+//         
+    }
+    
+    func writeToSimilarMedia(media: Media, similarMedia: [Media]) {
+        let similar = SimilarMedia(context: container.viewContext)
+        similar.id = media.id
+        
+        for media in similarMedia {
+            similar.addToMedia(media)
         }
     }
     
@@ -286,7 +305,7 @@ class DataController: ObservableObject {
         }
     }
     
-    func CreateMediaObject(item: MediaResult, uniqueTitle: String?, filter: DetectFilter) {
+    func CreateMediaObject(item: MediaResult, filter: DetectFilter) -> Media? {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -300,11 +319,6 @@ class DataController: ObservableObject {
         newItem.watchlist = false
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
-        newItem.similarMedia = SimilarMedia(context: container.viewContext)
-        
-        if let uniqueTitle = uniqueTitle {
-            newItem.similarMedia?.title = uniqueTitle
-        }
         
         if filter == .discover {
             newItem.isDiscoverObject = true
@@ -335,6 +349,9 @@ class DataController: ObservableObject {
         Task {
             await downloadPoster(media: newItem)
         }
+        
+        return newItem
+        
     }
     
         // Persistent Store Functions

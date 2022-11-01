@@ -1,10 +1,10 @@
-    //
-    //  Movie+CoreDataProperties.swift
-    //  MovieNight
-    //
-    //  Created by Cory Popp on 10/12/22.
-    //
-    //
+//
+//  Media+CoreDataProperties.swift
+//  MovieNight
+//
+//  Created by Cory Popp on 11/1/22.
+//
+//
 
 import Foundation
 import CoreData
@@ -42,7 +42,14 @@ extension Media {
     @NSManaged public var imdb_id: String?
     @NSManaged public var isDiscoverObject: Bool
     @NSManaged public var isSearchObject: Bool
-    @NSManaged public var similarMedia: SimilarMedia?
+    @NSManaged public var similar: NSSet?
+    
+    public var similarMedia: [SimilarMedia] {
+        let set = similar as? Set<SimilarMedia> ?? []
+        return set.sorted {
+            $0.id < $1.id
+        }
+    }
     
     
     var wrappedIMDBUrl: String {
@@ -101,9 +108,26 @@ extension Media {
     var wrappedPosterPath: String {
         poster_path ?? "wmUeEacsFZzDndaeOtNNmy26rYJ.jpg"
     }
-    
+
+}
+
+// MARK: Generated accessors for similarMedia
+extension Media {
+
+    @objc(addSimilarMediaObject:)
+    @NSManaged public func addToSimilarMedia(_ value: SimilarMedia)
+
+    @objc(removeSimilarMediaObject:)
+    @NSManaged public func removeFromSimilarMedia(_ value: SimilarMedia)
+
+    @objc(addSimilarMedia:)
+    @NSManaged public func addToSimilarMedia(_ values: NSSet)
+
+    @objc(removeSimilarMedia:)
+    @NSManaged public func removeFromSimilarMedia(_ values: NSSet)
+
 }
 
 extension Media : Identifiable {
-    
+
 }

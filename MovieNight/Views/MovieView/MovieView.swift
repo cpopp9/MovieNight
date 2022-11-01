@@ -24,9 +24,8 @@ struct MovieView: View {
             
                 //            CreditsView()
             
-            SimilarMoviesView(similarTo: media.wrappedTitle)
+            SimilarMoviesView(similarTo: Int(media.id))
             
-//            SimilarTest(media: media)
             Button("Similar? ") {
                 Task {
                     await dataController.loadSimilarMedia(media: media)
