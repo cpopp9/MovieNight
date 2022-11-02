@@ -26,11 +26,6 @@ struct MovieView: View {
             
             SimilarMoviesView(similarTo: Int(media.id))
             
-            Button("Similar? ") {
-                Task {
-                    await dataController.loadSimilarMedia(media: media)
-                }
-            }
         }
         .background(
             Image(uiImage: media.wrappedPosterImage)

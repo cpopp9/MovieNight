@@ -43,6 +43,9 @@ extension Media {
     @NSManaged public var isDiscoverObject: Bool
     @NSManaged public var isSearchObject: Bool
     @NSManaged public var similar: NSSet?
+    @NSManaged public var similarTo: SimilarMedia?
+    @NSManaged public var like: NSSet?
+    
     
     public var similarMedia: [SimilarMedia] {
         let set = similar as? Set<SimilarMedia> ?? []
@@ -50,7 +53,6 @@ extension Media {
             $0.id < $1.id
         }
     }
-    
     
     var wrappedIMDBUrl: String {
     "https://www.imdb.com/title/\(imdb_id ?? "tt1454468")"

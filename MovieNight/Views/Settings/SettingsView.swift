@@ -24,6 +24,9 @@ struct SettingsView: View {
                     Button("Delete App Data") {
                         showingAlert = true
                     }
+                    Button("Save") {
+                        try? dataController.container.viewContext.save()
+                    }
                 }
                 
                 Section("About this app") {

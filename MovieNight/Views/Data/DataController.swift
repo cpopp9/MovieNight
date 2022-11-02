@@ -175,13 +175,13 @@ class DataController: ObservableObject {
             fatalError("Invalid Data")
         }
         writeToSimilarMedia(media: media, similarMedia: similarMedia)
-//         
+        try? container.viewContext.save()
     }
     
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {
         let similar = SimilarMedia(context: container.viewContext)
         similar.id = media.id
-        
+
         for media in similarMedia {
             similar.addToMedia(media)
         }
@@ -319,6 +319,7 @@ class DataController: ObservableObject {
         newItem.watchlist = false
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
+        newItem.similarTo = SimilarMedia(context: container.viewContext)
         
         if filter == .discover {
             newItem.isDiscoverObject = true
@@ -349,9 +350,7 @@ class DataController: ObservableObject {
         Task {
             await downloadPoster(media: newItem)
         }
-        
         return newItem
-        
     }
     
         // Persistent Store Functions
