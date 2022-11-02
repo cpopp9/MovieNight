@@ -28,24 +28,7 @@ struct DiscoverView: View {
                     
                     LazyVGrid(columns: columns) {
                         ForEach(discoverResults) { media in
-                            NavigationLink {
-                                MovieView(media: media)
-                            } label: {
-                                VStack {
-                                    
-                                    Image(uiImage: media.wrappedPosterImage)
-                                        .resizable()
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .scaledToFit()
-                                        .frame(maxHeight: 300)
-                                    
-                                    
-                                    Text(media.wrappedTitle)
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                        .padding(.bottom, 15)
-                                }
-                            }
+                            DiscoverPoster(media: media)
                         }
                     }
                     .padding(.horizontal)
