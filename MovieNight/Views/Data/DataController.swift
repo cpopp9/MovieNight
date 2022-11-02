@@ -175,7 +175,6 @@ class DataController: ObservableObject {
             print("Invalid Data")
         }
         writeToSimilarMedia(media: media, similarMedia: similarMedia)
-        try? container.viewContext.save()
     }
     
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {

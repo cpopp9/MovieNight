@@ -12,13 +12,14 @@ struct SimilarMoviesView: View {
     @EnvironmentObject var dataController: DataController
     @FetchRequest var similarMedia: FetchedResults<SimilarMedia>
     
+    
     var body: some View {
         VStack {
             
             VStack(alignment: .leading) {
                 
                 VStack(alignment: .leading) {
-                    Text("You might also like - \(similarMedia.count)")
+                    Text("You might also like")
                         .font(.title.bold())
                         .padding(.horizontal)
                 }
@@ -27,15 +28,7 @@ struct SimilarMoviesView: View {
                     HStack(spacing: 15) {
                         ForEach(similarMedia, id: \.self) { similar in
                             ForEach(similar.similarMedia) { media in
-                                NavigationLink {
-                                    MovieView(media: media)
-                                } label: {
-                                    Image(uiImage: media.wrappedPosterImage)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 200)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                }
+                                SimilarPostersView(media: media)
                             }
                         }
                     }
