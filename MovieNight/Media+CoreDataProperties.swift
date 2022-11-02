@@ -43,8 +43,7 @@ extension Media {
     @NSManaged public var isDiscoverObject: Bool
     @NSManaged public var isSearchObject: Bool
     @NSManaged public var similar: NSSet?
-    @NSManaged public var similarTo: SimilarMedia?
-    @NSManaged public var like: NSSet?
+    
     
     
     public var similarMedia: [SimilarMedia] {

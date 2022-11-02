@@ -172,7 +172,7 @@ class DataController: ObservableObject {
             }
             
         } catch {
-            fatalError("Invalid Data")
+            print("Invalid Data")
         }
         writeToSimilarMedia(media: media, similarMedia: similarMedia)
         try? container.viewContext.save()
@@ -319,7 +319,6 @@ class DataController: ObservableObject {
         newItem.watchlist = false
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
-        newItem.similarTo = SimilarMedia(context: container.viewContext)
         
         if filter == .discover {
             newItem.isDiscoverObject = true

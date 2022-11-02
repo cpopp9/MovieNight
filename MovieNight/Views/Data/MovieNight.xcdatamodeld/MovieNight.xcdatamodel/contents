@@ -24,13 +24,9 @@
         <attribute name="watched" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="watchlist" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="similarMedia" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SimilarMedia" inverseName="media" inverseEntity="SimilarMedia"/>
-        <relationship name="similarTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SimilarMedia"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
-            </uniquenessConstraint>
-            <uniquenessConstraint>
-                <constraint value="title"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
