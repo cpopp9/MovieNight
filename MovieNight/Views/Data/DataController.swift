@@ -114,9 +114,9 @@ class DataController: ObservableObject {
             print("Invalid Data")
         }
         
-//        DispatchQueue.main.async {
-//            try? self.container.viewContext.save()
-//        }
+            //        DispatchQueue.main.async {
+            //            try? self.container.viewContext.save()
+            //        }
         
     }
     
@@ -180,13 +180,15 @@ class DataController: ObservableObject {
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {
         let similar = SimilarMedia(context: container.viewContext)
         similar.id = media.id
-
+        
         for media in similarMedia {
             similar.addToMedia(media)
         }
     }
     
     func getCredits(media: Media) async {
+        
+        var credits = [Person]()
         
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
@@ -200,22 +202,13 @@ class DataController: ObservableObject {
                 
                 if let cast = decodedResponse.cast {
                     for person in cast {
-                        
-                            //                        if detectExistingPerson(credit_id: person.credit_id) {
-                        
-                            //                        } else {
-                        let newPerson = Person(context: container.viewContext)
-                        newPerson.name = person.name
-                        newPerson.credit_id = person.credit_id
-                        newPerson.popularity = person.popularity
-                        newPerson.profile_path = person.profile_path
-                        newPerson.knownFor = person.known_for_department
-                        newPerson.id = Int(person.id)
-                        
-                        Task {
-                            await downloadProfile(person: newPerson)
+                        if let existing = detectExistingPerson(personID: Int(person.id)) {
+                            credits.append(existing)
+                        } else {
+                            let new = CreatePerson(person: person, media: media)
+                            credits.append(new)
+                            
                         }
-                        
                             //                        }
                     }
                 }
@@ -223,6 +216,7 @@ class DataController: ObservableObject {
         } catch {
             fatalError("Invalid Data")
         }
+        writeToCredits(media: media, credits: credits)
     }
     
     func additionalPersonDetails(person: Person) async {
@@ -245,6 +239,15 @@ class DataController: ObservableObject {
             }
         } catch {
             print("Invalid Data")
+        }
+    }
+    
+    func writeToCredits(media: Media, credits: [Person]) {
+        let newCredits = Person(context: container.viewContext)
+        newCredits.mediaCredit = Int(media.id)
+        
+        for person in credits {
+            newCredits.addToMedia(media)
         }
     }
     
@@ -292,16 +295,15 @@ class DataController: ObservableObject {
         return nil
     }
     
-    func detectExistingPerson(credit_id: String) -> Bool {
+    func detectExistingPerson(personID: Int) -> Person? {
         let request: NSFetchRequest<Person> = Person.fetchRequest()
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "credit_id == %@", credit_id)
+        request.predicate = NSPredicate(format: "id == %i", personID)
         
         if let person = try? container.viewContext.fetch(request).first {
-            return true
-        } else {
-            return false
+            return person
         }
+        return nil
     }
     
     func CreateMediaObject(item: MediaResult, filter: DetectFilter) -> Media? {
@@ -349,6 +351,23 @@ class DataController: ObservableObject {
             await downloadPoster(media: newItem)
         }
         return newItem
+    }
+    
+    func CreatePerson(person: Cast, media: Media) -> Person {
+        let newPerson = Person(context: container.viewContext)
+        newPerson.name = person.name
+        newPerson.credit_id = person.credit_id
+        newPerson.popularity = person.popularity
+        newPerson.profile_path = person.profile_path
+        newPerson.knownFor = person.known_for_department
+        newPerson.id = Int(person.id)
+        newPerson.mediaCredit = Int(media.id)
+        
+        Task {
+            await downloadProfile(person: newPerson)
+        }
+        
+        return newPerson
     }
     
         // Persistent Store Functions

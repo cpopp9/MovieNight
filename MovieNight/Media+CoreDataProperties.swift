@@ -43,8 +43,15 @@ extension Media {
     @NSManaged public var isDiscoverObject: Bool
     @NSManaged public var isSearchObject: Bool
     @NSManaged public var similar: NSSet?
+    @NSManaged public var credits: NSSet?
     
     
+    public var creditsArray: [Person] {
+        let set = credits as? Set<Person> ?? []
+        return set.sorted {
+            $0.id < $1.id
+        }
+    }
     
     public var similarMedia: [SimilarMedia] {
         let set = similar as? Set<SimilarMedia> ?? []

@@ -2,7 +2,7 @@
 //  Person+CoreDataProperties.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 10/25/22.
+//  Created by Cory Popp on 11/2/22.
 //
 //
 
@@ -28,6 +28,16 @@ extension Person {
     @NSManaged public var place_of_birth: String?
     @NSManaged public var deathday: String?
     @NSManaged public var id: Int
+    @NSManaged public var mediaCredit: Int
+    @NSManaged public var media: NSSet?
+    
+    
+    public var mediaArray: [Media] {
+        let set = media as? Set<Media> ?? []
+        return set.sorted {
+            $0.id < $1.id
+        }
+    }
     
     var wrappedCreditID: String {
         credit_id ?? "--"
@@ -72,6 +82,23 @@ extension Person {
     var wrappedProfilePath: String {
         profile_path ?? "--"
     }
+
+}
+
+// MARK: Generated accessors for media
+extension Person {
+
+    @objc(addMediaObject:)
+    @NSManaged public func addToMedia(_ value: Media)
+
+    @objc(removeMediaObject:)
+    @NSManaged public func removeFromMedia(_ value: Media)
+
+    @objc(addMedia:)
+    @NSManaged public func addToMedia(_ values: NSSet)
+
+    @objc(removeMedia:)
+    @NSManaged public func removeFromMedia(_ values: NSSet)
 
 }
 
