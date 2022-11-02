@@ -11,6 +11,7 @@ import CoreData
 struct SimilarMoviesView: View {
     @EnvironmentObject var dataController: DataController
     @FetchRequest var similarMedia: FetchedResults<SimilarMedia>
+    @ObservedObject var media: Media
     
     
     var body: some View {
@@ -19,7 +20,7 @@ struct SimilarMoviesView: View {
             VStack(alignment: .leading) {
                 
                 VStack(alignment: .leading) {
-                    Text("You might also like")
+                    Text("You might also like - \(similarMedia.count)")
                         .font(.title.bold())
                         .padding(.horizontal)
                 }
@@ -36,10 +37,14 @@ struct SimilarMoviesView: View {
                 }
             }
         }
+        .task {
+                await dataController.loadSimilarMedia(media: media)
+        }
     }
     
-    init(similarTo: Int) {
-        _similarMedia = FetchRequest<SimilarMedia>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i", similarTo))
+    init(media: Media) {
+        _similarMedia = FetchRequest<SimilarMedia>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i", media.id))
+        self.media = media
     }
 }
 
