@@ -11,6 +11,7 @@ import CoreData
 struct CreditsView: View {
     @EnvironmentObject var dataController: DataController
     @FetchRequest var credits: FetchedResults<Person>
+    @ObservedObject var media: Media
     
     
     var body: some View {
@@ -34,10 +35,16 @@ struct CreditsView: View {
                     .padding(.horizontal)
                 }
             }
+        .task {
+            if credits.isEmpty {
+                await dataController.getCredits(media: media)
+            }
+        }
     }
     
-    init(mediaID: Int) {
-        _credits = FetchRequest<Person>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "mediaCredit == %i", mediaID))
+    init(media: Media) {
+        _credits = FetchRequest<Person>(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "mediaCredit == %i", media.id))
+        self.media = media
     }
 }
 

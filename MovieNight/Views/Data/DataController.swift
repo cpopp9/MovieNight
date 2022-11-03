@@ -114,9 +114,9 @@ class DataController: ObservableObject {
             print("Invalid Data")
         }
         
-            //        DispatchQueue.main.async {
-            //            try? self.container.viewContext.save()
-            //        }
+        await MainActor.run {
+            saveMedia()
+        }
         
     }
     
@@ -202,13 +202,15 @@ class DataController: ObservableObject {
                 
                 if let cast = decodedResponse.cast {
                     for person in cast {
-                        if let existing = detectExistingPerson(personID: Int(person.id)) {
-                            credits.append(existing)
-                        } else {
-                            let new = CreatePerson(person: person, media: media)
-                            credits.append(new)
-                            
-                        }
+                        
+                        
+                            //                        if let existing = detectExistingPerson(personID: Int(person.id)) {
+                            //                            credits.append(existing)
+                            //                        } else {
+                        let new = CreatePerson(person: person, media: media)
+                        credits.append(new)
+                        
+                            //                        }
                             //                        }
                     }
                 }
