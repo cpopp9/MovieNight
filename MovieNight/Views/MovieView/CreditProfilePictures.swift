@@ -13,13 +13,12 @@ struct CreditProfilePictures: View {
         NavigationLink {
             PersonView(person: person)
         } label: {
-            VStack {
-                
+            ZStack {
                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")) { image in
                     image
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 150)
+//                        .frame(width: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     
                 } placeholder: {
@@ -27,21 +26,20 @@ struct CreditProfilePictures: View {
                         .resizable()
                         .scaledToFit()
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .frame(height: 150)
                 }
-                
-                    //                Image(uiImage: person.wrappedPosterImage)
-                    //                    .resizable()
-                    //                    .aspectRatio(contentMode: .fit)
-                    //                    .frame(width: 100)
-                    //                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                
-                    //                Text(person.wrappedName)
-                    //                    .font(.caption)
-                    //                    .foregroundColor(.secondary)
-                    //                    .multilineTextAlignment(.center)
+                VStack(alignment: .trailing) {
+                    Spacer()
+                    Text(person.wrappedName)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(5)
+                        .background(Color.black)
+                        
+                        .
+                }
             }
-//            .frame(width: 100)
+            .frame(width: 100)
         }
     }
 }
