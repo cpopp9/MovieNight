@@ -38,5 +38,6 @@ struct MediaResult: Codable {
 
 struct MediaResults: Codable {
     var results: [MediaResult]?
+    var crew: [MediaResult]?
 }
 

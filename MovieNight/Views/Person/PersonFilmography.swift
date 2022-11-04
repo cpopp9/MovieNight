@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct PersonFilmography: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.popularity, order: .reverse)], predicate: NSPredicate(format: "isDiscoverObject == true")) var filmography: FetchedResults<Media>
-    
+    @FetchRequest var filmography: FetchedResults<Filmography>
     @EnvironmentObject var dataController: DataController
+    @ObservedObject var person: Person
     
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
@@ -18,33 +18,37 @@ struct PersonFilmography: View {
         VStack(alignment: .leading) {
             
             Text("Filmography:")
+            Text(String(filmography.count))
+            Button("load") {
+                Task {
+                    await dataController.loadFilmography(person: person)
+                }
+            }
             
                 .foregroundColor(.secondary)
                 .padding(.horizontal)
             
             LazyVGrid(columns: columns) {
-                ForEach(filmography) { media in
-                    NavigationLink {
-                        MovieView(media: media)
-                    } label: {
-                        VStack {
-                            Image(uiImage: media.wrappedPosterImage)
-                                .resizable()
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .scaledToFit()
-                                .frame(maxHeight: 300)
-                            
-                            Text(media.wrappedTitle)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.bottom, 15)
-                        }
+                ForEach(filmography) { filmography in
+                    ForEach(filmography.similarMedia) { media in
+                        FilmographyPostersView(media: media)
                     }
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
+        }
+        .task {
+            if filmography.isEmpty {
+                await dataController.loadFilmography(person: person)
+            }
         }
     }
+    
+    init(person: Person) {
+        _filmography = FetchRequest<Filmography>(sortDescriptors: [], predicate: NSPredicate(format: "personID == %i", person.id, person.wrappedName))
+        self.person = person
+    }
+    
 }
 
 //struct PersonFilmography_Previews: PreviewProvider {

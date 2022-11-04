@@ -14,7 +14,7 @@ struct PersonView: View {
     var body: some View {
         ScrollView {
             PersonDetails(person: person)
-            PersonFilmography()
+            PersonFilmography(person: person)
         }
         .task {
             await dataController.additionalPersonDetails(person: person)

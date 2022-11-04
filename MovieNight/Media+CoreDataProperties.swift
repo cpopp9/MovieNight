@@ -2,7 +2,7 @@
 //  Media+CoreDataProperties.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 11/1/22.
+//  Created by Cory Popp on 11/4/22.
 //
 //
 
@@ -12,11 +12,11 @@ import UIKit
 
 
 extension Media {
-    
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Media> {
         return NSFetchRequest<Media>(entityName: "Media")
     }
-    
+
     @NSManaged public var backdrop_path: String?
     @NSManaged public var id: Int32
     @NSManaged public var media_type: String?
@@ -44,6 +44,14 @@ extension Media {
     @NSManaged public var isSearchObject: Bool
     @NSManaged public var similar: NSSet?
     @NSManaged public var credits: NSSet?
+    @NSManaged public var filmography: NSSet?
+    
+    public var filmographyArray: [Filmography] {
+        let set = filmography as? Set<Filmography> ?? []
+        return set.sorted {
+            $0.id < $1.id
+        }
+    }
     
     
     public var creditsArray: [Person] {
@@ -119,6 +127,23 @@ extension Media {
 
 }
 
+// MARK: Generated accessors for credits
+extension Media {
+
+    @objc(addCreditsObject:)
+    @NSManaged public func addToCredits(_ value: Person)
+
+    @objc(removeCreditsObject:)
+    @NSManaged public func removeFromCredits(_ value: Person)
+
+    @objc(addCredits:)
+    @NSManaged public func addToCredits(_ values: NSSet)
+
+    @objc(removeCredits:)
+    @NSManaged public func removeFromCredits(_ values: NSSet)
+
+}
+
 // MARK: Generated accessors for similarMedia
 extension Media {
 
@@ -133,6 +158,23 @@ extension Media {
 
     @objc(removeSimilarMedia:)
     @NSManaged public func removeFromSimilarMedia(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for filmography
+extension Media {
+
+    @objc(addFilmographyObject:)
+    @NSManaged public func addToFilmography(_ value: Media)
+
+    @objc(removeFilmographyObject:)
+    @NSManaged public func removeFromFilmography(_ value: Media)
+
+    @objc(addFilmography:)
+    @NSManaged public func addToFilmography(_ values: NSSet)
+
+    @objc(removeFilmography:)
+    @NSManaged public func removeFromFilmography(_ values: NSSet)
 
 }
 

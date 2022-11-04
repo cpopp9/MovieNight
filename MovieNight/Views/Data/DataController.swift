@@ -178,6 +178,46 @@ class DataController: ObservableObject {
         print("similar movies loaded")
     }
     
+    func loadFilmography(person: Person) async {
+        
+        let filmography = Filmography(context: container.viewContext)
+        filmography.personID = Int64(person.id)
+        filmography.name = person.wrappedName
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+                
+                if let discoverResults = decodedResponse.crew {
+                    
+                    for item in discoverResults {
+                        if item.poster_path == nil { break }
+                        
+                        if let existing = detectExistingMedia(mediaID: item.id) {
+                            filmography.addToMedia(existing)
+                        } else {
+                            if let new = CreateMediaObject(item: item, filter: .similar) {
+                                filmography.addToMedia(new)
+                            }
+                        }
+                    }
+                }
+            }
+            
+        } catch {
+            print("Invalid Data")
+        }
+
+        await saveMedia()
+        print("filmography loaded")
+    }
+    
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {
         let similar = SimilarMedia(context: container.viewContext)
         similar.id = media.id
@@ -298,17 +338,7 @@ class DataController: ObservableObject {
         
         return nil
     }
-    
-    func detectExistingPerson(personID: Int) -> Person? {
-        let request: NSFetchRequest<Person> = Person.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "id == %i", personID)
-        
-        if let person = try? container.viewContext.fetch(request).first {
-            return person
-        }
-        return nil
-    }
+
     
     func CreateMediaObject(item: MediaResult, filter: DetectFilter) -> Media? {
         let newItem = Media(context: container.viewContext)
@@ -417,11 +447,13 @@ class DataController: ObservableObject {
         let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
         let peopleRequest = NSFetchRequest<Person>(entityName: "Person")
         let similarRequest = NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
+        let filmography = NSFetchRequest<Filmography>(entityName: "Filmography")
         
         do {
             let mediaResults = try container.viewContext.fetch(mediaRequest)
             let personResults = try container.viewContext.fetch(mediaRequest)
             let similarResults = try container.viewContext.fetch(similarRequest)
+            let filmographyResults = try container.viewContext.fetch(filmography)
             
             for media in mediaResults {
                 if !media.watchlist {
@@ -435,6 +467,10 @@ class DataController: ObservableObject {
             
             for similar in similarResults {
                     container.viewContext.delete(similar)
+            }
+            
+            for media in filmographyResults {
+                container.viewContext.delete(media)
             }
             
         } catch let error {
