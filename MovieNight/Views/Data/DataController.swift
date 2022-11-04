@@ -173,6 +173,7 @@ class DataController: ObservableObject {
         }
         writeToSimilarMedia(media: media, similarMedia: similarMedia)
         await saveMedia()
+        print("similar movies loaded")
     }
     
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {

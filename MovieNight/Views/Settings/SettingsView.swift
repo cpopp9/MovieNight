@@ -25,7 +25,9 @@ struct SettingsView: View {
                         showingAlert = true
                     }
                     Button("Save") {
-                        try? dataController.container.viewContext.save()
+                        Task {
+                            await dataController.saveMedia()
+                        }
                     }
                 }
                 
