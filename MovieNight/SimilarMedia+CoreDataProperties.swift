@@ -17,7 +17,12 @@ extension SimilarMedia {
     }
 
     @NSManaged public var id: Int32
+    @NSManaged public var title: String?
     @NSManaged public var media: NSSet?
+    
+    public var wrappedTitle: String {
+        title ?? "Unknown"
+    }
     
     public var similarMedia: [Media] {
         let set = media as? Set<Media> ?? []

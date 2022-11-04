@@ -48,6 +48,7 @@
     </entity>
     <entity name="SimilarMedia" representedClassName="SimilarMedia" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="media" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Media" inverseName="similarMedia" inverseEntity="Media"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

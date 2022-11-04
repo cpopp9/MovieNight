@@ -179,6 +179,7 @@ class DataController: ObservableObject {
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {
         let similar = SimilarMedia(context: container.viewContext)
         similar.id = media.id
+        similar.title = media.title
         
         for media in similarMedia {
             similar.addToMedia(media)

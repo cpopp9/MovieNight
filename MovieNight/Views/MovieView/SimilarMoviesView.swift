@@ -45,7 +45,7 @@ struct SimilarMoviesView: View {
     }
     
     init(media: Media) {
-        _similarMedia = FetchRequest<SimilarMedia>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i", media.id))
+        _similarMedia = FetchRequest<SimilarMedia>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i && title == %@", media.id, media.wrappedTitle))
         self.media = media
     }
 }
