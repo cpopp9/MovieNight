@@ -14,11 +14,26 @@ struct PersonDetails: View {
     var body: some View {
         
         VStack {
-            Image(uiImage: person.wrappedPosterImage)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 75)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
+            
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 150)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                
+            } placeholder: {
+                Image("profile_placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .frame(height: 150)
+            }
+//            Image(uiImage: person.wrappedPosterImage)
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+//                .frame(width: 75)
+//                .clipShape(RoundedRectangle(cornerRadius: 15))
             
             Text(person.wrappedName)
                 .font(.title.bold())

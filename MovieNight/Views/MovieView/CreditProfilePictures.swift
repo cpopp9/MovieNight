@@ -1,9 +1,9 @@
-//
-//  CreditProfilePictures.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 11/2/22.
-//
+    //
+    //  CreditProfilePictures.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 11/2/22.
+    //
 
 import SwiftUI
 
@@ -14,24 +14,40 @@ struct CreditProfilePictures: View {
             PersonView(person: person)
         } label: {
             VStack {
-                Image(uiImage: person.wrappedPosterImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 
-//                Text(person.wrappedName)
-//                    .font(.caption)
-//                    .foregroundColor(.secondary)
-//                    .multilineTextAlignment(.center)
+                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    
+                } placeholder: {
+                    Image("profile_placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .frame(height: 150)
+                }
+                
+                    //                Image(uiImage: person.wrappedPosterImage)
+                    //                    .resizable()
+                    //                    .aspectRatio(contentMode: .fit)
+                    //                    .frame(width: 100)
+                    //                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                
+                    //                Text(person.wrappedName)
+                    //                    .font(.caption)
+                    //                    .foregroundColor(.secondary)
+                    //                    .multilineTextAlignment(.center)
             }
-            .frame(width: 100)
+//            .frame(width: 100)
         }
     }
 }
 
-//struct CreditProfilePictures_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CreditProfilePictures()
-//    }
-//}
+    //struct CreditProfilePictures_Previews: PreviewProvider {
+    //    static var previews: some View {
+    //        CreditProfilePictures()
+    //    }
+    //}

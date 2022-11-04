@@ -27,7 +27,7 @@ class DataController: ObservableObject {
         deleteMediaObjects()
         
         Task {
-            await loadDiscovery(filterKey: "discover", year: 2022, page: 1)
+            await loadDiscovery(filterKey: "discover", year: 2021, page: 1)
         }
         
     }
@@ -144,7 +144,7 @@ class DataController: ObservableObject {
         
         var similarMedia = [Media]()
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/similar?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
         }
@@ -157,6 +157,8 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
+                        if item.poster_path == nil { break }
+                        
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             similarMedia.append(existing)
                         } else {
@@ -437,6 +439,9 @@ class DataController: ObservableObject {
             
         } catch let error {
             print("Error fetching. \(error)")
+        }
+        Task {
+            await saveMedia()
         }
     }
     

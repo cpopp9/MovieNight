@@ -22,7 +22,11 @@ struct SimilarPostersView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 
             } placeholder: {
-                Color.gray
+                Image("poster_placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 250)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             
             
