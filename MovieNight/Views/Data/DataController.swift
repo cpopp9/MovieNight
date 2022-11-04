@@ -180,9 +180,11 @@ class DataController: ObservableObject {
     
     func loadFilmography(person: Person) async {
         
-        let filmography = Filmography(context: container.viewContext)
-        filmography.personID = Int64(person.id)
-        filmography.name = person.wrappedName
+//        let filmography = Filmography(context: container.viewContext)
+//        filmography.personID = Int64(person.id)
+//        filmography.name = person.wrappedName
+        
+        var filmographyMedia = [Media]()
         
         guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
@@ -194,16 +196,18 @@ class DataController: ObservableObject {
             
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
-                if let discoverResults = decodedResponse.crew {
+                if let discoverResults = decodedResponse.cast {
                     
                     for item in discoverResults {
                         if item.poster_path == nil { break }
                         
                         if let existing = detectExistingMedia(mediaID: item.id) {
-                            filmography.addToMedia(existing)
+//                            filmography.addToMedia(existing)
+                            filmographyMedia.append(existing)
                         } else {
                             if let new = CreateMediaObject(item: item, filter: .similar) {
-                                filmography.addToMedia(new)
+                                filmographyMedia.append(new)
+//                                filmography.addToMedia(new)
                             }
                         }
                     }
@@ -213,9 +217,19 @@ class DataController: ObservableObject {
         } catch {
             print("Invalid Data")
         }
-
+        writeToFilmography(person: person, filmographyMedia: filmographyMedia)
         await saveMedia()
         print("filmography loaded")
+    }
+    
+    func writeToFilmography(person: Person, filmographyMedia: [Media]) {
+        let filmography = Filmography(context: container.viewContext)
+        filmography.personID = Int64(person.id)
+        filmography.name = person.wrappedName
+        
+        for media in filmographyMedia {
+            filmography.addToMedia(media)
+        }
     }
     
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {

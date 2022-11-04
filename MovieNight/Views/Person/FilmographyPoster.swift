@@ -13,29 +13,20 @@ struct FilmographyPostersView: View {
         NavigationLink {
             MovieView(media: media)
         } label: {
-            
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 250)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            VStack {
                 
-            } placeholder: {
-                Image("poster_placeholder")
+                Image(uiImage: media.wrappedPosterImage)
                     .resizable()
-                    .scaledToFit()
-                    .frame(height: 250)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .scaledToFit()
+                    .frame(maxHeight: 300)
+                
+                
+                Text(media.wrappedTitle)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 15)
             }
-            
-            
-            
-//            Image(uiImage: media.wrappedPosterImage)
-//                .resizable()
-//                .scaledToFit()
-//                .frame(height: 200)
-//                .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     }
 }

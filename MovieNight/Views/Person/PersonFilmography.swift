@@ -1,9 +1,9 @@
-//
-//  PersonFilmography.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 10/25/22.
-//
+    //
+    //  PersonFilmography.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 10/25/22.
+    //
 
 import SwiftUI
 
@@ -15,16 +15,10 @@ struct PersonFilmography: View {
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
     var body: some View {
+        
         VStack(alignment: .leading) {
             
             Text("Filmography:")
-            Text(String(filmography.count))
-            Button("load") {
-                Task {
-                    await dataController.loadFilmography(person: person)
-                }
-            }
-            
                 .foregroundColor(.secondary)
                 .padding(.horizontal)
             
@@ -34,8 +28,8 @@ struct PersonFilmography: View {
                         FilmographyPostersView(media: media)
                     }
                 }
-                .padding(.horizontal)
             }
+            .padding(.horizontal)
         }
         .task {
             if filmography.isEmpty {
@@ -51,8 +45,8 @@ struct PersonFilmography: View {
     
 }
 
-//struct PersonFilmography_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PersonFilmography(dataController: DataController)
-//    }
-//}
+    //struct PersonFilmography_Previews: PreviewProvider {
+    //    static var previews: some View {
+    //        PersonFilmography(dataController: DataController)
+    //    }
+    //}
