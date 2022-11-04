@@ -24,7 +24,7 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
-        deleteMediaObjects(filter: .nonWatchlist)
+        deleteMediaObjects()
         
         Task {
             await loadDiscovery(filterKey: "discover", year: 2022, page: 1)
@@ -114,10 +114,7 @@ class DataController: ObservableObject {
             print("Invalid Data")
         }
         
-        await MainActor.run {
-            saveMedia()
-        }
-        
+            await saveMedia()
     }
     
     func additionalMediaDetails(media: Media) async {
@@ -175,6 +172,7 @@ class DataController: ObservableObject {
             print("Invalid Data")
         }
         writeToSimilarMedia(media: media, similarMedia: similarMedia)
+        await saveMedia()
     }
     
     func writeToSimilarMedia(media: Media, similarMedia: [Media]) {
@@ -374,13 +372,16 @@ class DataController: ObservableObject {
     
         // Persistent Store Functions
     
-    func saveMedia() {
-        do {
-            if container.viewContext.hasChanges {
+    func saveMedia() async {
+        
+        await MainActor.run {
+            do {
                 try container.viewContext.save()
+                print("Context Saved")
+                
+            } catch let error {
+                print("Persistent Store Not Saved \(error)")
             }
-        } catch {
-            print("Persistent Store Not Saved")
         }
     }
     
@@ -408,19 +409,15 @@ class DataController: ObservableObject {
         }
     }
     
-    func deleteMediaObjects(filter: DeleteFilter) {
+    func deleteMediaObjects() {
         let request = NSFetchRequest<Media>(entityName: "Media")
         
         do {
             let mediaResults = try container.viewContext.fetch(request)
             
             for media in mediaResults {
-                if filter == DeleteFilter.all {
+                if !media.watchlist {
                     container.viewContext.delete(media)
-                } else if filter == DeleteFilter.nonWatchlist{
-                    if !media.watchlist {
-                        container.viewContext.delete(media)
-                    }
                 }
             }
         } catch let error {

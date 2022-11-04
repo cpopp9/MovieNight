@@ -17,6 +17,11 @@ struct AddToWatchListButton: View {
         VStack {
             Button() {
                 media.watchlist.toggle()
+                
+//                Task {
+//                    await saveItem()
+//                }
+                
             } label: {
                 HStack {
                     Image(systemName: media.watchlist ? "minus" : "plus")
@@ -48,15 +53,17 @@ struct AddToWatchListButton: View {
         .padding(.horizontal)
     }
     
-//    func overwriteObject(media: Media) {
-//        let request: NSFetchRequest<Media> = Media.fetchRequest()
-//        request.fetchLimit = 1
-//        request.predicate = NSPredicate(format: "id == %i && watchlist == true", Int(media.id))
-//        
-//        if let object = try? dataController.container.viewContext.fetch(request).first {
-//            watchlistObject = object
-//        }
-//    }
+    func saveItem() async {
+            await MainActor.run {
+                do {
+                    try dataController.container.viewContext.save()
+                    print("Context Saved")
+                    
+                } catch let error {
+                    print("Persistent Store Not Saved \(error)")
+                }
+            }
+    }
 }
     
 //        struct AddToWatchListButton_Previews: PreviewProvider {

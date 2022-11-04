@@ -27,7 +27,6 @@ struct MovieNightApp: App {
                     if newPhase == .inactive {
                     } else if newPhase == .active {
                     } else if newPhase == .background {
-                        dataController.saveMedia()
                     }
                 }
         }
