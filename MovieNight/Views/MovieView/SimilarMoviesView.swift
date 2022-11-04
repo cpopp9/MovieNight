@@ -20,7 +20,7 @@ struct SimilarMoviesView: View {
             VStack(alignment: .leading) {
                 
                 VStack(alignment: .leading) {
-                    Text("You might also like - \(similarMedia.count)")
+                    Text("You might also like")
                         .font(.title.bold())
                         .padding(.horizontal)
                 }

@@ -412,16 +412,29 @@ class DataController: ObservableObject {
     }
     
     func deleteMediaObjects() {
-        let request = NSFetchRequest<Media>(entityName: "Media")
+        let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
+        let peopleRequest = NSFetchRequest<Person>(entityName: "Person")
+        let similarRequest = NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
         
         do {
-            let mediaResults = try container.viewContext.fetch(request)
+            let mediaResults = try container.viewContext.fetch(mediaRequest)
+            let personResults = try container.viewContext.fetch(mediaRequest)
+            let similarResults = try container.viewContext.fetch(similarRequest)
             
             for media in mediaResults {
                 if !media.watchlist {
                     container.viewContext.delete(media)
                 }
             }
+            
+            for person in personResults {
+                    container.viewContext.delete(person)
+            }
+            
+            for similar in similarResults {
+                    container.viewContext.delete(similar)
+            }
+            
         } catch let error {
             print("Error fetching. \(error)")
         }
