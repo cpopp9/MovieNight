@@ -47,6 +47,7 @@ struct PersonDetails: View {
             VStack(alignment: .leading) {
                 
                 Text(person.wrappedBiography)
+                    .frame(maxWidth: .infinity)
                     .lineLimit(expandBiography ? 20 : 3)
                 
                 

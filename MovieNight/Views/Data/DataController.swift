@@ -142,7 +142,9 @@ class DataController: ObservableObject {
     
     func loadSimilarMedia(media: Media) async {
         
-        var similarMedia = [Media]()
+        let similar = SimilarMedia(context: container.viewContext)
+        similar.id = media.id
+        similar.title = media.title
         
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/similar?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
@@ -160,10 +162,10 @@ class DataController: ObservableObject {
                         if item.poster_path == nil { break }
                         
                         if let existing = detectExistingMedia(mediaID: item.id) {
-                            similarMedia.append(existing)
+                            similar.addToMedia(existing)
                         } else {
                             if let new = CreateMediaObject(item: item, filter: .similar) {
-                                similarMedia.append(new)
+                                similar.addToMedia(new)
                             }
                         }
                     }
@@ -173,18 +175,15 @@ class DataController: ObservableObject {
         } catch {
             print("Invalid Data")
         }
-        writeToSimilarMedia(media: media, similarMedia: similarMedia)
         await saveMedia()
         print("similar movies loaded")
     }
     
     func loadFilmography(person: Person) async {
         
-//        let filmography = Filmography(context: container.viewContext)
-//        filmography.personID = Int64(person.id)
-//        filmography.name = person.wrappedName
-        
-        var filmographyMedia = [Media]()
+        let filmography = Filmography(context: container.viewContext)
+        filmography.personID = Int64(person.id)
+        filmography.name = person.wrappedName
         
         guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
@@ -202,12 +201,10 @@ class DataController: ObservableObject {
                         if item.poster_path == nil { break }
                         
                         if let existing = detectExistingMedia(mediaID: item.id) {
-//                            filmography.addToMedia(existing)
-                            filmographyMedia.append(existing)
+                            filmography.addToMedia(existing)
                         } else {
                             if let new = CreateMediaObject(item: item, filter: .similar) {
-                                filmographyMedia.append(new)
-//                                filmography.addToMedia(new)
+                                filmography.addToMedia(new)
                             }
                         }
                     }
@@ -217,30 +214,11 @@ class DataController: ObservableObject {
         } catch {
             print("Invalid Data")
         }
-        writeToFilmography(person: person, filmographyMedia: filmographyMedia)
+
         await saveMedia()
         print("filmography loaded")
     }
-    
-    func writeToFilmography(person: Person, filmographyMedia: [Media]) {
-        let filmography = Filmography(context: container.viewContext)
-        filmography.personID = Int64(person.id)
-        filmography.name = person.wrappedName
-        
-        for media in filmographyMedia {
-            filmography.addToMedia(media)
-        }
-    }
-    
-    func writeToSimilarMedia(media: Media, similarMedia: [Media]) {
-        let similar = SimilarMedia(context: container.viewContext)
-        similar.id = media.id
-        similar.title = media.title
-        
-        for media in similarMedia {
-            similar.addToMedia(media)
-        }
-    }
+
     
     func getCredits(media: Media) async {
         
