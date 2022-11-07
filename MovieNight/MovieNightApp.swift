@@ -30,5 +30,5 @@ struct MovieNightApp: App {
                     }
                 }
         }
-    }
+    }   
 }

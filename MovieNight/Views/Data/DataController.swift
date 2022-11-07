@@ -27,7 +27,7 @@ class DataController: ObservableObject {
         deleteMediaObjects()
         
         Task {
-            await downloadDiscoveryMedia(filterKey: "discover", year: 2021, page: 1)
+            await downloadDiscoveryMedia(filterKey: "discover", year: 2022, page: 1)
         }
         
     }
@@ -141,6 +141,7 @@ class DataController: ObservableObject {
             print("Invalid Data \(error)")
         }
         print("Additional Media Details Loaded")
+        await saveMedia()
     }
     
     func downloadSimilarMedia(media: Media) async {
@@ -165,7 +166,6 @@ class DataController: ObservableObject {
                         
                         if item.poster_path == nil { break }
                         
-                        DispatchQueue.main.async {
                             if let existing = self.detectExistingMedia(mediaID: item.id) {
                                 similar.addToMedia(existing)
                             } else {
@@ -173,7 +173,6 @@ class DataController: ObservableObject {
                                     similar.addToMedia(new)
                                 }
                             }
-                        }
                     }
                 }
             }
@@ -213,6 +212,7 @@ class DataController: ObservableObject {
                                 filmography.addToMedia(new)
                             }
                         }
+                        await saveMedia()
                     }
                 }
             }
@@ -319,7 +319,6 @@ class DataController: ObservableObject {
         newItem.poster_path = item.poster_path ?? item.profile_path
         newItem.media_type = item.media_type ?? "movie"
         newItem.original_language = item.original_language
-        newItem.original_title = item.original_title ?? item.original_name
         newItem.overview = item.overview
         newItem.release_date = item.release_date ?? item.first_air_date
         newItem.popularity = item.popularity ?? 0.0
@@ -354,7 +353,7 @@ class DataController: ObservableObject {
         }
         
         Task {
-                await downloadPoster(media: newItem)
+            await downloadPoster(media: newItem)
         }
         return newItem
     }
@@ -368,6 +367,10 @@ class DataController: ObservableObject {
         newPerson.knownFor = person.known_for_department
         newPerson.id = Int(person.id)
         newPerson.mediaCredit = Int(media.id)
+        
+        Task {
+            await saveMedia()
+        }
         
         return newPerson
     }

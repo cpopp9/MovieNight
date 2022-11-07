@@ -21,7 +21,6 @@ extension Media {
     @NSManaged public var id: Int32
     @NSManaged public var media_type: String?
     @NSManaged public var original_language: String?
-    @NSManaged public var original_title: String?
     @NSManaged public var overview: String?
     @NSManaged public var poster_path: String?
     @NSManaged public var release_date: String?
@@ -99,10 +98,6 @@ extension Media {
     
     var wrappedMediaType: String {
         media_type ?? "Unknown"
-    }
-    
-    var wrappedOriginalTitle: String {
-        original_title ?? "Unknown"
     }
     
     var wrappedOriginalLanguage: String {

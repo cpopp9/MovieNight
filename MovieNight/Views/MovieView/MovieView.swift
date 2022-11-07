@@ -22,9 +22,9 @@ struct MovieView: View {
             
             MovieDetailView(media: media)
             
-            CreditsView(media: media)
-            
-            SimilarMoviesView(media: media)
+//            CreditsView(media: media)
+//            
+//            SimilarMoviesView(media: media)
             
         }
         .background(

@@ -17,12 +17,10 @@
         <attribute name="isSearchObject" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="media_type" optional="YES" attributeType="String"/>
         <attribute name="original_language" optional="YES" attributeType="String"/>
-        <attribute name="original_title" optional="YES" attributeType="String"/>
         <attribute name="overview" optional="YES" attributeType="String"/>
         <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="poster_path" optional="YES" attributeType="String"/>
         <attribute name="posterImage" optional="YES" attributeType="Transformable" valueTransformerName="UIImageTransformer" customClassName="UIImage"/>
-        <attribute name="relatedMediaID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="release_date" optional="YES" attributeType="String"/>
         <attribute name="revenue" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="runtime" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

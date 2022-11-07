@@ -17,7 +17,9 @@ struct PersonView: View {
             PersonFilmography(person: person)
         }
         .task {
-            await dataController.downloadAdditionalPersonDetails(person: person)
+            if person.biography == nil {
+                await dataController.downloadAdditionalPersonDetails(person: person)
+            }
         }
     }
 }

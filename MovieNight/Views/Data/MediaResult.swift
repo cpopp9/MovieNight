@@ -22,12 +22,10 @@ struct MediaResult: Codable {
     
     // Movie Details
     let title: String?
-    let original_title: String?
     let release_date: String?
     
     // TV Details
     let name: String?
-    let original_name: String?
     let first_air_date: String?
     
     // Person Details
