@@ -162,13 +162,16 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
+                        
                         if item.poster_path == nil { break }
                         
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            similar.addToMedia(existing)
-                        } else {
-                            if let new = CreateMediaObject(item: item, filter: .similar) {
-                                similar.addToMedia(new)
+                        DispatchQueue.main.async {
+                            if let existing = self.detectExistingMedia(mediaID: item.id) {
+                                similar.addToMedia(existing)
+                            } else {
+                                if let new = self.CreateMediaObject(item: item, filter: .similar) {
+                                    similar.addToMedia(new)
+                                }
                             }
                         }
                     }
@@ -278,16 +281,19 @@ class DataController: ObservableObject {
     
     func downloadPoster(media: Media) async {
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
+        DispatchQueue.main.async {
             
-            media.posterImage = UIImage(data: data)
+            let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
             
-        }.resume()
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                guard let data = data, error == nil else {
+                    return
+                }
+                
+                media.posterImage = UIImage(data: data)
+                
+            }.resume()
+        }
     }
     
     
@@ -348,7 +354,7 @@ class DataController: ObservableObject {
         }
         
         Task {
-            await downloadPoster(media: newItem)
+                await downloadPoster(media: newItem)
         }
         return newItem
     }
@@ -370,9 +376,9 @@ class DataController: ObservableObject {
     
     func saveMedia() async {
         
-        await MainActor.run {
+        DispatchQueue.main.async {
             do {
-                try container.viewContext.save()
+                try self.container.viewContext.save()
                 print("Context Saved")
                 
             } catch let error {
