@@ -17,8 +17,15 @@ struct AllSearchResults: View {
                     MovieView(media: media)
                 } label: {
                     HStack {
-                        if let poster = media.posterImage {
-                            Image(uiImage: poster)
+                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(media.poster_path ?? "")")) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 75, height: 75)
+                                .clipped()
+                            
+                        } placeholder: {
+                            Image("poster_placeholder")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 75, height: 75)

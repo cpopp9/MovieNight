@@ -18,9 +18,9 @@ struct AddToWatchListButton: View {
             Button() {
                 media.watchlist.toggle()
                 
-//                Task {
-//                    await saveItem()
-//                }
+                Task {
+                    await dataController.saveMedia()
+                }
                 
             } label: {
                 HStack {
@@ -37,6 +37,11 @@ struct AddToWatchListButton: View {
 
             Button() {
                 media.watched.toggle()
+                
+                Task {
+                    await dataController.saveMedia()
+                }
+                
             } label: {
                 HStack {
                     Image(systemName: media.watched ? "checkmark.circle.fill" : "checkmark.circle")

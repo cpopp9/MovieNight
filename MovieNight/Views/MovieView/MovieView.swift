@@ -14,7 +14,7 @@ struct MovieView: View {
     @State var credits = Credits(cast: [])
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             
             MovieTopDetails(media: media)
             
@@ -23,18 +23,30 @@ struct MovieView: View {
             MovieDetailView(media: media)
             
 //            CreditsView(media: media)
-//            
+//
 //            SimilarMoviesView(media: media)
             
         }
-        .background(
-            Image(uiImage: media.wrappedPosterImage)
-                .resizable()
-                .scaledToFill()
-                .blur(radius: 50)
-                .overlay(Color.gray.opacity(0.1))
-                .ignoresSafeArea()
+        
+        .background (
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.poster_path ?? "")")) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .blur(radius: 50)
+                    .overlay(Color.gray.opacity(0.1))
+                    .ignoresSafeArea()
+                
+            } placeholder: {
+                Image("poster_placeholder")
+                    .resizable()
+                    .scaledToFill()
+                    .blur(radius: 50)
+                    .overlay(Color.gray.opacity(0.1))
+                    .ignoresSafeArea()
+            }
         )
+        
         .task {
             if media.tagline == nil {
                 await dataController.downloadAdditionalMediaDetails(media: media)

@@ -20,8 +20,15 @@ struct WatchListFilter: View {
                         MovieView(media: media)
                     } label: {
                         HStack {
-                            if let posterImage = media.posterImage {
-                                Image(uiImage: posterImage)
+                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(media.poster_path ?? "")")) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 75, height: 75)
+                                    .clipped()
+                                
+                            } placeholder: {
+                                Image("poster_placeholder")
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 75, height: 75)

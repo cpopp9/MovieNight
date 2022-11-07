@@ -1,9 +1,9 @@
-//
-//  MovieTopDetails.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 10/24/22.
-//
+    //
+    //  MovieTopDetails.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 10/24/22.
+    //
 
 import SwiftUI
 
@@ -12,12 +12,23 @@ struct MovieTopDetails: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Image(uiImage: media.wrappedPosterImage)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 300)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .padding(.trailing)
+            
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.poster_path ?? "")")) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 300)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .padding(.trailing)
+                
+            } placeholder: {
+                Image("poster_placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 300)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .padding(.trailing)
+            }
             
             VStack {
                 Text(media.wrappedTitle)
@@ -38,7 +49,7 @@ struct MovieTopDetails: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-            }   
+            }
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.horizontal)

@@ -83,6 +83,7 @@ class DataController: ObservableObject {
         } catch let error {
             fatalError("Invalid Data \(error)")
         }
+        await saveMedia()
         print("Search Media Loaded")
     }
     
@@ -250,7 +251,7 @@ class DataController: ObservableObject {
                 }
             }
         } catch let error {
-            fatalError("Invalid Data \(error)")
+            print("Invalid Data \(error)")
         }
         print("Media Credits Loaded")
     }
@@ -352,9 +353,10 @@ class DataController: ObservableObject {
             newItem.vote_count = Int16(vote_count)
         }
         
-        Task {
-            await downloadPoster(media: newItem)
-        }
+//        Task {
+//            await downloadPoster(media: newItem)
+//        }
+        
         return newItem
     }
     

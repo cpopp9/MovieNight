@@ -15,11 +15,27 @@ struct DiscoverPoster: View {
         } label: {
             VStack {
                 
-                Image(uiImage: media.wrappedPosterImage)
-                    .resizable()
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .scaledToFit()
-                    .frame(maxHeight: 300)
+                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.poster_path ?? "")")) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 300)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    
+                } placeholder: {
+                    Image("poster_placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 300)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                }
+                
+                
+//                Image(uiImage: media.wrappedPosterImage)
+//                    .resizable()
+//                    .clipShape(RoundedRectangle(cornerRadius: 10))
+//                    .scaledToFit()
+//                    .frame(maxHeight: 300)
                 
                 
                 Text(media.wrappedTitle)
