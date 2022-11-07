@@ -12,7 +12,7 @@ struct DiscoverView: View {
     
     @EnvironmentObject var dataController: DataController
     
-    @State var pageCount = 1
+    @State var currentPage = 1
     
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
