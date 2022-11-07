@@ -30,18 +30,18 @@ struct DiscoverView: View {
                         ForEach(discoverResults) { media in
                             DiscoverPoster(media: media)
                         }
+                        Image(systemName: "plus")
+                            .padding()
+                            .font(.system(size: 25))
+                            .onAppear {
+                                currentPage += 1
+                                Task {
+                                    await dataController.downloadDiscoveryMedia(filterKey: "discover", year: 2022, page: currentPage)
+                                }
+                            }
                     }
                     .padding(.horizontal)
                 }
-                Image(systemName: "plus")
-                    .padding()
-                    .font(.system(size: 25))
-                    .onTapGesture {
-                        pageCount += 1
-                        Task {
-                            await dataController.downloadDiscoveryMedia(filterKey: "discover", year: 2022, page: pageCount)
-                        }
-                    }
             }
             .navigationTitle("Discover")
         }
