@@ -27,7 +27,7 @@ class DataController: ObservableObject {
         deleteMediaObjects()
         
         Task {
-            await loadDiscovery(filterKey: "discover", year: 2021, page: 1)
+            await downloadDiscoveryMedia(filterKey: "discover", year: 2021, page: 1)
         }
         
     }
@@ -48,7 +48,7 @@ class DataController: ObservableObject {
     
         // API Requests
     
-    func multiSearch(searchText: String) async {
+    func downloadSearchMedia(searchText: String) async {
         
         clearMedia(filter: .search)
         
@@ -80,12 +80,13 @@ class DataController: ObservableObject {
                     }
                 }
             }
-        } catch {
-            fatalError("Invalid Data")
+        } catch let error {
+            fatalError("Invalid Data \(error)")
         }
+        print("Search Media Loaded")
     }
     
-    func loadDiscovery(filterKey: String, year: Int, page: Int) async {
+    func downloadDiscoveryMedia(filterKey: String, year: Int, page: Int) async {
         
         let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate")
         
@@ -110,14 +111,15 @@ class DataController: ObservableObject {
                     }
                 }
             }
-        } catch {
-            print("Invalid Data")
+        } catch let error {
+            print("Invalid Data \(error)")
         }
         
-            await saveMedia()
+        await saveMedia()
+        print("Discovery Media Loaded")
     }
     
-    func additionalMediaDetails(media: Media) async {
+    func downloadAdditionalMediaDetails(media: Media) async {
         
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
@@ -135,18 +137,19 @@ class DataController: ObservableObject {
                 media.status = decodedResponse.status
                 
             }
-        } catch {
-            print("Invalid Data")
+        } catch let error {
+            print("Invalid Data \(error)")
         }
+        print("Additional Media Details Loaded")
     }
     
-    func loadSimilarMedia(media: Media) async {
+    func downloadSimilarMedia(media: Media) async {
         
         let similar = SimilarMedia(context: container.viewContext)
         similar.id = media.id
         similar.title = media.title
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/similar?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
         }
@@ -172,14 +175,14 @@ class DataController: ObservableObject {
                 }
             }
             
-        } catch {
-            print("Invalid Data")
+        } catch let error {
+            print("Invalid Data \(error)")
         }
         await saveMedia()
-        print("similar movies loaded")
+        print("Similar Movies Loaded")
     }
     
-    func loadFilmography(person: Person) async {
+    func downloadPersonFilmography(person: Person) async {
         
         let filmography = Filmography(context: container.viewContext)
         filmography.personID = Int64(person.id)
@@ -211,18 +214,18 @@ class DataController: ObservableObject {
                 }
             }
             
-        } catch {
-            print("Invalid Data")
+        } catch let error {
+            print("Invalid Data \(error)")
         }
-
-        await saveMedia()
-        print("filmography loaded")
-    }
-
-    
-    func getCredits(media: Media) async {
         
-        var credits = [Person]()
+        await saveMedia()
+        print("Person Filmography Loaded")
+    }
+    
+    func downloadMediaCredits(media: Media) async {
+        
+        let newCredits = Person(context: container.viewContext)
+        newCredits.mediaCredit = Int(media.id)
         
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
@@ -237,25 +240,19 @@ class DataController: ObservableObject {
                 if let cast = decodedResponse.cast {
                     for person in cast {
                         
-                        
-                            //                        if let existing = detectExistingPerson(personID: Int(person.id)) {
-                            //                            credits.append(existing)
-                            //                        } else {
                         let new = CreatePerson(person: person, media: media)
-                        credits.append(new)
+                        newCredits.addToMedia(media)
                         
-                            //                        }
-                            //                        }
                     }
                 }
             }
-        } catch {
-            fatalError("Invalid Data")
+        } catch let error {
+            fatalError("Invalid Data \(error)")
         }
-        writeToCredits(media: media, credits: credits)
+        print("Media Credits Loaded")
     }
     
-    func additionalPersonDetails(person: Person) async {
+    func downloadAdditionalPersonDetails(person: Person) async {
         
         guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
@@ -273,21 +270,11 @@ class DataController: ObservableObject {
                     //                person.deathday = decodedResponse.deathday
                 
             }
-        } catch {
-            print("Invalid Data")
+        } catch let error {
+            print("Invalid Data \(error)")
         }
+        print("Additional Person Details Loaded")
     }
-    
-    func writeToCredits(media: Media, credits: [Person]) {
-        let newCredits = Person(context: container.viewContext)
-        newCredits.mediaCredit = Int(media.id)
-        
-        for person in credits {
-            newCredits.addToMedia(media)
-        }
-    }
-    
-        // Media Download
     
     func downloadPoster(media: Media) async {
         
@@ -303,19 +290,7 @@ class DataController: ObservableObject {
         }.resume()
     }
     
-    func downloadProfile(person: Person) async {
-        
-        let url = URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")!
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            person.profileImage = UIImage(data: data)
-            
-        }.resume()
-    }
+    
     
         // Object Functions
     
@@ -330,7 +305,6 @@ class DataController: ObservableObject {
         
         return nil
     }
-
     
     func CreateMediaObject(item: MediaResult, filter: DetectFilter) -> Media? {
         let newItem = Media(context: container.viewContext)
@@ -388,10 +362,6 @@ class DataController: ObservableObject {
         newPerson.knownFor = person.known_for_department
         newPerson.id = Int(person.id)
         newPerson.mediaCredit = Int(media.id)
-        
-        Task {
-            await downloadProfile(person: newPerson)
-        }
         
         return newPerson
     }
@@ -454,11 +424,11 @@ class DataController: ObservableObject {
             }
             
             for person in personResults {
-                    container.viewContext.delete(person)
+                container.viewContext.delete(person)
             }
             
             for similar in similarResults {
-                    container.viewContext.delete(similar)
+                container.viewContext.delete(similar)
             }
             
             for media in filmographyResults {
@@ -472,5 +442,30 @@ class DataController: ObservableObject {
             await saveMedia()
         }
     }
+    
+        // archived functions
+    
+        //    func downloadProfile(person: Person) async {
+        //
+        //        let url = URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")!
+        //
+        //        URLSession.shared.dataTask(with: url) { data, _, error in
+        //            guard let data = data, error == nil else {
+        //                return
+        //            }
+        //
+        //            person.profileImage = UIImage(data: data)
+        //
+        //        }.resume()
+        //    }
+    
+        //    func writeToCredits(media: Media, credits: [Person]) {
+        //        let newCredits = Person(context: container.viewContext)
+        //        newCredits.mediaCredit = Int(media.id)
+        //
+        //        for person in credits {
+        //            newCredits.addToMedia(media)
+        //        }
+        //    }
     
 }

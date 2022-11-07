@@ -39,7 +39,7 @@ struct DiscoverView: View {
                     .onTapGesture {
                         pageCount += 1
                         Task {
-                            await dataController.loadDiscovery(filterKey: "discover", year: 2022, page: pageCount)
+                            await dataController.downloadDiscoveryMedia(filterKey: "discover", year: 2022, page: pageCount)
                         }
                     }
             }

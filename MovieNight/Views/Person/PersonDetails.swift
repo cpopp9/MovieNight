@@ -29,11 +29,6 @@ struct PersonDetails: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .frame(height: 150)
             }
-//            Image(uiImage: person.wrappedPosterImage)
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 75)
-//                .clipShape(RoundedRectangle(cornerRadius: 15))
             
             Text(person.wrappedName)
                 .font(.title.bold())

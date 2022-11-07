@@ -37,7 +37,7 @@ struct CreditsView: View {
         }
         .task {
             if credits.isEmpty {
-                await dataController.getCredits(media: media)
+                await dataController.downloadMediaCredits(media: media)
             }
         }
     }

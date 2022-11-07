@@ -42,7 +42,7 @@ struct SearchView: View {
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search for something")
             .onSubmit(of: .search) {
                 Task {
-                    await dataController.multiSearch(searchText: searchText)
+                    await dataController.downloadSearchMedia(searchText: searchText)
                 }
             }
             .onChange(of: searchText) { value in

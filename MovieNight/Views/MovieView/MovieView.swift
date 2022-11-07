@@ -36,9 +36,9 @@ struct MovieView: View {
                 .ignoresSafeArea()
         )
         .task {
-            await dataController.additionalMediaDetails(media: media)
-//            await dataController.getCredits(media: media)
-//            await dataController.loadSimilarMedia(media: media)
+            if media.tagline == nil {
+                await dataController.downloadAdditionalMediaDetails(media: media)
+            }
         }
     }
 }

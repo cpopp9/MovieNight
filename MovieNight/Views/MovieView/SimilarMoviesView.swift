@@ -39,7 +39,7 @@ struct SimilarMoviesView: View {
         }
         .task {
             if similarMedia.count < 1 {
-                await dataController.loadSimilarMedia(media: media)
+                await dataController.downloadSimilarMedia(media: media)
             }
         }
     }

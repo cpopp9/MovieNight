@@ -33,7 +33,7 @@ struct PersonFilmography: View {
         }
         .task {
             if filmography.isEmpty {
-                await dataController.loadFilmography(person: person)
+                await dataController.downloadPersonFilmography(person: person)
             }
         }
     }
