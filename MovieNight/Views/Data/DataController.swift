@@ -26,10 +26,6 @@ class DataController: ObservableObject {
         
         deleteMediaObjects()
         
-        Task {
-            await downloadDiscoveryMedia(filterKey: "discover", year: 2022, page: 1)
-        }
-        
     }
     
         // Enums
@@ -326,6 +322,7 @@ class DataController: ObservableObject {
         newItem.watchlist = false
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
+        newItem.timeAdded = Date.now
         
         if filter == .discover {
             newItem.isDiscoverObject = true

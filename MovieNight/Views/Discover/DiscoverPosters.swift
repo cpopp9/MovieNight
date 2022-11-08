@@ -30,14 +30,6 @@ struct DiscoverPoster: View {
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
                 
-                
-//                Image(uiImage: media.wrappedPosterImage)
-//                    .resizable()
-//                    .clipShape(RoundedRectangle(cornerRadius: 10))
-//                    .scaledToFit()
-//                    .frame(maxHeight: 300)
-                
-                
                 Text(media.wrappedTitle)
                     .font(.caption)
                     .foregroundColor(.secondary)

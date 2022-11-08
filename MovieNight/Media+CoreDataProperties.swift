@@ -44,6 +44,7 @@ extension Media {
     @NSManaged public var similar: NSSet?
     @NSManaged public var credits: NSSet?
     @NSManaged public var filmography: NSSet?
+    @NSManaged public var timeAdded: Date
     
     public var filmographyArray: [Filmography] {
         let set = filmography as? Set<Filmography> ?? []
