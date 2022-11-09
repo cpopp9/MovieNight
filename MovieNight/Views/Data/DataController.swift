@@ -24,7 +24,7 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
-        deleteMediaObjects()
+        deleteNonWatchlistMedia()
         
     }
     
@@ -367,9 +367,9 @@ class DataController: ObservableObject {
             newItem.vote_count = Int16(vote_count)
         }
         
-//        Task {
-//            await downloadPoster(media: newItem)
-//        }
+            //        Task {
+            //            await downloadPoster(media: newItem)
+            //        }
         
         return newItem
     }
@@ -430,7 +430,28 @@ class DataController: ObservableObject {
         }
     }
     
-    func deleteMediaObjects() {
+    func deleteNonWatchlistMedia() {
+        let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
+        
+        do {
+            let mediaResults = try container.viewContext.fetch(mediaRequest)
+            
+            for media in mediaResults {
+                if !media.watchlist {
+                    container.viewContext.delete(media)
+                }
+            }
+            
+        } catch let error {
+            print("Error fetching. \(error)")
+            
+        }
+        Task {
+            await saveMedia()
+        }
+    }
+    
+    func deleteAllObjects() {
         let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
         let peopleRequest = NSFetchRequest<Person>(entityName: "Person")
         let similarRequest = NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
