@@ -48,6 +48,8 @@ class DataController: ObservableObject {
         
         clearMedia(filter: .search)
         
+        var newMedia = [MediaResult]()
+        
         var encoded: String {
             if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
                 return encodedText
@@ -71,8 +73,12 @@ class DataController: ObservableObject {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isSearchObject = true
                         } else {
-                            CreateMediaObject(item: item, filter: .search)
+                            newMedia.append(item)
                         }
+                    }
+                    
+                    for item in newMedia {
+                        CreateMediaObject(item: item, filter: .search)
                     }
                 }
             }
@@ -84,6 +90,8 @@ class DataController: ObservableObject {
     }
     
     func downloadDiscoveryMedia(filterKey: String, year: Int, page: Int) async {
+        
+        var newMedia = [MediaResult]()
         
         let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate")
         
@@ -97,14 +105,18 @@ class DataController: ObservableObject {
             
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
-                if let discoverResults = decodedResponse.results {
+                if var discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isDiscoverObject = true
                         } else {
-                            CreateMediaObject(item: item, filter: .discover)
+                            newMedia.append(item)
                         }
+                    }
+                    
+                    for item in newMedia {
+                        CreateMediaObject(item: item, filter: .discover)
                     }
                 }
             }
@@ -143,6 +155,8 @@ class DataController: ObservableObject {
     
     func downloadSimilarMedia(media: Media) async {
         
+        var newMedia = [MediaResult]()
+        
         let similar = SimilarMedia(context: container.viewContext)
         similar.id = media.id
         similar.title = media.title
@@ -157,19 +171,22 @@ class DataController: ObservableObject {
             
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
-                if let discoverResults = decodedResponse.results {
+                if let similarResults = decodedResponse.results {
                     
-                    for item in discoverResults {
-                        
+                    for item in similarResults {
                         if item.poster_path == nil { break }
                         
-                            if let existing = self.detectExistingMedia(mediaID: item.id) {
-                                similar.addToMedia(existing)
-                            } else {
-                                if let new = self.CreateMediaObject(item: item, filter: .similar) {
-                                    similar.addToMedia(new)
-                                }
-                            }
+                        if let existing = detectExistingMedia(mediaID: item.id) {
+                            similar.addToMedia(existing)
+                        } else {
+                            newMedia.append(item)
+                        }
+                    }
+                    
+                    for item in newMedia {
+                        if let new = CreateMediaObject(item: item, filter: .similar) {
+                            similar.addToMedia(new)
+                        }
                     }
                 }
             }

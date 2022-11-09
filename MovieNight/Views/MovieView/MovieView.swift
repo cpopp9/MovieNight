@@ -24,7 +24,7 @@ struct MovieView: View {
             
 //            CreditsView(media: media)
 //
-//            SimilarMoviesView(media: media)
+            SimilarMoviesView(media: media)
             
         }
         
