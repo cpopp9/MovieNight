@@ -251,8 +251,7 @@ class DataController: ObservableObject {
     
     func downloadMediaCredits(media: Media) async {
         
-        let newCredits = Person(context: container.viewContext)
-        newCredits.mediaCredit = Int(media.id)
+        var newCredits = [Person]()
         
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
             print("Invalid URL")
@@ -267,9 +266,12 @@ class DataController: ObservableObject {
                 if let cast = decodedResponse.cast {
                     for person in cast {
                         
-                        let new = CreatePerson(person: person, media: media)
-                        newCredits.addToMedia(media)
+                        newCredits.append(CreatePerson(person: person, media: media))
                         
+                    }
+                    
+                    for person in newCredits {
+                        person.addToMedia(media)
                     }
                 }
             }
