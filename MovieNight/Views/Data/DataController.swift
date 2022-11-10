@@ -265,6 +265,7 @@ class DataController: ObservableObject {
                 
                 if let cast = decodedResponse.cast {
                     for person in cast {
+                        if person.profile_path == nil { break }
                         
                         newCredits.append(CreatePerson(person: person, media: media))
                         
@@ -394,7 +395,6 @@ class DataController: ObservableObject {
         newPerson.profile_path = person.profile_path
         newPerson.knownFor = person.known_for_department
         newPerson.id = Int(person.id)
-        newPerson.mediaCredit = Int(media.id)
         
         return newPerson
     }
