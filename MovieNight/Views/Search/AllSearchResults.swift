@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AllSearchResults: View {
-    var searchResults: FetchedResults<Media>
+    let allMedia: [Media]
     
     var body: some View {
         List {
-            ForEach(searchResults) { media in
+            ForEach(allMedia) { media in
                 NavigationLink {
                     MovieView(media: media)
                 } label: {

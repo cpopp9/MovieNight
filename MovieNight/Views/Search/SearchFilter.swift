@@ -11,12 +11,13 @@ struct SearchFilter: View {
     
     @FetchRequest var searchResults: FetchedResults<Media>
     var mediaHeadline: String
+    @State var showMore = false
     
     var body: some View {
         
         if searchResults.count > 0 {
             Section(mediaHeadline) {
-                ForEach(searchResults.prefix(3)) { media in
+                ForEach(searchResults.prefix(showMore ? 20 : 3)) { media in
                     NavigationLink {
                         MovieView(media: media)
                     } label: {
@@ -63,14 +64,18 @@ struct SearchFilter: View {
                     }
                 }
                 
-                NavigationLink {
-                    AllSearchResults(searchResults: searchResults)
+                Button() {
+                    showMore.toggle()
                 } label: {
                     HStack {
-                        Text("See More")
+                        Text(showMore ? "Show Less" : "Show More")
                         Spacer()
-                        Text(String(searchResults.count))
-                        Image(systemName: "plus")
+                        
+                        if !showMore {
+                            Text(String(searchResults.count))
+                        }
+                        
+                        Image(systemName: showMore ? "minus" : "plus")
                     }
                 }
             }

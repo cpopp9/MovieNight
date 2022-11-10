@@ -14,20 +14,19 @@ struct CreditsView: View {
     
     
     var body: some View {
-        VStack {
+        
+        VStack(alignment: .leading) {
             
-            VStack(alignment: .leading) {
+            if !media.creditsArray.isEmpty {
                 
-                VStack(alignment: .leading) {
-                    Text("Credits")
-                        .font(.title.bold())
-                        .padding(.horizontal)
-                }
+                Text("Credits")
+                    .font(.title.bold())
+                    .padding(.horizontal)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .top, spacing: 15) {
                         ForEach(media.creditsArray.prefix(10)) { person in
-                                CreditProfilePictures(person: person)
+                            CreditProfilePictures(person: person)
                         }
                     }
                     .padding(.horizontal)
