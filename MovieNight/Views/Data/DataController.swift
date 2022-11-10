@@ -24,7 +24,7 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
-        deleteNonWatchlistMedia()
+        deleteAllObjects()
         
     }
     
@@ -155,7 +155,8 @@ class DataController: ObservableObject {
     
     func downloadSimilarMedia(media: Media) async {
         
-        var newMedia = [MediaResult]()
+        var newItem = [MediaResult]()
+        
         
         let similar = SimilarMedia(context: container.viewContext)
         similar.id = media.id
@@ -179,11 +180,11 @@ class DataController: ObservableObject {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             similar.addToMedia(existing)
                         } else {
-                            newMedia.append(item)
+                            newItem.append(item)
                         }
                     }
                     
-                    for item in newMedia {
+                    for item in newItem {
                         if let new = CreateMediaObject(item: item, filter: .similar) {
                             similar.addToMedia(new)
                         }
@@ -199,6 +200,8 @@ class DataController: ObservableObject {
     }
     
     func downloadPersonFilmography(person: Person) async {
+        
+        var newMedia = [MediaResult]()
         
         let filmography = Filmography(context: container.viewContext)
         filmography.personID = Int64(person.id)
@@ -217,16 +220,23 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.cast {
                     
                     for item in discoverResults {
+                        
                         if item.poster_path == nil { break }
                         
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            filmography.addToMedia(existing)
-                        } else {
-                            if let new = CreateMediaObject(item: item, filter: .similar) {
-                                filmography.addToMedia(new)
+                        for item in discoverResults {
+                            if let existing = detectExistingMedia(mediaID: item.id) {
+                                filmography.addToMedia(existing)
+                                await saveMedia()
+                            } else {
+                                newMedia.append(item)
                             }
                         }
-                        await saveMedia()
+                        
+                        for item in newMedia {
+                            if let media = CreateMediaObject(item: item, filter: .similar) {
+                                filmography.addToMedia(media)
+                            }
+                        }
                     }
                 }
             }
@@ -384,10 +394,6 @@ class DataController: ObservableObject {
         newPerson.id = Int(person.id)
         newPerson.mediaCredit = Int(media.id)
         
-        Task {
-            await saveMedia()
-        }
-        
         return newPerson
     }
     
@@ -453,13 +459,13 @@ class DataController: ObservableObject {
     
     func deleteAllObjects() {
         let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
-        let peopleRequest = NSFetchRequest<Person>(entityName: "Person")
+        let personRequest = NSFetchRequest<Person>(entityName: "Person")
         let similarRequest = NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
         let filmography = NSFetchRequest<Filmography>(entityName: "Filmography")
         
         do {
             let mediaResults = try container.viewContext.fetch(mediaRequest)
-            let personResults = try container.viewContext.fetch(mediaRequest)
+            let personResults = try container.viewContext.fetch(personRequest)
             let similarResults = try container.viewContext.fetch(similarRequest)
             let filmographyResults = try container.viewContext.fetch(filmography)
             
