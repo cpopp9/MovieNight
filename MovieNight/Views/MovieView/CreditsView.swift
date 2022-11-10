@@ -26,7 +26,8 @@ struct CreditsView: View {
                 }
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 15) {
+//                    HStack(spacing: 15) {
+                    HStack(alignment: .top, spacing: 15) {
                         ForEach(credits.prefix(10), id: \.self) { person in
                             CreditProfilePictures(person: person)
                         }
