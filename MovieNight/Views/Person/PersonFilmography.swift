@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PersonFilmography: View {
-    @FetchRequest var filmography: FetchedResults<Filmography>
+
     @EnvironmentObject var dataController: DataController
     @ObservedObject var person: Person
     
@@ -18,30 +18,28 @@ struct PersonFilmography: View {
         
         VStack(alignment: .leading) {
             
-            Text("Filmography:")
+            Text("Filmography \(person.filmographyArray.count):")
                 .foregroundColor(.secondary)
                 .padding(.horizontal)
             
             LazyVGrid(columns: columns) {
-                ForEach(filmography) { filmography in
-                    ForEach(filmography.similarMedia) { media in
+                ForEach(person.filmographyArray) { media in
                         FilmographyPostersView(media: media)
                     }
-                }
             }
             .padding(.horizontal)
         }
         .task {
-            if filmography.isEmpty {
+            if person.filmographyArray.isEmpty {
                 await dataController.downloadPersonFilmography(person: person)
             }
         }
     }
     
-    init(person: Person) {
-        _filmography = FetchRequest<Filmography>(sortDescriptors: [], predicate: NSPredicate(format: "personID == %i", person.id, person.wrappedName))
-        self.person = person
-    }
+//    init(person: Person) {
+//        _filmography = FetchRequest<Filmography>(sortDescriptors: [], predicate: NSPredicate(format: "personID == %i", person.id, person.wrappedName))
+//        self.person = person
+//    }
     
 }
 

@@ -14,7 +14,7 @@ struct FilmographyPostersView: View {
             MovieView(media: media)
         } label: {
             VStack {
-                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.poster_path ?? "")")) { image in
+                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
                     image
                         .resizable()
                         .clipShape(RoundedRectangle(cornerRadius: 10))

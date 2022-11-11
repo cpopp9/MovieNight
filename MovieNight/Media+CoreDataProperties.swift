@@ -2,7 +2,7 @@
 //  Media+CoreDataProperties.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 11/4/22.
+//  Created by Cory Popp on 11/11/22.
 //
 //
 
@@ -53,7 +53,6 @@ extension Media {
         }
     }
     
-    
     public var creditsArray: [Person] {
         let set = credits as? Set<Person> ?? []
         return set.sorted {
@@ -61,7 +60,7 @@ extension Media {
         }
     }
     
-    public var similarMedia: [SimilarMedia] {
+    public var similarArray: [SimilarMedia] {
         let set = similar as? Set<SimilarMedia> ?? []
         return set.sorted {
             $0.id < $1.id
@@ -161,10 +160,10 @@ extension Media {
 extension Media {
 
     @objc(addFilmographyObject:)
-    @NSManaged public func addToFilmography(_ value: Media)
+    @NSManaged public func addToFilmography(_ value: Person)
 
     @objc(removeFilmographyObject:)
-    @NSManaged public func removeFromFilmography(_ value: Media)
+    @NSManaged public func removeFromFilmography(_ value: Person)
 
     @objc(addFilmography:)
     @NSManaged public func addToFilmography(_ values: NSSet)

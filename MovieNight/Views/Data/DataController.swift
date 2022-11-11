@@ -78,7 +78,7 @@ class DataController: ObservableObject {
                     }
                     
                     for item in newMedia {
-                        CreateMediaObject(item: item, filter: .search)
+                        CreateMediaObject(item: item)?.isSearchObject = true
                     }
                 }
             }
@@ -116,7 +116,7 @@ class DataController: ObservableObject {
                     }
                     
                     for item in newMedia {
-                        CreateMediaObject(item: item, filter: .discover)
+                        CreateMediaObject(item: item)?.isDiscoverObject = true
                     }
                 }
             }
@@ -162,6 +162,7 @@ class DataController: ObservableObject {
         similar.id = media.id
         similar.title = media.title
         
+        
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
@@ -178,15 +179,15 @@ class DataController: ObservableObject {
                         if item.poster_path == nil { break }
                         
                         if let existing = detectExistingMedia(mediaID: item.id) {
-                            similar.addToMedia(existing)
+                            existing.addToSimilarMedia(similar)
                         } else {
                             newItem.append(item)
                         }
                     }
                     
                     for item in newItem {
-                        if let new = CreateMediaObject(item: item, filter: .similar) {
-                            similar.addToMedia(new)
+                        if let new = CreateMediaObject(item: item) {
+                            new.addToSimilarMedia(similar)
                         }
                     }
                 }
@@ -203,13 +204,10 @@ class DataController: ObservableObject {
         
         var newMedia = [MediaResult]()
         
-        let filmography = Filmography(context: container.viewContext)
-        filmography.personID = Int64(person.id)
-        filmography.name = person.wrappedName
+        let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
-            print("Invalid URL")
-            return
+        guard let url = discover else {
+            fatalError("Invalid URL")
         }
         
         do {
@@ -223,31 +221,28 @@ class DataController: ObservableObject {
                         
                         if item.poster_path == nil { break }
                         
-                        for item in discoverResults {
-                            if let existing = detectExistingMedia(mediaID: item.id) {
-                                filmography.addToMedia(existing)
-                                await saveMedia()
-                            } else {
-                                newMedia.append(item)
-                            }
+                        if let existing = detectExistingMedia(mediaID: item.id) {
+                            person.addToFilmography(existing)
+                        } else {
+                            newMedia.append(item)
                         }
-                        
-                        for item in newMedia {
-                            if let media = CreateMediaObject(item: item, filter: .similar) {
-                                filmography.addToMedia(media)
-                            }
+                    }
+                    
+                    for item in newMedia {
+                        if let new = CreateMediaObject(item: item) {
+                            person.addToFilmography(new)
                         }
                     }
                 }
             }
-            
         } catch let error {
             print("Invalid Data \(error)")
         }
         
         await saveMedia()
-        print("Person Filmography Loaded")
+        print("Filmography Loaded")
     }
+
     
     func downloadMediaCredits(media: Media) async {
         
@@ -339,7 +334,7 @@ class DataController: ObservableObject {
         return nil
     }
     
-    func CreateMediaObject(item: MediaResult, filter: DetectFilter) -> Media? {
+    func CreateMediaObject(item: MediaResult) -> Media? {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -353,14 +348,6 @@ class DataController: ObservableObject {
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
         newItem.timeAdded = Date.now
-        
-        if filter == .discover {
-            newItem.isDiscoverObject = true
-        }
-        
-        if filter == .search {
-            newItem.isSearchObject = true
-        }
         
         if let date = item.release_date ?? item.first_air_date {
             let formatter = DateFormatter()
@@ -379,10 +366,6 @@ class DataController: ObservableObject {
         if let vote_count = item.vote_count {
             newItem.vote_count = Int16(vote_count)
         }
-        
-            //        Task {
-            //            await downloadPoster(media: newItem)
-            //        }
         
         return newItem
     }
@@ -463,13 +446,11 @@ class DataController: ObservableObject {
         let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
         let personRequest = NSFetchRequest<Person>(entityName: "Person")
         let similarRequest = NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
-        let filmography = NSFetchRequest<Filmography>(entityName: "Filmography")
         
         do {
             let mediaResults = try container.viewContext.fetch(mediaRequest)
             let personResults = try container.viewContext.fetch(personRequest)
             let similarResults = try container.viewContext.fetch(similarRequest)
-            let filmographyResults = try container.viewContext.fetch(filmography)
             
             for media in mediaResults {
                 if !media.watchlist {
@@ -483,10 +464,6 @@ class DataController: ObservableObject {
             
             for similar in similarResults {
                 container.viewContext.delete(similar)
-            }
-            
-            for media in filmographyResults {
-                container.viewContext.delete(media)
             }
             
         } catch let error {

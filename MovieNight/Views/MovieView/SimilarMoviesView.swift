@@ -28,7 +28,7 @@ struct SimilarMoviesView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
                         ForEach(similarMedia, id: \.self) { similar in
-                            ForEach(similar.similarMedia) { media in
+                            ForEach(similar.mediaArray) { media in
                                 SimilarPostersView(media: media)
                             }
                         }

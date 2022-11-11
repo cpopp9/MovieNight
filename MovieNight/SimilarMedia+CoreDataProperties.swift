@@ -24,7 +24,7 @@ extension SimilarMedia {
         title ?? "Unknown"
     }
     
-    public var similarMedia: [Media] {
+    public var mediaArray: [Media] {
         let set = media as? Set<Media> ?? []
         return set.sorted {
             $0.wrappedTitle < $1.wrappedTitle
