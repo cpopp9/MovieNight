@@ -60,7 +60,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .alert("Delete all movies?", isPresented: $showingAlert) {
                 Button("Confirm", role: .destructive) {
-                    dataController.deleteAllObjects()
+                    dataController.deleteObjects(filter: .all)
                 }
             }
         }

@@ -24,7 +24,7 @@ class DataController: ObservableObject {
         
         ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         
-        deleteAllObjects()
+        deleteObjects(filter: .nonWatchlist)
         
     }
     
@@ -150,7 +150,6 @@ class DataController: ObservableObject {
             print("Invalid Data \(error)")
         }
         print("Additional Media Details Loaded")
-        await saveMedia()
     }
     
     func downloadSimilarMedia(media: Media) async {
@@ -242,7 +241,6 @@ class DataController: ObservableObject {
         await saveMedia()
         print("Filmography Loaded")
     }
-
     
     func downloadMediaCredits(media: Media) async {
         
@@ -421,28 +419,28 @@ class DataController: ObservableObject {
         }
     }
     
-    func deleteNonWatchlistMedia() {
-        let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
-        
-        do {
-            let mediaResults = try container.viewContext.fetch(mediaRequest)
-            
-            for media in mediaResults {
-                if !media.watchlist {
-                    container.viewContext.delete(media)
-                }
-            }
-            
-        } catch let error {
-            print("Error fetching. \(error)")
-            
-        }
-        Task {
-            await saveMedia()
-        }
-    }
+//    func deleteNonWatchlistMedia() {
+//        let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
+//
+//        do {
+//            let mediaResults = try container.viewContext.fetch(mediaRequest)
+//
+//            for media in mediaResults {
+//                if !media.watchlist {
+//                    container.viewContext.delete(media)
+//                }
+//            }
+//
+//        } catch let error {
+//            print("Error fetching. \(error)")
+//
+//        }
+//        Task {
+//            await saveMedia()
+//        }
+//    }
     
-    func deleteAllObjects() {
+    func deleteObjects(filter: DeleteFilter) {
         let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
         let personRequest = NSFetchRequest<Person>(entityName: "Person")
         let similarRequest = NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
@@ -452,9 +450,14 @@ class DataController: ObservableObject {
             let personResults = try container.viewContext.fetch(personRequest)
             let similarResults = try container.viewContext.fetch(similarRequest)
             
+            
             for media in mediaResults {
-                if !media.watchlist {
+                if filter == .all {
                     container.viewContext.delete(media)
+                } else if filter == .nonWatchlist {
+                    if !media.watchlist {
+                        container.viewContext.delete(media)
+                    }
                 }
             }
             
@@ -473,30 +476,5 @@ class DataController: ObservableObject {
             await saveMedia()
         }
     }
-    
-        // archived functions
-    
-        //    func downloadProfile(person: Person) async {
-        //
-        //        let url = URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")!
-        //
-        //        URLSession.shared.dataTask(with: url) { data, _, error in
-        //            guard let data = data, error == nil else {
-        //                return
-        //            }
-        //
-        //            person.profileImage = UIImage(data: data)
-        //
-        //        }.resume()
-        //    }
-    
-        //    func writeToCredits(media: Media, credits: [Person]) {
-        //        let newCredits = Person(context: container.viewContext)
-        //        newCredits.mediaCredit = Int(media.id)
-        //
-        //        for person in credits {
-        //            newCredits.addToMedia(media)
-        //        }
-        //    }
     
 }
