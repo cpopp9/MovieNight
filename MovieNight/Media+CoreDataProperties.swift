@@ -46,8 +46,8 @@ extension Media {
     @NSManaged public var filmography: NSSet?
     @NSManaged public var timeAdded: Date
     
-    public var filmographyArray: [Filmography] {
-        let set = filmography as? Set<Filmography> ?? []
+    public var filmographyArray: [Person] {
+        let set = filmography as? Set<Person> ?? []
         return set.sorted {
             $0.id < $1.id
         }
