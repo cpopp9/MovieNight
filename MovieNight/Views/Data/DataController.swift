@@ -34,19 +34,11 @@ class DataController: ObservableObject {
         case all, nonWatchlist
     }
     
-    enum ClearFilter {
-        case search, discover, all
-    }
-    
-    enum DetectFilter {
-        case search, discover, similar
-    }
-    
         // API Requests
     
     func downloadSearchMedia(searchText: String) async {
         
-        clearMedia(filter: .search)
+        clearSearch()
         
         var newMedia = [MediaResult]()
         
@@ -395,50 +387,20 @@ class DataController: ObservableObject {
         }
     }
     
-    func clearMedia(filter: ClearFilter) {
+    func clearSearch() {
         let request = NSFetchRequest<Media>(entityName: "Media")
         
         do {
             let mediaResults = try container.viewContext.fetch(request)
             
             for media in mediaResults {
-                if filter == .search {
                     media.isSearchObject = false
-                } else if filter == .discover {
-                    media.isDiscoverObject = false
-                    
-                    
-                } else if filter == .all {
-                    media.isSearchObject = false
-                    media.isDiscoverObject = false
-                }
             }
             
         } catch let error {
             print("Error fetching media to clear. \(error)")
         }
     }
-    
-//    func deleteNonWatchlistMedia() {
-//        let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
-//
-//        do {
-//            let mediaResults = try container.viewContext.fetch(mediaRequest)
-//
-//            for media in mediaResults {
-//                if !media.watchlist {
-//                    container.viewContext.delete(media)
-//                }
-//            }
-//
-//        } catch let error {
-//            print("Error fetching. \(error)")
-//
-//        }
-//        Task {
-//            await saveMedia()
-//        }
-//    }
     
     func deleteObjects(filter: DeleteFilter) {
         let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
