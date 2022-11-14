@@ -32,6 +32,7 @@
 		DC7A37D92912B87A00E8343A /* CreditProfilePictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */; };
 		DC7A37DF291327C900E8343A /* DiscoverPosters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A37DE291327C900E8343A /* DiscoverPosters.swift */; };
 		DC881816290040520066C8FB /* MediaDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC881815290040520066C8FB /* MediaDetails.swift */; };
+		DCAB67602922D3AF0081BAA9 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB675F2922D3AF0081BAA9 /* UIImageTransformer.swift */; };
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
@@ -73,6 +74,7 @@
 		DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditProfilePictures.swift; sourceTree = "<group>"; };
 		DC7A37DE291327C900E8343A /* DiscoverPosters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPosters.swift; sourceTree = "<group>"; };
 		DC881815290040520066C8FB /* MediaDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetails.swift; sourceTree = "<group>"; };
+		DCAB675F2922D3AF0081BAA9 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageTransformer.swift; sourceTree = "<group>"; };
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 		DCAE02FF28F87CCD008C5DD6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DCAB675F2922D3AF0081BAA9 /* UIImageTransformer.swift */,
 				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
 			);
 			path = Extensions;
@@ -319,6 +322,7 @@
 				DC6E134D28E6664000A50AC5 /* SearchView.swift in Sources */,
 				DCD021F4290888CF00C5BF54 /* PersonView.swift in Sources */,
 				DCD021F629088B5300C5BF54 /* PersonResult.swift in Sources */,
+				DCAB67602922D3AF0081BAA9 /* UIImageTransformer.swift in Sources */,
 				DC7A37D72912AE6A00E8343A /* SimilarPostersView.swift in Sources */,
 				DCD021F829089B7100C5BF54 /* Person+CoreDataProperties.swift in Sources */,
 				DC881816290040520066C8FB /* MediaDetails.swift in Sources */,
