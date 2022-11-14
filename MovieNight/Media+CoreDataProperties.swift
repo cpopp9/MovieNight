@@ -45,7 +45,7 @@ extension Media {
     @NSManaged public var credits: NSSet?
     @NSManaged public var filmography: NSSet?
     @NSManaged public var timeAdded: Date
-    @NSManaged public var genres: [Int]
+    @NSManaged public var genres: String?
     
     public var similarArray: [Media] {
         let set = similar as? Set<Media> ?? []
@@ -66,6 +66,11 @@ extension Media {
         return set.sorted {
             $0.id < $1.id
         }
+    }
+    
+    
+    var wrappedGenres: String {
+        genres ?? ""
     }
     
     var wrappedIMDBUrl: String {

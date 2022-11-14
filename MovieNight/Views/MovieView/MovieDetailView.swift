@@ -16,8 +16,9 @@ struct MovieDetailView: View {
                 VStack(alignment: .leading) {
                     Text("Overview")
                         .font(.title2.bold())
-                    Text("Sci-fi, Adventure, Action")
+                    Text(media.wrappedGenres)
                         .font(.subheadline)
+                        
                     Text("\(media.runtime) minutes")
                         .font(.subheadline)
                         .foregroundColor(.secondary)

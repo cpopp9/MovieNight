@@ -136,6 +136,17 @@ class DataController: ObservableObject {
                 media.tagline = decodedResponse.tagline
                 media.status = decodedResponse.status
                 
+                if let genres = decodedResponse.genres {
+                    var genString = [String]()
+                    
+                    for genre in genres {
+                        genString.append(genre.name)
+                    }
+                    
+                    media.genres = genString.joined(separator: ", ")
+                }
+                
+                
             }
         } catch let error {
             print("Invalid Data \(error)")
@@ -330,7 +341,6 @@ class DataController: ObservableObject {
         newItem.watchlist = false
         newItem.watched = false
         newItem.timeAdded = Date.now
-        newItem.genres = item.genre_ids ?? []
         
         if let date = item.release_date ?? item.first_air_date {
             let formatter = DateFormatter()
