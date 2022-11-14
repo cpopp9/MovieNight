@@ -50,21 +50,21 @@ extension Media {
     public var similarArray: [Media] {
         let set = similar as? Set<Media> ?? []
         return set.sorted {
-            $0.id < $1.id
+            $0.popularity > $1.popularity
         }
     }
     
     public var filmographyArray: [Person] {
         let set = filmography as? Set<Person> ?? []
         return set.sorted {
-            $0.id < $1.id
+            $0.popularity > $1.popularity
         }
     }
     
     public var creditsArray: [Person] {
         let set = credits as? Set<Person> ?? []
         return set.sorted {
-            $0.id < $1.id
+            $0.popularity > $1.popularity
         }
     }
     

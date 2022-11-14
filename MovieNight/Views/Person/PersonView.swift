@@ -24,8 +24,8 @@ struct PersonView: View {
     }
 }
 
-//struct PersonView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PersonView()
-//    }
-//}
+struct PersonView_Previews: PreviewProvider {
+    static var previews: some View {
+        PersonView(person: Person())
+    }
+}

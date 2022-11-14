@@ -17,7 +17,7 @@ struct AllSearchResults: View {
                     MovieView(media: media)
                 } label: {
                     HStack {
-                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(media.poster_path ?? "")")) { image in
+                        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(media.wrappedPosterPath)")) { image in
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)

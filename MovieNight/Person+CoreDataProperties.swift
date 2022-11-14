@@ -28,21 +28,12 @@ extension Person {
     @NSManaged public var place_of_birth: String?
     @NSManaged public var deathday: String?
     @NSManaged public var id: Int
-    @NSManaged public var mediaCredit: Int
-    @NSManaged public var media: NSSet?
     @NSManaged public var filmography: NSSet?
     
     public var filmographyArray: [Media] {
         let set = filmography as? Set<Media> ?? []
         return set.sorted {
-            $0.id < $1.id
-        }
-    }
-    
-    public var mediaArray: [Media] {
-        let set = media as? Set<Media> ?? []
-        return set.sorted {
-            $0.id < $1.id
+            $0.popularity > $1.popularity
         }
     }
     

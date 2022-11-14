@@ -13,7 +13,7 @@ struct MovieTopDetails: View {
     var body: some View {
         VStack(alignment: .center) {
             
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.poster_path ?? "")")) { image in
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
                 image
                     .resizable()
                     .scaledToFit()
