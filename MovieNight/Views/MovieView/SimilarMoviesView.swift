@@ -28,7 +28,6 @@ struct SimilarMoviesView: View {
                     HStack(spacing: 15) {
                         ForEach(media.similarArray) { media in
                             SimilarPostersView(media: media)
-                                //                            }
                         }
                     }
                     .padding(.horizontal)

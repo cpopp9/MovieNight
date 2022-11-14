@@ -39,7 +39,6 @@ extension Person {
         }
     }
     
-    
     public var mediaArray: [Media] {
         let set = media as? Set<Media> ?? []
         return set.sorted {
