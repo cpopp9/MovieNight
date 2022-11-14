@@ -14,21 +14,21 @@ struct SimilarMoviesView: View {
     
     
     var body: some View {
-        VStack {
+        
+        VStack(alignment: .leading) {
             
-            VStack(alignment: .leading) {
+            if !media.similarArray.isEmpty {
                 
-                VStack(alignment: .leading) {
-                    Text("You might also like")
-                        .font(.title.bold())
-                        .padding(.horizontal)
-                }
+                Text("You might also like \(media.similarArray.count)")
+                    .font(.title.bold())
+                    .padding(.horizontal)
+                
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
                         ForEach(media.similarArray) { media in
-                                SimilarPostersView(media: media)
-//                            }
+                            SimilarPostersView(media: media)
+                                //                            }
                         }
                     }
                     .padding(.horizontal)
@@ -36,9 +36,9 @@ struct SimilarMoviesView: View {
             }
         }
         .task {
-//            if media.similarArray.isEmpty {
+            if media.similarArray.isEmpty {
                 await dataController.downloadSimilarMedia(media: media)
-//            }
+            }
         }
     }
 }
