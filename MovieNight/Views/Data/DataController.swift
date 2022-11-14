@@ -330,6 +330,7 @@ class DataController: ObservableObject {
         newItem.watchlist = false
         newItem.watched = false
         newItem.timeAdded = Date.now
+        newItem.genres = item.genre_ids ?? []
         
         if let date = item.release_date ?? item.first_air_date {
             let formatter = DateFormatter()
@@ -386,7 +387,7 @@ class DataController: ObservableObject {
             let mediaResults = try container.viewContext.fetch(request)
             
             for media in mediaResults {
-                    media.isSearchObject = false
+                media.isSearchObject = false
             }
             
         } catch let error {
