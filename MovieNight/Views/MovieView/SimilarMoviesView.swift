@@ -10,7 +10,6 @@ import CoreData
 
 struct SimilarMoviesView: View {
     @EnvironmentObject var dataController: DataController
-    @FetchRequest var similarMedia: FetchedResults<SimilarMedia>
     @ObservedObject var media: Media
     
     
@@ -27,10 +26,9 @@ struct SimilarMoviesView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
-                        ForEach(similarMedia, id: \.self) { similar in
-                            ForEach(similar.mediaArray) { media in
+                        ForEach(media.similarArray) { media in
                                 SimilarPostersView(media: media)
-                            }
+//                            }
                         }
                     }
                     .padding(.horizontal)
@@ -38,15 +36,10 @@ struct SimilarMoviesView: View {
             }
         }
         .task {
-            if similarMedia.count < 1 {
+//            if media.similarArray.isEmpty {
                 await dataController.downloadSimilarMedia(media: media)
-            }
+//            }
         }
-    }
-    
-    init(media: Media) {
-        _similarMedia = FetchRequest<SimilarMedia>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i && title == %@", media.id, media.wrappedTitle))
-        self.media = media
     }
 }
 

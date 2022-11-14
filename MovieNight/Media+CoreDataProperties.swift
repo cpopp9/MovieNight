@@ -2,7 +2,7 @@
 //  Media+CoreDataProperties.swift
 //  MovieNight
 //
-//  Created by Cory Popp on 11/11/22.
+//  Created by Cory Popp on 11/14/22.
 //
 //
 
@@ -46,6 +46,13 @@ extension Media {
     @NSManaged public var filmography: NSSet?
     @NSManaged public var timeAdded: Date
     
+    public var similarArray: [Media] {
+        let set = similar as? Set<Media> ?? []
+        return set.sorted {
+            $0.id < $1.id
+        }
+    }
+    
     public var filmographyArray: [Person] {
         let set = filmography as? Set<Person> ?? []
         return set.sorted {
@@ -55,13 +62,6 @@ extension Media {
     
     public var creditsArray: [Person] {
         let set = credits as? Set<Person> ?? []
-        return set.sorted {
-            $0.id < $1.id
-        }
-    }
-    
-    public var similarArray: [SimilarMedia] {
-        let set = similar as? Set<SimilarMedia> ?? []
         return set.sorted {
             $0.id < $1.id
         }
@@ -139,23 +139,6 @@ extension Media {
 
 }
 
-// MARK: Generated accessors for similarMedia
-extension Media {
-
-    @objc(addSimilarMediaObject:)
-    @NSManaged public func addToSimilarMedia(_ value: SimilarMedia)
-
-    @objc(removeSimilarMediaObject:)
-    @NSManaged public func removeFromSimilarMedia(_ value: SimilarMedia)
-
-    @objc(addSimilarMedia:)
-    @NSManaged public func addToSimilarMedia(_ values: NSSet)
-
-    @objc(removeSimilarMedia:)
-    @NSManaged public func removeFromSimilarMedia(_ values: NSSet)
-
-}
-
 // MARK: Generated accessors for filmography
 extension Media {
 
@@ -170,6 +153,23 @@ extension Media {
 
     @objc(removeFilmography:)
     @NSManaged public func removeFromFilmography(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for similar
+extension Media {
+
+    @objc(addSimilarObject:)
+    @NSManaged public func addToSimilar(_ value: Media)
+
+    @objc(removeSimilarObject:)
+    @NSManaged public func removeFromSimilar(_ value: Media)
+
+    @objc(addSimilar:)
+    @NSManaged public func addToSimilar(_ values: NSSet)
+
+    @objc(removeSimilar:)
+    @NSManaged public func removeFromSimilar(_ values: NSSet)
 
 }
 

@@ -46,8 +46,6 @@
 		DCD021FA29089DD000C5BF54 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F929089DD000C5BF54 /* Person+CoreDataClass.swift */; };
 		DCE9740428F83BD9002917F0 /* AllSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE9740328F83BD9002917F0 /* AllSearchResults.swift */; };
 		DCEDDFA029157D3E009D07B5 /* Media+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDDF9F29157D3E009D07B5 /* Media+CoreDataProperties.swift */; };
-		DCF11736290C372A00A59059 /* SimilarMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF11734290C372A00A59059 /* SimilarMedia+CoreDataClass.swift */; };
-		DCF11737290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF11735290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,8 +89,6 @@
 		DCD021F929089DD000C5BF54 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Person+CoreDataClass.swift"; path = "MovieNight/Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DCE9740328F83BD9002917F0 /* AllSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchResults.swift; sourceTree = "<group>"; };
 		DCEDDF9F29157D3E009D07B5 /* Media+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Media+CoreDataProperties.swift"; path = "MovieNight/Media+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		DCF11734290C372A00A59059 /* SimilarMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SimilarMedia+CoreDataClass.swift"; path = "MovieNight/SimilarMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
-		DCF11735290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SimilarMedia+CoreDataProperties.swift"; path = "MovieNight/SimilarMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,8 +162,6 @@
 				DCD021F729089B7100C5BF54 /* Person+CoreDataProperties.swift */,
 				DC2BC11B28F71C5800E12FA5 /* Media+CoreDataClass.swift */,
 				DCEDDF9F29157D3E009D07B5 /* Media+CoreDataProperties.swift */,
-				DCF11734290C372A00A59059 /* SimilarMedia+CoreDataClass.swift */,
-				DCF11735290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift */,
 				DC6E133228E5F4EE00A50AC5 /* MovieNight */,
 				DC6E133128E5F4EE00A50AC5 /* Products */,
 			);
@@ -322,7 +316,6 @@
 			files = (
 				DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */,
 				DC2BC11D28F71C5800E12FA5 /* Media+CoreDataClass.swift in Sources */,
-				DCF11736290C372A00A59059 /* SimilarMedia+CoreDataClass.swift in Sources */,
 				DC6E134928E6660900A50AC5 /* Percent-Encoding.swift in Sources */,
 				DC6E134728E665E200A50AC5 /* MovieView.swift in Sources */,
 				DCEDDFA029157D3E009D07B5 /* Media+CoreDataProperties.swift in Sources */,
@@ -338,7 +331,6 @@
 				DC7A37D92912B87A00E8343A /* CreditProfilePictures.swift in Sources */,
 				DC7A37DF291327C900E8343A /* DiscoverPosters.swift in Sources */,
 				DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */,
-				DCF11737290C372A00A59059 /* SimilarMedia+CoreDataProperties.swift in Sources */,
 				DC6DB7D7290720AE00F7BCDD /* MovieDetailView.swift in Sources */,
 				DC6DB7D3290701BF00F7BCDD /* Credits.swift in Sources */,
 				DCD021FA29089DD000C5BF54 /* Person+CoreDataClass.swift in Sources */,

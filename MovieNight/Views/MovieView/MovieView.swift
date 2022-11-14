@@ -11,8 +11,6 @@ struct MovieView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var moc
     
-    @State var credits = Credits(cast: [])
-    
     var body: some View {
         ScrollView(showsIndicators: false) {
             
@@ -29,7 +27,7 @@ struct MovieView: View {
         }
         
         .background (
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.poster_path ?? "")")) { image in
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
                 image
                     .resizable()
                     .scaledToFill()

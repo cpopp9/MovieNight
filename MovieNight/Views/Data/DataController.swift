@@ -148,12 +148,6 @@ class DataController: ObservableObject {
         
         var newItem = [MediaResult]()
         
-        
-        let similar = SimilarMedia(context: container.viewContext)
-        similar.id = media.id
-        similar.title = media.title
-        
-        
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
@@ -167,10 +161,10 @@ class DataController: ObservableObject {
                 if let similarResults = decodedResponse.results {
                     
                     for item in similarResults {
-                        if item.poster_path == nil { break }
+                        if item.poster_path == nil { continue }
                         
                         if let existing = detectExistingMedia(mediaID: item.id) {
-                            existing.addToSimilarMedia(similar)
+                            media.addToSimilar(existing)
                         } else {
                             newItem.append(item)
                         }
@@ -178,7 +172,7 @@ class DataController: ObservableObject {
                     
                     for item in newItem {
                         if let new = CreateMediaObject(item: item) {
-                            new.addToSimilarMedia(similar)
+                            media.addToSimilar(new)
                         }
                     }
                 }
@@ -210,7 +204,7 @@ class DataController: ObservableObject {
                     
                     for item in discoverResults {
                         
-                        if item.poster_path == nil { break }
+                        if item.poster_path == nil { continue }
                         
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             person.addToFilmography(existing)
@@ -405,12 +399,10 @@ class DataController: ObservableObject {
     func deleteObjects(filter: DeleteFilter) {
         let mediaRequest = NSFetchRequest<Media>(entityName: "Media")
         let personRequest = NSFetchRequest<Person>(entityName: "Person")
-        let similarRequest = NSFetchRequest<SimilarMedia>(entityName: "SimilarMedia")
         
         do {
             let mediaResults = try container.viewContext.fetch(mediaRequest)
             let personResults = try container.viewContext.fetch(personRequest)
-            let similarResults = try container.viewContext.fetch(similarRequest)
             
             
             for media in mediaResults {
@@ -425,10 +417,6 @@ class DataController: ObservableObject {
             
             for person in personResults {
                 container.viewContext.delete(person)
-            }
-            
-            for similar in similarResults {
-                container.viewContext.delete(similar)
             }
             
         } catch let error {
