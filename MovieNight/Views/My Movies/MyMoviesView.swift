@@ -29,7 +29,7 @@ struct MyMoviesView: View {
                     
                 } else {
                     VStack {
-                        Image(systemName: "video.badge.plus")
+                        Image(systemName: "video")
                             .font(.system(size: 45))
                             .foregroundColor(Color(.systemPink))
                             .padding(.vertical)
