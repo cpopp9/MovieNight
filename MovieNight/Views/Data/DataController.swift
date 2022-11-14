@@ -102,6 +102,7 @@ class DataController: ObservableObject {
                     for item in discoverResults {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isDiscoverObject = true
+                            existing.timeAdded = Date.now
                         } else {
                             newMedia.append(item)
                         }
@@ -409,7 +410,9 @@ class DataController: ObservableObject {
                 if filter == .all {
                     container.viewContext.delete(media)
                 } else if filter == .nonWatchlist {
-                    if !media.watchlist {
+                    if media.watchlist {
+                        media.isDiscoverObject = false
+                    } else {
                         container.viewContext.delete(media)
                     }
                 }
