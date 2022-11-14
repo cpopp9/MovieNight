@@ -20,6 +20,8 @@ class DataController: ObservableObject {
             }
             
             self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+            
+            ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         }
         
         deleteObjects(filter: .nonWatchlist)
