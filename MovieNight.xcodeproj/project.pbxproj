@@ -32,9 +32,7 @@
 		DC7A37D92912B87A00E8343A /* CreditProfilePictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */; };
 		DC7A37DF291327C900E8343A /* DiscoverPosters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A37DE291327C900E8343A /* DiscoverPosters.swift */; };
 		DC881816290040520066C8FB /* MediaDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC881815290040520066C8FB /* MediaDetails.swift */; };
-		DCAE02FE28F87CC6008C5DD6 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */; };
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
-		DCB5F171290C18C400A75DDA /* MediaExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5F170290C18C400A75DDA /* MediaExtension.swift */; };
 		DCC484FE28EB13C4004116CD /* AttributionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FD28EB13C4004116CD /* AttributionsView.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 		DCC60AFD29159889006D814A /* FilmographyPoster.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC60AFC29159889006D814A /* FilmographyPoster.swift */; };
@@ -75,9 +73,7 @@
 		DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditProfilePictures.swift; sourceTree = "<group>"; };
 		DC7A37DE291327C900E8343A /* DiscoverPosters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPosters.swift; sourceTree = "<group>"; };
 		DC881815290040520066C8FB /* MediaDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetails.swift; sourceTree = "<group>"; };
-		DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageTransformer.swift; sourceTree = "<group>"; };
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
-		DCB5F170290C18C400A75DDA /* MediaExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaExtension.swift; sourceTree = "<group>"; };
 		DCC484FD28EB13C4004116CD /* AttributionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsView.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 		DCC60AFC29159889006D814A /* FilmographyPoster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmographyPoster.swift; sourceTree = "<group>"; };
@@ -227,8 +223,6 @@
 			isa = PBXGroup;
 			children = (
 				DC6E134828E6660900A50AC5 /* Percent-Encoding.swift */,
-				DCAE02FD28F87CC6008C5DD6 /* UIImageTransformer.swift */,
-				DCB5F170290C18C400A75DDA /* MediaExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -347,10 +341,8 @@
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
 				DC6DB7D12902D4F000F7BCDD /* SimilarMoviesView.swift in Sources */,
 				DC6E134F28E6668100A50AC5 /* MyMoviesView.swift in Sources */,
-				DCB5F171290C18C400A75DDA /* MediaExtension.swift in Sources */,
 				DC6DB7D52907078A00F7BCDD /* CreditsView.swift in Sources */,
 				DC25CA0528F0E41300646BB9 /* SearchFilter.swift in Sources */,
-				DCAE02FE28F87CC6008C5DD6 /* UIImageTransformer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
