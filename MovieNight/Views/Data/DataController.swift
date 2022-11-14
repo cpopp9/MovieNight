@@ -331,7 +331,6 @@ class DataController: ObservableObject {
         newItem.popularity = item.popularity ?? 0.0
         newItem.watchlist = false
         newItem.watched = false
-        newItem.posterImage = UIImage(named: "poster_placeholder")
         newItem.timeAdded = Date.now
         
         if let date = item.release_date ?? item.first_air_date {

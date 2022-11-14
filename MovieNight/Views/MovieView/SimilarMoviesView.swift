@@ -36,7 +36,7 @@ struct SimilarMoviesView: View {
             }
         }
         .task {
-            if media.similarArray.isEmpty {
+            if media.similarArray.count < 5 {
                 await dataController.downloadSimilarMedia(media: media)
             }
         }
