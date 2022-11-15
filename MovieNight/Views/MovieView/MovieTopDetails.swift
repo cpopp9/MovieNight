@@ -13,22 +13,45 @@ struct MovieTopDetails: View {
     var body: some View {
         VStack(alignment: .center) {
             
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 300)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .padding(.trailing)
-                
-            } placeholder: {
-                Image("poster_placeholder")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 300)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .padding(.trailing)
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
+                switch phase {
+                case .empty:
+                    Color.black.opacity(0.1)
+                    
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    
+                case .failure(_):
+                    Image(systemName: "exclamationmark.icloud")
+                        .resizable()
+                        .scaledToFit()
+                    
+                @unknown default:
+                    Image(systemName: "exclamationmark.icloud")
+                }
             }
+            .frame(height: 300)
+            .padding(.trailing)
+            
+//            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
+//                image
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(height: 300)
+//                    .clipShape(RoundedRectangle(cornerRadius: 15))
+//                    .padding(.trailing)
+//
+//            } placeholder: {
+//                Image("poster_placeholder")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(height: 300)
+//                    .clipShape(RoundedRectangle(cornerRadius: 15))
+//                    .padding(.trailing)
+//            }
             
             VStack {
                 Text(media.wrappedTitle)

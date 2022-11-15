@@ -362,6 +362,7 @@ class DataController: ObservableObject {
             newItem.vote_count = Int16(vote_count)
         }
         
+        
         return newItem
     }
     
