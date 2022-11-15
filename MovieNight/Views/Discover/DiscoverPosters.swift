@@ -26,30 +26,15 @@ struct DiscoverPoster: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                         
                     case .failure(_):
-                        Image(systemName: "exclamationmark.icloud")
-                            .resizable()
-                            .scaledToFit()
+                        Color.black.opacity(0.1)
                         
                     @unknown default:
-                        Image(systemName: "exclamationmark.icloud")
+                        Color.black.opacity(0.1)
                     }
                 }
                 .aspectRatio(2/3, contentMode: .fill)
                 .frame(height: 250)
                 
-                
-                    //                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
-                    //                    image
-                    //                        .resizable()
-                    //                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    //
-                    //                } placeholder: {
-                    //                    Image("poster_placeholder")
-                    //                        .resizable()
-                    //                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    //                }
-                    //                .aspectRatio(2/3, contentMode: .fill)
-                    //                .frame(height: 250)
                 
                 Text(media.wrappedTitle)
                     .font(.caption)
