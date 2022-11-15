@@ -11,20 +11,12 @@ import SwiftUI
 struct MovieNightApp: App {
     @StateObject private var dataController = DataController()
     
-//    @AppStorage("isDarkMode") private var isDarkMode = true
-    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(dataController)
                 .environment(\.managedObjectContext, dataController.container.viewContext)
                 .preferredColorScheme(.dark)
-//                .onChange(of: scenePhase) { newPhase in
-//                    if newPhase == .inactive {
-//                    } else if newPhase == .active {
-//                    } else if newPhase == .background {
-//                    }
-//                }
         }
     }   
 }

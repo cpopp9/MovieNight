@@ -48,8 +48,8 @@ struct AllSearchResults: View {
     }
 }
 
-//    struct AllSearchResults_Previews: PreviewProvider {
-//        static var previews: some View {
-//            AllSearchResults(searchResults: <#T##FetchedResults<Movie>#>)
-//        }
-//    }
+struct AllSearchResults_Previews: PreviewProvider {
+    static var previews: some View {
+        AllSearchResults(allMedia: [])
+    }
+}

@@ -44,3 +44,9 @@ struct DiscoverPoster: View {
         }
     }
 }
+
+struct DiscoverPoster_Previews: PreviewProvider {
+    static var previews: some View {
+        DiscoverPoster(media: Media())
+    }
+}

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SearchView: View {
-//    @Environment(\.managedObjectContext) var moc
     @Environment(\.isSearching) private var isSearching: Bool
     
     @EnvironmentObject var dataController: DataController

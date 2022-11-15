@@ -60,8 +60,8 @@ struct PersonDetails: View {
     }
 }
 
-//struct PersonView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PersonDetails(person: Person())
-//    }
-//}
+struct PersonDetails_Previews: PreviewProvider {
+    static var previews: some View {
+        PersonDetails(person: Person())
+    }
+}

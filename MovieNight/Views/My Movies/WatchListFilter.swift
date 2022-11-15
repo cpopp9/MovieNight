@@ -10,7 +10,6 @@ import SwiftUI
 struct WatchListFilter: View {
     @FetchRequest var watchlistMedia: FetchedResults<Media>
     @EnvironmentObject var dataController: DataController
-//    @Environment(\.managedObjectContext) var moc
     
     private var headerText: String
     
@@ -72,5 +71,10 @@ struct WatchListFilter: View {
             dataController.container.viewContext.delete(media)
         }
     }
-    
+}
+
+struct WatchListFilter_Previews: PreviewProvider {
+    static var previews: some View {
+        WatchListFilter(media_type: "movie", watchedSort: true, watched: true, searchQuery: "")
+    }
 }

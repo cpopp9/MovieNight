@@ -86,6 +86,7 @@ class DataController: ObservableObject {
     func downloadDiscoveryMedia(filterKey: String, year: Int, page: Int) async {
         
         var newMedia = [MediaResult]()
+        var existingMedia = [Media]()
         
         let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate")
         
@@ -99,12 +100,12 @@ class DataController: ObservableObject {
             
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
-                if var discoverResults = decodedResponse.results {
+                if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
+                        
                         if let existing = detectExistingMedia(mediaID: item.id) {
-                            existing.isDiscoverObject = true
-                            existing.timeAdded = Date.now
+                            existingMedia.append(existing)
                         } else {
                             newMedia.append(item)
                         }
@@ -112,6 +113,11 @@ class DataController: ObservableObject {
                     
                     for item in newMedia {
                         CreateMediaObject(item: item)?.isDiscoverObject = true
+                    }
+                    
+                    for item in existingMedia {
+                        item.isDiscoverObject = true
+                        item.timeAdded = Date.now
                     }
                 }
             }

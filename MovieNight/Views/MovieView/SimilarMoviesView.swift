@@ -42,3 +42,9 @@ struct SimilarMoviesView: View {
     }
 }
 
+struct SimilarMoviesView_Previews: PreviewProvider {
+    static var previews: some View {
+        SimilarMoviesView(media: Media())
+    }
+}
+

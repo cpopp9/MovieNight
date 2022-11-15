@@ -26,18 +26,18 @@ struct CreditProfilePictures: View {
                         .scaledToFit()
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                    Text(person.wrappedName)
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .padding(5)
+                Text(person.wrappedName)
+                    .font(.caption)
+                    .foregroundColor(.white)
+                    .padding(5)
             }
             .frame(width: 100)
         }
     }
 }
 
-    //struct CreditProfilePictures_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        CreditProfilePictures()
-    //    }
-    //}
+struct CreditProfilePictures_Previews: PreviewProvider {
+    static var previews: some View {
+        CreditProfilePictures(person: Person())
+    }
+}

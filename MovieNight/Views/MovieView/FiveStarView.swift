@@ -31,8 +31,8 @@ struct MediaRatingView: View {
     }
 }
 
-//struct MovieRatingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MovieRatingView(rating: 3)
-//    }
-//}
+struct MovieRatingView_Previews: PreviewProvider {
+    static var previews: some View {
+        MediaRatingView(voteAverage: 3.5)
+    }
+}

@@ -107,8 +107,8 @@ struct SearchFilter: View {
 
 
 
-    //struct MovieSearch_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        SearchFilter()
-    //    }
-    //}
+struct MovieSearch_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchFilter(mediaFilter: "tv")
+    }
+}

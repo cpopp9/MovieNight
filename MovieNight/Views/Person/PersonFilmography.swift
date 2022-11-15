@@ -35,16 +35,10 @@ struct PersonFilmography: View {
             }
         }
     }
-    
-//    init(person: Person) {
-//        _filmography = FetchRequest<Filmography>(sortDescriptors: [], predicate: NSPredicate(format: "personID == %i", person.id, person.wrappedName))
-//        self.person = person
-//    }
-    
 }
 
-    //struct PersonFilmography_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        PersonFilmography(dataController: DataController)
-    //    }
-    //}
+    struct PersonFilmography_Previews: PreviewProvider {
+        static var previews: some View {
+            PersonFilmography(person: Person())
+        }
+    }

@@ -40,3 +40,10 @@ struct CreditsView: View {
         }
     }
 }
+
+
+struct CreditsView_Previes: PreviewProvider {
+    static var previews: some View {
+        MovieDetailView(media: Media())
+    }
+}

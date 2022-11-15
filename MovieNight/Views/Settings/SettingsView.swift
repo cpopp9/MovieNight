@@ -11,14 +11,10 @@ import SafariServices
 struct SettingsView: View {
     @EnvironmentObject var dataController: DataController
     @State private var showingAlert = false
-    @AppStorage("isDarkMode") private var isDarkMode = true
     
     var body: some View {
         NavigationView {
             Form {
-                Section {
-                    Toggle("Light Mode", isOn: $isDarkMode)
-                }
                 
                 Section {
                     Button("Delete App Data") {

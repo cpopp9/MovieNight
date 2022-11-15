@@ -50,8 +50,8 @@ struct MovieDetailView: View {
     }
 }
 
-    //struct MovieDetailView_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        MovieDetailView()
-    //    }
-    //}
+    struct MovieDetailView_Previews: PreviewProvider {
+        static var previews: some View {
+            MovieDetailView(media: Media())
+        }
+    }

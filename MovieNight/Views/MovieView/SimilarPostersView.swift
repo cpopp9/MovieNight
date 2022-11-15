@@ -45,8 +45,8 @@ struct SimilarPostersView: View {
     }
 }
 
-    //struct SimilarPostersView_Previews: PreviewProvider {
-    //    static var previews: some View {
-    //        SimilarPostersView()
-    //    }
-    //}
+    struct SimilarPostersView_Previews: PreviewProvider {
+        static var previews: some View {
+            SimilarPostersView(media: Media())
+        }
+    }
