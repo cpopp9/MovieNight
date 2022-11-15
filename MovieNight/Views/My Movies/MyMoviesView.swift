@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct MyMoviesView: View {
-    @Environment(\.managedObjectContext) var moc
+//    @Environment(\.managedObjectContext) var moc
     
         // Filter data
     @State private var media_type = "movies and tv"

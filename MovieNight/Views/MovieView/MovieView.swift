@@ -9,7 +9,7 @@ import SwiftUI
 struct MovieView: View {
     @ObservedObject var media: Media
     @EnvironmentObject var dataController: DataController
-    @Environment(\.managedObjectContext) var moc
+//    @Environment(\.managedObjectContext) var moc
     
     var body: some View {
         ScrollView(showsIndicators: false) {

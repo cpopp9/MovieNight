@@ -9,7 +9,8 @@ import SwiftUI
 
 struct WatchListFilter: View {
     @FetchRequest var watchlistMedia: FetchedResults<Media>
-    @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var dataController: DataController
+//    @Environment(\.managedObjectContext) var moc
     
     private var headerText: String
     
@@ -68,7 +69,7 @@ struct WatchListFilter: View {
     func deleteMedia(at offsets: IndexSet) {
         for offset in offsets {
             let media = watchlistMedia[offset]
-            moc.delete(media)
+            dataController.container.viewContext.delete(media)
         }
     }
     
