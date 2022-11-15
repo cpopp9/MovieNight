@@ -17,12 +17,13 @@ struct MovieTopDetails: View {
                 switch phase {
                 case .empty:
                     Color.black.opacity(0.1)
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
                     
                 case .success(let image):
                     image
                         .resizable()
-                        .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
                     
                 case .failure(_):
                     Image(systemName: "exclamationmark.icloud")
@@ -33,25 +34,10 @@ struct MovieTopDetails: View {
                     Image(systemName: "exclamationmark.icloud")
                 }
             }
+            .scaledToFit()
             .frame(height: 300)
             .padding(.trailing)
             
-//            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
-//                image
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(height: 300)
-//                    .clipShape(RoundedRectangle(cornerRadius: 15))
-//                    .padding(.trailing)
-//
-//            } placeholder: {
-//                Image("poster_placeholder")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(height: 300)
-//                    .clipShape(RoundedRectangle(cornerRadius: 15))
-//                    .padding(.trailing)
-//            }
             
             VStack {
                 Text(media.wrappedTitle)

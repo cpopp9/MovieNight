@@ -21,28 +21,47 @@ struct MovieView: View {
             MovieDetailView(media: media)
             
             CreditsView(media: media)
-
+            
             SimilarMoviesView(media: media)
             
         }
         
         .background (
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .blur(radius: 50)
-                    .overlay(Color.gray.opacity(0.1))
-                    .ignoresSafeArea()
-                
-            } placeholder: {
-                Image("poster_placeholder")
-                    .resizable()
-                    .scaledToFill()
-                    .blur(radius: 50)
-                    .overlay(Color.gray.opacity(0.1))
-                    .ignoresSafeArea()
+            
+            
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
+                switch phase {
+                case .empty:
+                    Color.black.opacity(0.9)
+                        .scaledToFill()
+                        .blur(radius: 50)
+                        .overlay(Color.gray.opacity(0.1))
+                        .ignoresSafeArea()
+                    
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .blur(radius: 50)
+                        .overlay(Color.gray.opacity(0.1))
+                        .ignoresSafeArea()
+                    
+                case .failure(_):
+                    Color.black.opacity(0.9)
+                        .scaledToFill()
+                        .blur(radius: 50)
+                        .overlay(Color.gray.opacity(0.1))
+                        .ignoresSafeArea()
+                    
+                @unknown default:
+                    Color.black.opacity(0.9)
+                        .scaledToFill()
+                        .blur(radius: 50)
+                        .overlay(Color.gray.opacity(0.1))
+                        .ignoresSafeArea()
+                }
             }
+            
         )
         
         .task {

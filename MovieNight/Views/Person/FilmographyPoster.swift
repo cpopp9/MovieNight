@@ -14,15 +14,26 @@ struct FilmographyPostersView: View {
             MovieView(media: media)
         } label: {
             VStack {
-                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")) { image in
-                    image
-                        .resizable()
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    
-                } placeholder: {
-                    Image("poster_placeholder")
-                        .resizable()
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
+                    switch phase {
+                    case .empty:
+                        Color.black.opacity(0.1)
+                            .aspectRatio(2/3, contentMode: .fill)
+                            .frame(height: 250)
+                        
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        
+                    case .failure(_):
+                        Image(systemName: "exclamationmark.icloud")
+                            .resizable()
+                            .scaledToFit()
+                        
+                    @unknown default:
+                        Image(systemName: "exclamationmark.icloud")
+                    }
                 }
                 .aspectRatio(2/3, contentMode: .fill)
                 .frame(height: 250)
