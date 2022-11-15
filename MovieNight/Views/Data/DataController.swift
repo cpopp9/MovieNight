@@ -36,6 +36,8 @@ class DataController: ObservableObject {
     
         // API Requests
     
+    // Download Media
+    
     func downloadSearchMedia(searchText: String) async {
         
         clearSearch()
@@ -119,41 +121,6 @@ class DataController: ObservableObject {
         
         await saveMedia()
         print("Discovery Media Loaded")
-    }
-    
-    func downloadAdditionalMediaDetails(media: Media) async {
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(MediaDetails.self, from: data) {
-                
-                media.imdb_id = decodedResponse.imdb_id
-                media.runtime = Int16(decodedResponse.runtime ?? 0)
-                media.tagline = decodedResponse.tagline
-                media.status = decodedResponse.status
-                
-                if let genres = decodedResponse.genres {
-                    var genString = [String]()
-                    
-                    for genre in genres {
-                        genString.append(genre.name)
-                    }
-                    
-                    media.genres = genString.joined(separator: ", ")
-                }
-                
-                
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-        print("Additional Media Details Loaded")
     }
     
     func downloadSimilarMedia(media: Media) async {
@@ -240,6 +207,69 @@ class DataController: ObservableObject {
         print("Filmography Loaded")
     }
     
+    // Download Details
+    
+    func downloadAdditionalMediaDetails(media: Media) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaDetails.self, from: data) {
+                
+                media.imdb_id = decodedResponse.imdb_id
+                media.runtime = Int16(decodedResponse.runtime ?? 0)
+                media.tagline = decodedResponse.tagline
+                media.status = decodedResponse.status
+                
+                if let genres = decodedResponse.genres {
+                    var genString = [String]()
+                    
+                    for genre in genres {
+                        genString.append(genre.name)
+                    }
+                    
+                    media.genres = genString.joined(separator: ", ")
+                }
+                
+                
+            }
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
+        print("Additional Media Details Loaded")
+    }
+    
+    func downloadAdditionalPersonDetails(person: Person) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(PersonResult.self, from: data) {
+                
+                person.biography = decodedResponse.biography
+                person.place_of_birth = decodedResponse.place_of_birth
+                person.birthday = decodedResponse.birthday
+                    //                person.deathday = decodedResponse.deathday
+                
+            }
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
+        print("Additional Person Details Loaded")
+    }
+    
+    // Download People
+    
     func downloadMediaCredits(media: Media) async {
         
         var newCredits = [Person]()
@@ -273,29 +303,7 @@ class DataController: ObservableObject {
         print("Media Credits Loaded")
     }
     
-    func downloadAdditionalPersonDetails(person: Person) async {
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(PersonResult.self, from: data) {
-                
-                person.biography = decodedResponse.biography
-                person.place_of_birth = decodedResponse.place_of_birth
-                person.birthday = decodedResponse.birthday
-                    //                person.deathday = decodedResponse.deathday
-                
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-        print("Additional Person Details Loaded")
-    }
+    // Download Posters
     
     func downloadPoster(media: Media) async {
         
