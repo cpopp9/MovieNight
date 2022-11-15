@@ -301,7 +301,7 @@ class DataController: ObservableObject {
         
         DispatchQueue.main.async {
             
-            let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
+            let url = URL(string: "https://image.tmdb.org/t/p/w92\(media.wrappedPosterPath)")!
             
             URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data, error == nil else {
@@ -360,6 +360,10 @@ class DataController: ObservableObject {
         
         if let vote_count = item.vote_count {
             newItem.vote_count = Int16(vote_count)
+        }
+        
+        Task {
+            await downloadPoster(media: newItem)
         }
         
         

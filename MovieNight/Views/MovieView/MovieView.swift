@@ -28,39 +28,46 @@ struct MovieView: View {
         
         .background (
             
+            Image(uiImage: media.wrappedPosterImage)
+                .resizable()
+                .scaledToFill()
+                .blur(radius: 50)
+                .overlay(Color.gray.opacity(0.1))
+                .ignoresSafeArea()
             
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
-                switch phase {
-                case .empty:
-                    Color.black.opacity(0.9)
-                        .scaledToFill()
-                        .blur(radius: 50)
-                        .overlay(Color.gray.opacity(0.1))
-                        .ignoresSafeArea()
-                    
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .blur(radius: 50)
-                        .overlay(Color.gray.opacity(0.1))
-                        .ignoresSafeArea()
-                    
-                case .failure(_):
-                    Color.black.opacity(0.9)
-                        .scaledToFill()
-                        .blur(radius: 50)
-                        .overlay(Color.gray.opacity(0.1))
-                        .ignoresSafeArea()
-                    
-                @unknown default:
-                    Color.black.opacity(0.9)
-                        .scaledToFill()
-                        .blur(radius: 50)
-                        .overlay(Color.gray.opacity(0.1))
-                        .ignoresSafeArea()
-                }
-            }
+            
+//            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
+//                switch phase {
+//                case .empty:
+//                    Color.black.opacity(0.9)
+//                        .scaledToFill()
+//                        .blur(radius: 50)
+//                        .overlay(Color.gray.opacity(0.1))
+//                        .ignoresSafeArea()
+//                    
+//                case .success(let image):
+//                    image
+//                        .resizable()
+//                        .scaledToFill()
+//                        .blur(radius: 50)
+//                        .overlay(Color.gray.opacity(0.1))
+//                        .ignoresSafeArea()
+//                    
+//                case .failure(_):
+//                    Color.black.opacity(0.9)
+//                        .scaledToFill()
+//                        .blur(radius: 50)
+//                        .overlay(Color.gray.opacity(0.1))
+//                        .ignoresSafeArea()
+//                    
+//                @unknown default:
+//                    Color.black.opacity(0.9)
+//                        .scaledToFill()
+//                        .blur(radius: 50)
+//                        .overlay(Color.gray.opacity(0.1))
+//                        .ignoresSafeArea()
+//                }
+//            }
             
         )
         
