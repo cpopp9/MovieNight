@@ -20,20 +20,29 @@ struct WatchListFilter: View {
                         MovieView(media: media)
                     } label: {
                         HStack {
-                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(media.wrappedPosterPath)")) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 75, height: 75)
-                                    .clipped()
-                                
-                            } placeholder: {
-                                Image("poster_placeholder")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 75, height: 75)
-                                    .clipped()
+                            
+                            
+                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
+                                switch phase {
+                                case .empty:
+                                    Color.black.opacity(0.1)
+                                    
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                    
+                                case .failure(_):
+                                    Color.black
+                                        .scaledToFit()
+                                    
+                                @unknown default:
+                                    Image(systemName: "exclamationmark.icloud")
+                                }
                             }
+                            
+                            .frame(width: 75, height: 75)
+                            .clipped()
                             
                             VStack(alignment: .leading) {
                                 Text(media.wrappedTitle)

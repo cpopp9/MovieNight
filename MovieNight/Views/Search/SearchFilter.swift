@@ -47,22 +47,6 @@ struct SearchFilter: View {
                             .clipped()
                             
                             
-                            
-                                //                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w185\(media.wrappedPosterPath)")) { image in
-                                //                                image
-                                //                                    .resizable()
-                                //                                    .aspectRatio(contentMode: .fill)
-                                //                                    .frame(width: 75, height: 75)
-                                //                                    .clipped()
-                                //
-                                //                            } placeholder: {
-                                //                                Image("poster_placeholder")
-                                //                                    .resizable()
-                                //                                    .aspectRatio(contentMode: .fill)
-                                //                                    .frame(width: 75, height: 75)
-                                //                                    .clipped()
-                                //                            }
-                            
                             VStack(alignment: .leading) {
                                 Text(media.wrappedTitle)
                                     .font(.headline)
