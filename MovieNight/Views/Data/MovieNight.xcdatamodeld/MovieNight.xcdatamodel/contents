@@ -25,11 +25,6 @@
         <relationship name="credits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="media" inverseEntity="Person"/>
         <relationship name="filmography" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="filmography" inverseEntity="Person"/>
         <relationship name="similar" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Media" inverseName="similar" inverseEntity="Media"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="id"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="biography" optional="YES" attributeType="String"/>

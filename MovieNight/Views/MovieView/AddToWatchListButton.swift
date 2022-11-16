@@ -34,7 +34,7 @@ struct AddToWatchListButton: View {
             .buttonBorderShape(.roundedRectangle(radius: 10))
             .controlSize(.large)
             .padding(.top)
-
+            
             Button() {
                 media.watched.toggle()
                 
@@ -59,20 +59,20 @@ struct AddToWatchListButton: View {
     }
     
     func saveItem() async {
-            await MainActor.run {
-                do {
-                    try dataController.container.viewContext.save()
-                    print("Context Saved")
-                    
-                } catch let error {
-                    print("Persistent Store Not Saved \(error)")
-                }
-            }
-    }
-}
-    
-        struct AddToWatchListButton_Previews: PreviewProvider {
-            static var previews: some View {
-                AddToWatchListButton(media: Media())
+        await MainActor.run {
+            do {
+                try dataController.container.viewContext.save()
+                print("Context Saved")
+                
+            } catch let error {
+                print("Persistent Store Not Saved \(error)")
             }
         }
+    }
+}
+
+struct AddToWatchListButton_Previews: PreviewProvider {
+    static var previews: some View {
+        AddToWatchListButton(media: Media())
+    }
+}

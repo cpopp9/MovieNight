@@ -19,12 +19,13 @@ class DataController: ObservableObject {
                 return
             }
             
-            self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+//            self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
             
             ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         }
         
         deleteObjects(filter: .nonWatchlist)
+        clearSearch()
         
     }
     
@@ -68,11 +69,14 @@ class DataController: ObservableObject {
                 if let searchResults = decodedResponse.results {
 
                     for item in searchResults {
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            existing.isSearchObject = true
-                        } else {
-                            CreateMediaObject(item: item, filter: .search)
-                        }
+                        
+                        CreateMediaObject(item: item, filter: .search)
+                        
+//                        if let existing = detectExistingMedia(mediaID: item.id) {
+//                            existing.isSearchObject = true
+//                        } else {
+//                            CreateMediaObject(item: item, filter: .search)
+//                        }
                     }
 
                 }
@@ -80,7 +84,7 @@ class DataController: ObservableObject {
         } catch let error {
             fatalError("Invalid Data \(error)")
         }
-        await saveMedia()
+//        await saveMedia()
     }
     
     func downloadDiscoveryMedia(year: Int, page: Int) async {
@@ -111,41 +115,34 @@ class DataController: ObservableObject {
             print("Invalid Data \(error)")
         }
         
-        await saveMedia()
+//        await saveMedia()
     }
     
     func downloadSimilarMedia(media: Media) async {
         
         
-//        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
-//            print("Invalid URL")
-//            return
-//        }
-//
-//        do {
-//            let (data, _) = try await URLSession.shared.data(from: url)
-//
-//            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-//
-//                if let similarResults = decodedResponse.results {
-//
-//                    let downloadedMedia = detectExistingMedia(with: similarResults)
-//
-//                    let newMedia = downloadedMedia.0
-//                    var existingMedia = downloadedMedia.1
-//
-//                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
-//
-//                    for existing in existingMedia {
-//                        media.addToSimilar(existing)
-//                    }
-//
-//                }
-//            }
-//
-//        } catch let error {
-//            print("Invalid Data \(error)")
-//        }
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+            print("Invalid URL")
+            return
+        }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+
+                if let similarResults = decodedResponse.results {
+                    
+                    for item in similarResults {
+                        media.addToSimilar(CreateMediaObject(item: item, filter: .similar))
+                    }
+
+                }
+            }
+
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
     }
     
     func downloadPersonFilmography(person: Person) async {
@@ -307,29 +304,7 @@ class DataController: ObservableObject {
         return nil
     }
     
-//    func detectExistingMedia(with downloadedMedia: [MediaResult]) -> ([MediaResult], [Media]) {
-//        var newMedia = [MediaResult]()
-//        var existingMedia = [Media]()
-//
-//        for media in downloadedMedia {
-//            let request: NSFetchRequest<Media> = Media.fetchRequest()
-//            request.fetchLimit = 1
-//            request.predicate = NSPredicate(format: "id == %i", media.id)
-//
-//            do {
-//                if let existing = try container.viewContext.fetch(request).first {
-//                    existingMedia.append(existing)
-//                } else {
-//                    newMedia.append(media)
-//                }
-//            } catch {
-//                print("Error Fetching Media")
-//            }
-//
-//        }
-//        return (newMedia, existingMedia)
-    
-    func CreateMediaObject(item: MediaResult, filter: DetectFilter) {
+    func CreateMediaObject(item: MediaResult, filter: DetectFilter) -> Media {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -373,55 +348,8 @@ class DataController: ObservableObject {
         Task {
             await downloadPoster(media: newItem)
         }
-        
+        return newItem
     }
-//    }
-    
-//    func CreateMediaObject(with downloadedMedia: [MediaResult]) -> [Media]{
-//        var newMedia = [Media]()
-//
-//        for media in downloadedMedia {
-//            let newItem = Media(context: container.viewContext)
-//            newItem.title = media.title ?? media.name ?? "Unknown"
-//            newItem.id = Int32(media.id)
-//            newItem.poster_path = media.poster_path ?? media.profile_path
-//            newItem.media_type = media.media_type ?? "movie"
-//            newItem.original_language = media.original_language
-//            newItem.overview = media.overview
-//            newItem.release_date = media.release_date ?? media.first_air_date
-//            newItem.popularity = media.popularity ?? 0.0
-//            newItem.watchlist = false
-//            newItem.watched = false
-//            newItem.timeAdded = Date.now
-//            newItem.isDiscoverObject = false
-//            newItem.isSearchObject = false
-//
-//            if let date = media.release_date ?? media.first_air_date {
-//                let formatter = DateFormatter()
-//                formatter.dateFormat = "yyyy-MM-dd"
-//                if let parsed = formatter.date(from: date) {
-//                    let calendar = Calendar.current
-//                    let year = calendar.component(.year, from: parsed)
-//                    newItem.release_date = "\(year)"
-//                }
-//            }
-//
-//            if let vote_average = media.vote_average {
-//                newItem.vote_average = vote_average
-//            }
-//
-//            if let vote_count = media.vote_count {
-//                newItem.vote_count = Int16(vote_count)
-//            }
-//
-//            Task {
-//                await downloadPoster(media: newItem)
-//            }
-//            newMedia.append(newItem)
-//        }
-//
-//        return newMedia
-//    }
     
     func CreatePerson(person: Cast, media: Media) -> Person {
         let newPerson = Person(context: container.viewContext)

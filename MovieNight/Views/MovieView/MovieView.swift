@@ -13,15 +13,17 @@ struct MovieView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             
-//            MovieTopDetails(media: media)
+            MovieTopDetails(media: media)
+            
+            ButtonView(mediaID: Int(media.id))
             
 //            AddToWatchListButton(media: media)
             
-//            MovieDetailView(media: media)
+            MovieDetailView(media: media)
             
 //            CreditsView(media: media)
             
-//            SimilarMoviesView(media: media)
+            SimilarMoviesView(media: media)
             
         }
         
