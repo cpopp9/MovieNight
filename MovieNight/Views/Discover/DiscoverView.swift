@@ -36,7 +36,7 @@ struct DiscoverView: View {
                             .onAppear {
                                 currentPage += 1
                                 Task {
-                                    await dataController.downloadDiscoveryMedia(filterKey: "discover", year: 2022, page: currentPage)
+                                    await dataController.downloadDiscoveryMedia(year: 2022, page: currentPage)
                                 }
                             }
                     }

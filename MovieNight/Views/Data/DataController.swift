@@ -34,15 +34,14 @@ class DataController: ObservableObject {
         case all, nonWatchlist
     }
     
+    
         // API Requests
     
-    // Download Media
+        // Download Media
     
     func downloadSearchMedia(searchText: String) async {
         
         clearSearch()
-        
-        var newMedia = [MediaResult]()
         
         var encoded: String {
             if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
@@ -63,17 +62,17 @@ class DataController: ObservableObject {
                 
                 if let searchResults = decodedResponse.results {
                     
-                    for item in searchResults {
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            existing.isSearchObject = true
-                        } else {
-                            newMedia.append(item)
-                        }
+                    let downloadedMedia = detectExistingMedia(with: searchResults)
+                    
+                    let newMedia = downloadedMedia.0
+                    var existingMedia = downloadedMedia.1
+                    
+                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+                    
+                    for media in existingMedia {
+                        media.isSearchObject = true
                     }
                     
-                    for item in newMedia {
-                        CreateMediaObject(item: item)?.isSearchObject = true
-                    }
                 }
             }
         } catch let error {
@@ -83,42 +82,31 @@ class DataController: ObservableObject {
         print("Search Media Loaded")
     }
     
-    func downloadDiscoveryMedia(filterKey: String, year: Int, page: Int) async {
+    func downloadDiscoveryMedia(year: Int, page: Int) async {
         
-        var newMedia = [MediaResult]()
-        var existingMedia = [Media]()
-        
-        let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate")
-        
-        
-        guard let url = discover else {
-            fatalError("Invalid URL")
+        guard let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate") else {
+            print("Invalid URL")
+            return
         }
         
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
+            let (data, _) = try await URLSession.shared.data(from: discover)
             
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
                 if let discoverResults = decodedResponse.results {
                     
-                    for item in discoverResults {
-                        
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            existingMedia.append(existing)
-                        } else {
-                            newMedia.append(item)
-                        }
+                    let downloadedMedia = detectExistingMedia(with: discoverResults)
+                    
+                    let newMedia = downloadedMedia.0
+                    var existingMedia = downloadedMedia.1
+                    
+                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+                    
+                    for media in existingMedia {
+                        media.isDiscoverObject = true
                     }
                     
-                    for item in newMedia {
-                        CreateMediaObject(item: item)?.isDiscoverObject = true
-                    }
-                    
-                    for item in existingMedia {
-                        item.isDiscoverObject = true
-                        item.timeAdded = Date.now
-                    }
                 }
             }
         } catch let error {
@@ -131,8 +119,7 @@ class DataController: ObservableObject {
     
     func downloadSimilarMedia(media: Media) async {
         
-        var newItem = [MediaResult]()
-        
+
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
@@ -145,21 +132,17 @@ class DataController: ObservableObject {
                 
                 if let similarResults = decodedResponse.results {
                     
-                    for item in similarResults {
-                        if item.poster_path == nil { continue }
-                        
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            media.addToSimilar(existing)
-                        } else {
-                            newItem.append(item)
-                        }
+                    let downloadedMedia = detectExistingMedia(with: similarResults)
+                    
+                    let newMedia = downloadedMedia.0
+                    var existingMedia = downloadedMedia.1
+                    
+                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+                    
+                    for existing in existingMedia {
+                        media.addToSimilar(existing)
                     }
                     
-                    for item in newItem {
-                        if let new = CreateMediaObject(item: item) {
-                            media.addToSimilar(new)
-                        }
-                    }
                 }
             }
             
@@ -171,49 +154,41 @@ class DataController: ObservableObject {
     }
     
     func downloadPersonFilmography(person: Person) async {
-        
-        var newMedia = [MediaResult]()
-        
-        let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
-        
-        guard let url = discover else {
-            fatalError("Invalid URL")
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
             
-            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-                
-                if let discoverResults = decodedResponse.cast {
-                    
-                    for item in discoverResults {
-                        
-                        if item.poster_path == nil { continue }
-                        
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            person.addToFilmography(existing)
-                        } else {
-                            newMedia.append(item)
-                        }
+                    let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
+            
+                    guard let url = discover else {
+                        fatalError("Invalid URL")
                     }
-                    
-                    for item in newMedia {
-                        if let new = CreateMediaObject(item: item) {
-                            person.addToFilmography(new)
+            
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: url)
+            
+                        if let filmographyResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+            
+                            if let filmographyResults = filmographyResponse.cast {
+            
+                                let downloadedMedia = detectExistingMedia(with: filmographyResults)
+                                
+                                let newMedia = downloadedMedia.0
+                                var existingMedia = downloadedMedia.1
+                                
+                                existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+                                
+                                for existing in existingMedia {
+                                    person.addToFilmography(existing)
+                                }
+                            }
                         }
+                    } catch let error {
+                        print("Invalid Data \(error)")
                     }
-                }
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-        
-        await saveMedia()
-        print("Filmography Loaded")
+            
+                    await saveMedia()
+                    print("Filmography Loaded")
     }
     
-    // Download Details
+        // Download Details
     
     func downloadAdditionalMediaDetails(media: Media) async {
         
@@ -274,7 +249,7 @@ class DataController: ObservableObject {
         print("Additional Person Details Loaded")
     }
     
-    // Download People
+        // Download People
     
     func downloadMediaCredits(media: Media) async {
         
@@ -309,7 +284,7 @@ class DataController: ObservableObject {
         print("Media Credits Loaded")
     }
     
-    // Download Posters
+        // Download Posters
     
     func downloadPoster(media: Media) async {
         
@@ -329,59 +304,73 @@ class DataController: ObservableObject {
     }
     
     
-    
         // Object Functions
     
-    func detectExistingMedia(mediaID: Int) -> Media? {
-        let request: NSFetchRequest<Media> = Media.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "id == %i", mediaID)
+    func detectExistingMedia(with downloadedMedia: [MediaResult]) -> ([MediaResult], [Media]) {
+        var newMedia = [MediaResult]()
+        var existingMedia = [Media]()
         
-        if let object = try? container.viewContext.fetch(request).first {
-            return object
+        for media in downloadedMedia {
+            let request: NSFetchRequest<Media> = Media.fetchRequest()
+            request.fetchLimit = 1
+            request.predicate = NSPredicate(format: "id == %i", media.id)
+            
+            do {
+                if let existing = try container.viewContext.fetch(request).first {
+                    existingMedia.append(existing)
+                } else {
+                    newMedia.append(media)
+                }
+            } catch {
+                print("Error Fetching Media")
+            }
+            
         }
-        
-        return nil
+        return (newMedia, existingMedia)
     }
     
-    func CreateMediaObject(item: MediaResult) -> Media? {
-        let newItem = Media(context: container.viewContext)
-        newItem.title = item.title ?? item.name ?? "Unknown"
-        newItem.id = Int32(item.id)
-        newItem.poster_path = item.poster_path ?? item.profile_path
-        newItem.media_type = item.media_type ?? "movie"
-        newItem.original_language = item.original_language
-        newItem.overview = item.overview
-        newItem.release_date = item.release_date ?? item.first_air_date
-        newItem.popularity = item.popularity ?? 0.0
-        newItem.watchlist = false
-        newItem.watched = false
-        newItem.timeAdded = Date.now
+    func CreateMediaObject(with downloadedMedia: [MediaResult]) -> [Media]{
+        var newMedia = [Media]()
         
-        if let date = item.release_date ?? item.first_air_date {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            if let parsed = formatter.date(from: date) {
-                let calendar = Calendar.current
-                let year = calendar.component(.year, from: parsed)
-                newItem.release_date = "\(year)"
+        for media in downloadedMedia {
+            let newItem = Media(context: container.viewContext)
+            newItem.title = media.title ?? media.name ?? "Unknown"
+            newItem.id = Int32(media.id)
+            newItem.poster_path = media.poster_path ?? media.profile_path
+            newItem.media_type = media.media_type ?? "movie"
+            newItem.original_language = media.original_language
+            newItem.overview = media.overview
+            newItem.release_date = media.release_date ?? media.first_air_date
+            newItem.popularity = media.popularity ?? 0.0
+            newItem.watchlist = false
+            newItem.watched = false
+            newItem.timeAdded = Date.now
+            
+            if let date = media.release_date ?? media.first_air_date {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                if let parsed = formatter.date(from: date) {
+                    let calendar = Calendar.current
+                    let year = calendar.component(.year, from: parsed)
+                    newItem.release_date = "\(year)"
+                }
             }
+            
+            if let vote_average = media.vote_average {
+                newItem.vote_average = vote_average
+            }
+            
+            if let vote_count = media.vote_count {
+                newItem.vote_count = Int16(vote_count)
+            }
+            
+            Task {
+                await downloadPoster(media: newItem)
+            }
+            newMedia.append(newItem)
         }
         
-        if let vote_average = item.vote_average {
-            newItem.vote_average = vote_average
-        }
-        
-        if let vote_count = item.vote_count {
-            newItem.vote_count = Int16(vote_count)
-        }
-        
-        Task {
-            await downloadPoster(media: newItem)
-        }
-        
-        
-        return newItem
+        return newMedia
     }
     
     func CreatePerson(person: Cast, media: Media) -> Person {
