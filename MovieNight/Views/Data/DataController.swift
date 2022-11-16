@@ -41,44 +41,44 @@ class DataController: ObservableObject {
     
     func downloadSearchMedia(searchText: String) async {
         
-        clearSearch()
-        
-        var encoded: String {
-            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
-                return encodedText
-            } else {
-                return "Failed"
-            }
-        }
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-                
-                if let searchResults = decodedResponse.results {
-                    
-                    let downloadedMedia = detectExistingMedia(with: searchResults)
-                    
-                    let newMedia = downloadedMedia.0
-                    var existingMedia = downloadedMedia.1
-                    
-                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
-                    
-                    for media in existingMedia {
-                        media.isSearchObject = true
-                    }
-                    
-                }
-            }
-        } catch let error {
-            fatalError("Invalid Data \(error)")
-        }
+//        clearSearch()
+//
+//        var encoded: String {
+//            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
+//                return encodedText
+//            } else {
+//                return "Failed"
+//            }
+//        }
+//
+//        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
+//            print("Invalid URL")
+//            return
+//        }
+//
+//        do {
+//            let (data, _) = try await URLSession.shared.data(from: url)
+//
+//            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+//
+//                if let searchResults = decodedResponse.results {
+//
+//                    let downloadedMedia = detectExistingMedia(with: searchResults)
+//
+//                    let newMedia = downloadedMedia.0
+//                    var existingMedia = downloadedMedia.1
+//
+//                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+//
+//                    for media in existingMedia {
+//                        media.isSearchObject = true
+//                    }
+//
+//                }
+//            }
+//        } catch let error {
+//            fatalError("Invalid Data \(error)")
+//        }
     }
     
     func downloadDiscoveryMedia(year: Int, page: Int) async {
@@ -94,6 +94,12 @@ class DataController: ObservableObject {
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
                 
                 if let discoverResults = decodedResponse.results {
+                    
+                    if let existing = detectExistingMedia(mediaID: media.id) {
+                        existing.isDiscoverObject = true
+                    } else {
+                        CreateMediaObject(with: <#T##[MediaResult]#>)
+                    }
                     
                     let downloadedMedia = detectExistingMedia(with: discoverResults)
                     
@@ -117,67 +123,67 @@ class DataController: ObservableObject {
     func downloadSimilarMedia(media: Media) async {
         
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-                
-                if let similarResults = decodedResponse.results {
-                    
-                    let downloadedMedia = detectExistingMedia(with: similarResults)
-                    
-                    let newMedia = downloadedMedia.0
-                    var existingMedia = downloadedMedia.1
-                    
-                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
-                    
-                    for existing in existingMedia {
-                        media.addToSimilar(existing)
-                    }
-                    
-                }
-            }
-            
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
+//        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+//            print("Invalid URL")
+//            return
+//        }
+//
+//        do {
+//            let (data, _) = try await URLSession.shared.data(from: url)
+//
+//            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+//
+//                if let similarResults = decodedResponse.results {
+//
+//                    let downloadedMedia = detectExistingMedia(with: similarResults)
+//
+//                    let newMedia = downloadedMedia.0
+//                    var existingMedia = downloadedMedia.1
+//
+//                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+//
+//                    for existing in existingMedia {
+//                        media.addToSimilar(existing)
+//                    }
+//
+//                }
+//            }
+//
+//        } catch let error {
+//            print("Invalid Data \(error)")
+//        }
     }
     
     func downloadPersonFilmography(person: Person) async {
         
-        let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
-        
-        guard let url = discover else {
-            fatalError("Invalid URL")
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let filmographyResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-                
-                if let filmographyResults = filmographyResponse.cast {
-                    
-                    let downloadedMedia = detectExistingMedia(with: filmographyResults)
-                    
-                    let newMedia = downloadedMedia.0
-                    var existingMedia = downloadedMedia.1
-                    
-                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
-                    
-                    for existing in existingMedia {
-                        person.addToFilmography(existing)
-                    }
-                }
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
+//        let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
+//
+//        guard let url = discover else {
+//            fatalError("Invalid URL")
+//        }
+//
+//        do {
+//            let (data, _) = try await URLSession.shared.data(from: url)
+//
+//            if let filmographyResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+//
+//                if let filmographyResults = filmographyResponse.cast {
+//
+//                    let downloadedMedia = detectExistingMedia(with: filmographyResults)
+//
+//                    let newMedia = downloadedMedia.0
+//                    var existingMedia = downloadedMedia.1
+//
+//                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+//
+//                    for existing in existingMedia {
+//                        person.addToFilmography(existing)
+//                    }
+//                }
+//            }
+//        } catch let error {
+//            print("Invalid Data \(error)")
+//        }
     }
     
         // Download Details
@@ -295,28 +301,40 @@ class DataController: ObservableObject {
     
         // Object Functions
     
-    func detectExistingMedia(with downloadedMedia: [MediaResult]) -> ([MediaResult], [Media]) {
-        var newMedia = [MediaResult]()
-        var existingMedia = [Media]()
+    func detectExistingMedia(mediaID: Int) -> Media? {
+        let request: NSFetchRequest<Media> = Media.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "id == %i", mediaID)
         
-        for media in downloadedMedia {
-            let request: NSFetchRequest<Media> = Media.fetchRequest()
-            request.fetchLimit = 1
-            request.predicate = NSPredicate(format: "id == %i", media.id)
-            
-            do {
-                if let existing = try container.viewContext.fetch(request).first {
-                    existingMedia.append(existing)
-                } else {
-                    newMedia.append(media)
-                }
-            } catch {
-                print("Error Fetching Media")
-            }
-            
+        if let object = try? container.viewContext.fetch(request).first {
+            return object
         }
-        return (newMedia, existingMedia)
+        
+        return nil
     }
+    
+//    func detectExistingMedia(with downloadedMedia: [MediaResult]) -> ([MediaResult], [Media]) {
+//        var newMedia = [MediaResult]()
+//        var existingMedia = [Media]()
+//
+//        for media in downloadedMedia {
+//            let request: NSFetchRequest<Media> = Media.fetchRequest()
+//            request.fetchLimit = 1
+//            request.predicate = NSPredicate(format: "id == %i", media.id)
+//
+//            do {
+//                if let existing = try container.viewContext.fetch(request).first {
+//                    existingMedia.append(existing)
+//                } else {
+//                    newMedia.append(media)
+//                }
+//            } catch {
+//                print("Error Fetching Media")
+//            }
+//
+//        }
+//        return (newMedia, existingMedia)
+//    }
     
     func CreateMediaObject(with downloadedMedia: [MediaResult]) -> [Media]{
         var newMedia = [Media]()
