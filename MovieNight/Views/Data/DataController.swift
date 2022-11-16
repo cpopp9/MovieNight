@@ -99,7 +99,7 @@ class DataController: ObservableObject {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isDiscoverObject = true
                         } else {
-                            CreateMediaObject(item: item)?.isDiscoverObject = true
+                            
                         }
                     }
                 }
