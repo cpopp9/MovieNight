@@ -31,8 +31,6 @@ extension Media {
     @NSManaged public var watched: Bool
     @NSManaged public var popularity: Double
     @NSManaged public var watchlist: Bool
-    @NSManaged public var isSearchMedia: Bool
-    @NSManaged public var isDiscoverMedia: Bool
     @NSManaged public var posterImage: UIImage?
     @NSManaged public var status: String?
     @NSManaged public var tagline: String?

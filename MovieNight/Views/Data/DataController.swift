@@ -52,7 +52,8 @@ class DataController: ObservableObject {
         }
         
         guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
-            fatalError("Invalid URL")
+            print("Invalid URL")
+            return
         }
         
         do {
@@ -78,8 +79,6 @@ class DataController: ObservableObject {
         } catch let error {
             fatalError("Invalid Data \(error)")
         }
-        await saveMedia()
-        print("Search Media Loaded")
     }
     
     func downloadDiscoveryMedia(year: Int, page: Int) async {
@@ -104,22 +103,20 @@ class DataController: ObservableObject {
                     existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
                     
                     for media in existingMedia {
-                        media.isDiscoverObject = true
+                        if media.isDiscoverObject == false {
+                            media.isDiscoverObject = true
+                        }
                     }
-                    
                 }
             }
         } catch let error {
             print("Invalid Data \(error)")
         }
-        
-        await saveMedia()
-        print("Discovery Media Loaded")
     }
     
     func downloadSimilarMedia(media: Media) async {
         
-
+        
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
@@ -149,43 +146,38 @@ class DataController: ObservableObject {
         } catch let error {
             print("Invalid Data \(error)")
         }
-        await saveMedia()
-        print("Similar Movies Loaded")
     }
     
     func downloadPersonFilmography(person: Person) async {
+        
+        let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
+        
+        guard let url = discover else {
+            fatalError("Invalid URL")
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
             
-                    let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
-            
-                    guard let url = discover else {
-                        fatalError("Invalid URL")
+            if let filmographyResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+                
+                if let filmographyResults = filmographyResponse.cast {
+                    
+                    let downloadedMedia = detectExistingMedia(with: filmographyResults)
+                    
+                    let newMedia = downloadedMedia.0
+                    var existingMedia = downloadedMedia.1
+                    
+                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
+                    
+                    for existing in existingMedia {
+                        person.addToFilmography(existing)
                     }
-            
-                    do {
-                        let (data, _) = try await URLSession.shared.data(from: url)
-            
-                        if let filmographyResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-            
-                            if let filmographyResults = filmographyResponse.cast {
-            
-                                let downloadedMedia = detectExistingMedia(with: filmographyResults)
-                                
-                                let newMedia = downloadedMedia.0
-                                var existingMedia = downloadedMedia.1
-                                
-                                existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
-                                
-                                for existing in existingMedia {
-                                    person.addToFilmography(existing)
-                                }
-                            }
-                        }
-                    } catch let error {
-                        print("Invalid Data \(error)")
-                    }
-            
-                    await saveMedia()
-                    print("Filmography Loaded")
+                }
+            }
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
     }
     
         // Download Details
@@ -222,7 +214,6 @@ class DataController: ObservableObject {
         } catch let error {
             print("Invalid Data \(error)")
         }
-        print("Additional Media Details Loaded")
     }
     
     func downloadAdditionalPersonDetails(person: Person) async {
@@ -246,7 +237,6 @@ class DataController: ObservableObject {
         } catch let error {
             print("Invalid Data \(error)")
         }
-        print("Additional Person Details Loaded")
     }
     
         // Download People
@@ -281,7 +271,6 @@ class DataController: ObservableObject {
         } catch let error {
             print("Invalid Data \(error)")
         }
-        print("Media Credits Loaded")
     }
     
         // Download Posters
@@ -345,6 +334,8 @@ class DataController: ObservableObject {
             newItem.watchlist = false
             newItem.watched = false
             newItem.timeAdded = Date.now
+            newItem.isDiscoverObject = false
+            newItem.isSearchObject = false
             
             if let date = media.release_date ?? media.first_air_date {
                 let formatter = DateFormatter()
