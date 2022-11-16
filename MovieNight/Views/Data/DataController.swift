@@ -34,6 +34,10 @@ class DataController: ObservableObject {
         case all, nonWatchlist
     }
     
+    enum DetectFilter {
+        case discover, search, similar
+    }
+    
     
         // API Requests
     
@@ -98,8 +102,9 @@ class DataController: ObservableObject {
                     for item in discoverResults {
                         if let existing = detectExistingMedia(mediaID: item.id) {
                             existing.isDiscoverObject = true
+                            existing.timeAdded = Date.now
                         } else {
-                            
+                            CreateMediaObject(item: item, filter: .discover)
                         }
                     }
                 }
@@ -107,6 +112,8 @@ class DataController: ObservableObject {
         } catch let error {
             print("Invalid Data \(error)")
         }
+        
+        await saveMedia()
     }
     
     func downloadSimilarMedia(media: Media) async {
@@ -324,7 +331,7 @@ class DataController: ObservableObject {
 //        }
 //        return (newMedia, existingMedia)
     
-    func CreateMediaObject(item: MediaResult) -> Media? {
+    func CreateMediaObject(item: MediaResult, filter: DetectFilter) {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -337,6 +344,15 @@ class DataController: ObservableObject {
         newItem.watchlist = false
         newItem.watched = false
         newItem.posterImage = UIImage(named: "poster_placeholder")
+        newItem.timeAdded = Date.now
+        
+        if filter == .discover {
+            newItem.isDiscoverObject = true
+        }
+        
+        if filter == .search {
+            newItem.isSearchObject = true
+        }
         
         if let date = item.release_date ?? item.first_air_date {
             let formatter = DateFormatter()
@@ -359,7 +375,7 @@ class DataController: ObservableObject {
         Task {
             await downloadPoster(media: newItem)
         }
-        return newItem
+        
     }
 //    }
     
