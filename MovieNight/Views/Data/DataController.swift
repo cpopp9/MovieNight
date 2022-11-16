@@ -45,44 +45,42 @@ class DataController: ObservableObject {
     
     func downloadSearchMedia(searchText: String) async {
         
-//        clearSearch()
-//
-//        var encoded: String {
-//            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
-//                return encodedText
-//            } else {
-//                return "Failed"
-//            }
-//        }
-//
-//        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
-//            print("Invalid URL")
-//            return
-//        }
-//
-//        do {
-//            let (data, _) = try await URLSession.shared.data(from: url)
-//
-//            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-//
-//                if let searchResults = decodedResponse.results {
-//
-//                    let downloadedMedia = detectExistingMedia(with: searchResults)
-//
-//                    let newMedia = downloadedMedia.0
-//                    var existingMedia = downloadedMedia.1
-//
-//                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
-//
-//                    for media in existingMedia {
-//                        media.isSearchObject = true
-//                    }
-//
-//                }
-//            }
-//        } catch let error {
-//            fatalError("Invalid Data \(error)")
-//        }
+        clearSearch()
+
+        var encoded: String {
+            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
+                return encodedText
+            } else {
+                return "Failed"
+            }
+        }
+
+        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
+            print("Invalid URL")
+            return
+        }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+
+                if let searchResults = decodedResponse.results {
+
+                    for item in searchResults {
+                        if let existing = detectExistingMedia(mediaID: item.id) {
+                            existing.isSearchObject = true
+                        } else {
+                            CreateMediaObject(item: item, filter: .search)
+                        }
+                    }
+
+                }
+            }
+        } catch let error {
+            fatalError("Invalid Data \(error)")
+        }
+        await saveMedia()
     }
     
     func downloadDiscoveryMedia(year: Int, page: Int) async {
