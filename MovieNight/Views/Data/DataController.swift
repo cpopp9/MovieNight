@@ -95,22 +95,11 @@ class DataController: ObservableObject {
                 
                 if let discoverResults = decodedResponse.results {
                     
-                    if let existing = detectExistingMedia(mediaID: media.id) {
-                        existing.isDiscoverObject = true
-                    } else {
-                        CreateMediaObject(with: <#T##[MediaResult]#>)
-                    }
-                    
-                    let downloadedMedia = detectExistingMedia(with: discoverResults)
-                    
-                    let newMedia = downloadedMedia.0
-                    var existingMedia = downloadedMedia.1
-                    
-                    existingMedia.append(contentsOf: CreateMediaObject(with: newMedia))
-                    
-                    for media in existingMedia {
-                        if media.isDiscoverObject == false {
-                            media.isDiscoverObject = true
+                    for item in discoverResults {
+                        if let existing = detectExistingMedia(mediaID: item.id) {
+                            existing.isDiscoverObject = true
+                        } else {
+                            CreateMediaObject(item: item)?.isDiscoverObject = true
                         }
                     }
                 }
@@ -334,53 +323,91 @@ class DataController: ObservableObject {
 //
 //        }
 //        return (newMedia, existingMedia)
-//    }
     
-    func CreateMediaObject(with downloadedMedia: [MediaResult]) -> [Media]{
-        var newMedia = [Media]()
+    func CreateMediaObject(item: MediaResult) -> Media? {
+        let newItem = Media(context: container.viewContext)
+        newItem.title = item.title ?? item.name ?? "Unknown"
+        newItem.id = Int32(item.id)
+        newItem.poster_path = item.poster_path ?? item.profile_path
+        newItem.media_type = item.media_type ?? "movie"
+        newItem.original_language = item.original_language
+        newItem.overview = item.overview
+        newItem.release_date = item.release_date ?? item.first_air_date
+        newItem.popularity = item.popularity ?? 0.0
+        newItem.watchlist = false
+        newItem.watched = false
+        newItem.posterImage = UIImage(named: "poster_placeholder")
         
-        for media in downloadedMedia {
-            let newItem = Media(context: container.viewContext)
-            newItem.title = media.title ?? media.name ?? "Unknown"
-            newItem.id = Int32(media.id)
-            newItem.poster_path = media.poster_path ?? media.profile_path
-            newItem.media_type = media.media_type ?? "movie"
-            newItem.original_language = media.original_language
-            newItem.overview = media.overview
-            newItem.release_date = media.release_date ?? media.first_air_date
-            newItem.popularity = media.popularity ?? 0.0
-            newItem.watchlist = false
-            newItem.watched = false
-            newItem.timeAdded = Date.now
-            newItem.isDiscoverObject = false
-            newItem.isSearchObject = false
-            
-            if let date = media.release_date ?? media.first_air_date {
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd"
-                if let parsed = formatter.date(from: date) {
-                    let calendar = Calendar.current
-                    let year = calendar.component(.year, from: parsed)
-                    newItem.release_date = "\(year)"
-                }
+        if let date = item.release_date ?? item.first_air_date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            if let parsed = formatter.date(from: date) {
+                let calendar = Calendar.current
+                let year = calendar.component(.year, from: parsed)
+                newItem.release_date = "\(year)"
             }
-            
-            if let vote_average = media.vote_average {
-                newItem.vote_average = vote_average
-            }
-            
-            if let vote_count = media.vote_count {
-                newItem.vote_count = Int16(vote_count)
-            }
-            
-            Task {
-                await downloadPoster(media: newItem)
-            }
-            newMedia.append(newItem)
         }
         
-        return newMedia
+        if let vote_average = item.vote_average {
+            newItem.vote_average = vote_average
+        }
+        
+        if let vote_count = item.vote_count {
+            newItem.vote_count = Int16(vote_count)
+        }
+        
+        Task {
+            await downloadPoster(media: newItem)
+        }
+        return newItem
     }
+//    }
+    
+//    func CreateMediaObject(with downloadedMedia: [MediaResult]) -> [Media]{
+//        var newMedia = [Media]()
+//
+//        for media in downloadedMedia {
+//            let newItem = Media(context: container.viewContext)
+//            newItem.title = media.title ?? media.name ?? "Unknown"
+//            newItem.id = Int32(media.id)
+//            newItem.poster_path = media.poster_path ?? media.profile_path
+//            newItem.media_type = media.media_type ?? "movie"
+//            newItem.original_language = media.original_language
+//            newItem.overview = media.overview
+//            newItem.release_date = media.release_date ?? media.first_air_date
+//            newItem.popularity = media.popularity ?? 0.0
+//            newItem.watchlist = false
+//            newItem.watched = false
+//            newItem.timeAdded = Date.now
+//            newItem.isDiscoverObject = false
+//            newItem.isSearchObject = false
+//
+//            if let date = media.release_date ?? media.first_air_date {
+//                let formatter = DateFormatter()
+//                formatter.dateFormat = "yyyy-MM-dd"
+//                if let parsed = formatter.date(from: date) {
+//                    let calendar = Calendar.current
+//                    let year = calendar.component(.year, from: parsed)
+//                    newItem.release_date = "\(year)"
+//                }
+//            }
+//
+//            if let vote_average = media.vote_average {
+//                newItem.vote_average = vote_average
+//            }
+//
+//            if let vote_count = media.vote_count {
+//                newItem.vote_count = Int16(vote_count)
+//            }
+//
+//            Task {
+//                await downloadPoster(media: newItem)
+//            }
+//            newMedia.append(newItem)
+//        }
+//
+//        return newMedia
+//    }
     
     func CreatePerson(person: Cast, media: Media) -> Person {
         let newPerson = Person(context: container.viewContext)
