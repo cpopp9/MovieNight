@@ -15,7 +15,7 @@ struct MovieView: View {
             
             MovieTopDetails(media: media)
             
-            ButtonView(mediaID: Int(media.id))
+            ButtonView(media: media)
             
 //            AddToWatchListButton(media: media)
             

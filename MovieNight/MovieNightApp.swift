@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct MovieNightApp: App {
-    @StateObject private var dataController = DataController()
+    @StateObject var dataController = DataController()
     
     var body: some Scene {
         WindowGroup {

@@ -10,7 +10,7 @@ import CoreData
 import SwiftUI
 
 class DataController: ObservableObject {
-    lazy var container = NSPersistentContainer(name: "MovieNight")
+    let container = NSPersistentContainer(name: "MovieNight")
     
     init() {
         container.loadPersistentStores { description, error in
@@ -69,22 +69,14 @@ class DataController: ObservableObject {
                 if let searchResults = decodedResponse.results {
 
                     for item in searchResults {
-                        
-                        CreateMediaObject(item: item, filter: .search)
-                        
-//                        if let existing = detectExistingMedia(mediaID: item.id) {
-//                            existing.isSearchObject = true
-//                        } else {
-//                            CreateMediaObject(item: item, filter: .search)
-//                        }
+                        CreateMediaObject(item: item).isSearchObject = true
                     }
-
                 }
             }
         } catch let error {
             fatalError("Invalid Data \(error)")
         }
-//        await saveMedia()
+        await saveMedia()
     }
     
     func downloadDiscoveryMedia(year: Int, page: Int) async {
@@ -102,12 +94,7 @@ class DataController: ObservableObject {
                 if let discoverResults = decodedResponse.results {
                     
                     for item in discoverResults {
-                        if let existing = detectExistingMedia(mediaID: item.id) {
-                            existing.isDiscoverObject = true
-                            existing.timeAdded = Date.now
-                        } else {
-                            CreateMediaObject(item: item, filter: .discover)
-                        }
+                        CreateMediaObject(item: item).isDiscoverObject = true
                     }
                 }
             }
@@ -115,12 +102,12 @@ class DataController: ObservableObject {
             print("Invalid Data \(error)")
         }
         
-//        await saveMedia()
+        await saveMedia()
     }
     
     func downloadSimilarMedia(media: Media) async {
-        
-        
+//
+//
         guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
             print("Invalid URL")
             return
@@ -132,9 +119,11 @@ class DataController: ObservableObject {
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
 
                 if let similarResults = decodedResponse.results {
-                    
+
                     for item in similarResults {
-                        media.addToSimilar(CreateMediaObject(item: item, filter: .similar))
+                        if item.poster_path == nil { continue }
+                        
+                        media.addToSimilar(CreateMediaObject(item: item))
                     }
 
                 }
@@ -143,6 +132,7 @@ class DataController: ObservableObject {
         } catch let error {
             print("Invalid Data \(error)")
         }
+        await saveMedia()
     }
     
     func downloadPersonFilmography(person: Person) async {
@@ -292,19 +282,19 @@ class DataController: ObservableObject {
     
         // Object Functions
     
-    func detectExistingMedia(mediaID: Int) -> Media? {
-        let request: NSFetchRequest<Media> = Media.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "id == %i", mediaID)
-        
-        if let object = try? container.viewContext.fetch(request).first {
-            return object
-        }
-        
-        return nil
-    }
+//    func detectExistingMedia(mediaID: Int) -> Media? {
+//        let request: NSFetchRequest<Media> = Media.fetchRequest()
+//        request.fetchLimit = 1
+//        request.predicate = NSPredicate(format: "id == %i", mediaID)
+//
+//        if let object = try? container.viewContext.fetch(request).first {
+//            return object
+//        }
+//
+//        return nil
+//    }
     
-    func CreateMediaObject(item: MediaResult, filter: DetectFilter) -> Media {
+    func CreateMediaObject(item: MediaResult) -> Media {
         let newItem = Media(context: container.viewContext)
         newItem.title = item.title ?? item.name ?? "Unknown"
         newItem.id = Int32(item.id)
@@ -319,13 +309,6 @@ class DataController: ObservableObject {
         newItem.posterImage = UIImage(named: "poster_placeholder")
         newItem.timeAdded = Date.now
         
-        if filter == .discover {
-            newItem.isDiscoverObject = true
-        }
-        
-        if filter == .search {
-            newItem.isSearchObject = true
-        }
         
         if let date = item.release_date ?? item.first_air_date {
             let formatter = DateFormatter()
@@ -345,9 +328,9 @@ class DataController: ObservableObject {
             newItem.vote_count = Int16(vote_count)
         }
         
-        Task {
-            await downloadPoster(media: newItem)
-        }
+//        Task {
+//            await downloadPoster(media: newItem)
+//        }
         return newItem
     }
     
