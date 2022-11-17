@@ -85,7 +85,6 @@ class DataController: ObservableObject {
     }
     
     func downloadPoster(media: Media) {
-        Task {
 
             let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
             
@@ -97,7 +96,6 @@ class DataController: ObservableObject {
                 media.posterImage = UIImage(data: data)
                 
             }.resume()
-        }
     }
     
         // Persistent Store Functions
