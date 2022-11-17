@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ButtonView: View {
     @FetchRequest var mediaResults: FetchedResults<Media>
+    @Environment(\.managedObjectContext) var moc
     @ObservedObject var myMedia: Media
     
     var watchlist: Bool {
@@ -19,14 +20,14 @@ struct ButtonView: View {
         return true
     }
     
-//    var watched: Bool {
-//        for media in mediaResults {
-//            if media.watched == true {
-//                return true
-//            }
-//        }
-//        return false
-//    }
+        //    var watched: Bool {
+        //        for media in mediaResults {
+        //            if media.watched == true {
+        //                return true
+        //            }
+        //        }
+        //        return false
+        //    }
     
     @EnvironmentObject var dataController: DataController
     
@@ -36,9 +37,8 @@ struct ButtonView: View {
             Button() {
                 watchlist ? removeFromWatchlist() : addToWatchlist()
                 
-                Task {
-                    await dataController.saveMedia()
-                }
+                
+                dataController.saveMedia(context: moc)
                 
             } label: {
                 HStack {
@@ -80,32 +80,32 @@ struct ButtonView: View {
     
     init(media: Media) {
         _mediaResults = FetchRequest<Media>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i && watchlist == true", media.id))
-            
-            myMedia = media
+        
+        myMedia = media
+    }
+    
+        //    func markWatched() {
+        //        for media in mediaResults {
+        //            media.watched = true
+        //        }
+        //    }
+        //
+        //    func unmarkWatched() {
+        //        for media in mediaResults {
+        //            media.watched = false
+        //        }
+        //    }
+        //
+    func addToWatchlist() {
+        myMedia.watchlist = true
+    }
+    
+    func removeFromWatchlist() {
+        for media in mediaResults {
+            media.watchlist = false
         }
-        
-            //    func markWatched() {
-            //        for media in mediaResults {
-            //            media.watched = true
-            //        }
-            //    }
-            //
-            //    func unmarkWatched() {
-            //        for media in mediaResults {
-            //            media.watched = false
-            //        }
-            //    }
-            //
-                func addToWatchlist() {
-                        myMedia.watchlist = true
-                }
-            
-                func removeFromWatchlist() {
-                    for media in mediaResults {
-                        media.watchlist = false
-                    }
-                }
-        
+    }
+    
     
 }
 

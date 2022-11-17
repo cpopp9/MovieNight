@@ -17,11 +17,9 @@ struct MovieView: View {
             
             ButtonView(media: media)
             
-//            AddToWatchListButton(media: media)
-            
             MovieDetailView(media: media)
             
-//            CreditsView(media: media)
+            CreditsView(media: media)
             
             SimilarMoviesView(media: media)
             
@@ -40,10 +38,45 @@ struct MovieView: View {
         
         .task {
             if media.tagline == nil {
-                await dataController.downloadAdditionalMediaDetails(media: media)
+                await downloadAdditionalMediaDetails(media: media)
             }
         }
     }
+    
+    func downloadAdditionalMediaDetails(media: Media) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaDetails.self, from: data) {
+                
+                media.imdb_id = decodedResponse.imdb_id
+                media.runtime = Int16(decodedResponse.runtime ?? 0)
+                media.tagline = decodedResponse.tagline
+                media.status = decodedResponse.status
+                
+                if let genres = decodedResponse.genres {
+                    var genString = [String]()
+                    
+                    for genre in genres {
+                        genString.append(genre.name)
+                    }
+                    
+                    media.genres = genString.joined(separator: ", ")
+                }
+                
+                
+            }
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
+    }
+    
 }
 
 struct DiscoverMovieView_Previews: PreviewProvider {

@@ -11,6 +11,7 @@ import SwiftUI
 struct AddToWatchListButton: View {
     @ObservedObject var media: Media
     @EnvironmentObject var dataController: DataController
+    @Environment(\.managedObjectContext) var moc
     
     var body: some View {
         
@@ -19,7 +20,7 @@ struct AddToWatchListButton: View {
                 media.watchlist.toggle()
                 
                 Task {
-                    await dataController.saveMedia()
+                    dataController.saveMedia(context: moc)
                 }
                 
             } label: {
@@ -39,7 +40,7 @@ struct AddToWatchListButton: View {
                 media.watched.toggle()
                 
                 Task {
-                    await dataController.saveMedia()
+                    dataController.saveMedia(context: moc)
                 }
                 
             } label: {

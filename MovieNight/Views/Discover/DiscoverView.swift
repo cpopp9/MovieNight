@@ -11,6 +11,7 @@ struct DiscoverView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.timeAdded, order: .forward)], predicate: NSPredicate(format: "isDiscoverObject == true")) var discoverResults: FetchedResults<Media>
     
     @EnvironmentObject var dataController: DataController
+    @Environment(\.managedObjectContext) var moc
     
     @State var currentPage = 1
     
@@ -36,7 +37,7 @@ struct DiscoverView: View {
                             .onAppear {
                                 currentPage += 1
                                 Task {
-                                    await dataController.downloadDiscoveryMedia(year: 2022, page: currentPage)
+                                    await downloadDiscoveryMedia(year: 2022, page: currentPage)
                                 }
                             }
                     }
@@ -47,6 +48,32 @@ struct DiscoverView: View {
         }
         .accentColor(.white)
     }
+    
+    func downloadDiscoveryMedia(year: Int, page: Int) async {
+        
+        guard let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: discover)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+                
+                if let discoverResults = decodedResponse.results {
+                    
+                    for item in discoverResults {
+                        dataController.CreateMediaObject(item: item, context: moc).isDiscoverObject = true
+                    }
+                }
+            }
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
+        
+    }
+    
 }
 
 struct DiscoverView_Previews: PreviewProvider {

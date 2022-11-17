@@ -11,6 +11,7 @@ struct SearchView: View {
     @Environment(\.isSearching) private var isSearching: Bool
     
     @EnvironmentObject var dataController: DataController
+    @Environment(\.managedObjectContext) var moc
     
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchObject == true")) var searchResults: FetchedResults<Media>
     
@@ -41,7 +42,7 @@ struct SearchView: View {
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search for something")
             .onSubmit(of: .search) {
                 Task {
-                    await dataController.downloadSearchMedia(searchText: searchText)
+                    await downloadSearchMedia(searchText: searchText)
                 }
             }
             .onChange(of: searchText) { value in
@@ -52,6 +53,42 @@ struct SearchView: View {
         }
         .accentColor(.white)
     }
+    
+    func downloadSearchMedia(searchText: String) async {
+        
+        dataController.clearSearch()
+
+        var encoded: String {
+            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
+                return encodedText
+            } else {
+                return "Failed"
+            }
+        }
+
+        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
+            print("Invalid URL")
+            return
+        }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+
+                if let searchResults = decodedResponse.results {
+
+                    for item in searchResults {
+                        dataController.CreateMediaObject(item: item, context: moc).isSearchObject = true
+                    }
+                }
+            }
+        } catch let error {
+            fatalError("Invalid Data \(error)")
+        }
+        dataController.saveMedia(context: moc)
+    }
+    
 }
 
 

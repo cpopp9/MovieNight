@@ -10,6 +10,7 @@ import CoreData
 
 struct CreditsView: View {
     @EnvironmentObject var dataController: DataController
+    @Environment(\.managedObjectContext) var moc
     @ObservedObject var media: Media
     
     
@@ -34,11 +35,39 @@ struct CreditsView: View {
             }
         }
         .task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
             if media.creditsArray.isEmpty {
-                await dataController.downloadMediaCredits(media: media)
+                await downloadMediaCredits(media: media)
             }
         }
     }
+    
+    
+    func downloadMediaCredits(media: Media) async {
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try?  JSONDecoder().decode(Credits.self, from: data) {
+                
+                if let cast = decodedResponse.cast {
+                    for person in cast {
+                        if person.profile_path == nil { break }
+                        media.addToCredits(dataController.CreatePerson(person: person))
+                    }
+                }
+            }
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
+        dataController.saveMedia(context: moc)
+    }
+    
 }
 
 

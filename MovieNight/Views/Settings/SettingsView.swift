@@ -10,6 +10,7 @@ import SafariServices
 
 struct SettingsView: View {
     @EnvironmentObject var dataController: DataController
+    @Environment(\.managedObjectContext) var moc
     @State private var showingAlert = false
     
     var body: some View {
@@ -22,7 +23,7 @@ struct SettingsView: View {
                     }
                     Button("Save") {
                         Task {
-                            await dataController.saveMedia()
+                            dataController.saveMedia(context: moc)
                         }
                     }
                 }

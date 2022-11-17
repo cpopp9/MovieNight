@@ -23,21 +23,3 @@ struct PersonResult: Codable {
     
 }
 
-//switch Int(voteAverage) {
-//case 0..<2:
-//    return Text("★☆☆☆☆")
-//        .foregroundColor(.yellow)
-//case 2..<4:
-//    return Text("★★☆☆☆")
-//        .foregroundColor(.yellow)
-//case 4..<6:
-//    return Text("★★★☆☆")
-//        .foregroundColor(.yellow)
-//case 6..<8:
-//    return Text("★★★★☆")
-//        .foregroundColor(.yellow)
-//default:
-//    return Text("★★★★★")
-//        .foregroundColor(.yellow)
-//}
-

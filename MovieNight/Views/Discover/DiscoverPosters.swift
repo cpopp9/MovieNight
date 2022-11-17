@@ -15,25 +15,31 @@ struct DiscoverPoster: View {
         } label: {
             VStack {
                 
-                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
-                    switch phase {
-                    case .empty:
-                        Color.black.opacity(0.1)
-                        
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
-                    case .failure(_):
-                        Color.black.opacity(0.1)
-                        
-                    @unknown default:
-                        Color.black.opacity(0.1)
-                    }
-                }
-                .aspectRatio(2/3, contentMode: .fill)
-                .frame(height: 250)
+                Image(uiImage: media.wrappedPosterImage)
+                    .resizable()
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .aspectRatio(2/3, contentMode: .fill)
+                    .frame(height: 250)
+                
+//                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
+//                    switch phase {
+//                    case .empty:
+//                        Color.black.opacity(0.1)
+//                        
+//                    case .success(let image):
+//                        image
+//                            .resizable()
+//                            .clipShape(RoundedRectangle(cornerRadius: 10))
+//                        
+//                    case .failure(_):
+//                        Color.black.opacity(0.1)
+//                        
+//                    @unknown default:
+//                        Color.black.opacity(0.1)
+//                    }
+//                }
+//                .aspectRatio(2/3, contentMode: .fill)
+//                .frame(height: 250)
                 
                 
                 Text(media.wrappedTitle)

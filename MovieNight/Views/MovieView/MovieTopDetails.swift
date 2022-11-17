@@ -13,30 +13,12 @@ struct MovieTopDetails: View {
     var body: some View {
         VStack(alignment: .center) {
             
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
-                switch phase {
-                case .empty:
-                    Color.black.opacity(0.1)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                    
-                case .success(let image):
-                    image
-                        .resizable()
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                    
-                case .failure(_):
-                    Image(systemName: "exclamationmark.icloud")
-                        .resizable()
-                        .scaledToFit()
-                    
-                @unknown default:
-                    Image(systemName: "exclamationmark.icloud")
-                }
-            }
-            .scaledToFit()
-            .frame(height: 300)
-            .padding(.trailing)
+            Image(uiImage: media.wrappedPosterImage)
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .scaledToFit()
+                .frame(height: 300)
+                .padding(.trailing)
             
             
             VStack {
