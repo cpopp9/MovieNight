@@ -67,9 +67,7 @@ class DataController: ObservableObject {
             newItem.vote_count = Int16(vote_count)
         }
         
-        Task {
-            await downloadPoster(media: newItem)
-        }
+            downloadPoster(media: newItem)
         
         return newItem
     }
@@ -86,11 +84,10 @@ class DataController: ObservableObject {
         return newPerson
     }
     
-    func downloadPoster(media: Media) async {
-        
-        DispatchQueue.main.async {
-            
-            let url = URL(string: "https://image.tmdb.org/t/p/w500\(media.wrappedPosterPath)")!
+    func downloadPoster(media: Media) {
+        Task {
+
+            let url = URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)")!
             
             URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data, error == nil else {

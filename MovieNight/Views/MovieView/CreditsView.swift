@@ -35,7 +35,6 @@ struct CreditsView: View {
             }
         }
         .task {
-            try? await Task.sleep(nanoseconds: 1_000_000_000)
             if media.creditsArray.isEmpty {
                 await downloadMediaCredits(media: media)
             }
@@ -45,29 +44,31 @@ struct CreditsView: View {
     
     func downloadMediaCredits(media: Media) async {
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
+        Task {
             
-            if let decodedResponse = try?  JSONDecoder().decode(Credits.self, from: data) {
+            guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+                print("Invalid URL")
+                return
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
                 
-                if let cast = decodedResponse.cast {
-                    for person in cast {
-                        if person.profile_path == nil { break }
-                        media.addToCredits(dataController.CreatePerson(person: person))
+                if let decodedResponse = try?  JSONDecoder().decode(Credits.self, from: data) {
+                    
+                    if let cast = decodedResponse.cast {
+                        for person in cast {
+                            if person.profile_path == nil { break }
+                            media.addToCredits(dataController.CreatePerson(person: person))
+                        }
                     }
                 }
+            } catch let error {
+                print("Invalid Data \(error)")
             }
-        } catch let error {
-            print("Invalid Data \(error)")
+            dataController.saveMedia(context: moc)
         }
-        dataController.saveMedia(context: moc)
     }
-    
 }
 
 
