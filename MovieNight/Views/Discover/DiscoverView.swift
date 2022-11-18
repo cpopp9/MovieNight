@@ -18,7 +18,6 @@ struct DiscoverView: View {
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
     var body: some View {
-        NavigationView {
             ScrollView {
                 VStack(alignment: .leading) {
                     
@@ -45,8 +44,11 @@ struct DiscoverView: View {
                 }
             }
             .navigationTitle("Discover")
-        }
-        .accentColor(.white)
+            .task {
+                if discoverResults.isEmpty {
+                    await downloadDiscoveryMedia(year: 2022, page: 1)
+                }
+            }
     }
     
     func downloadDiscoveryMedia(year: Int, page: Int) async {

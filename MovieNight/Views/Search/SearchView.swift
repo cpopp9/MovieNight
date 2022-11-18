@@ -18,46 +18,43 @@ struct SearchView: View {
     @State var searchText = ""
     
     var body: some View {
-        NavigationView {
-            VStack {
-                
-                if searchResults.count > 0 {
-                    List {
-                            SearchFilter(mediaFilter: "movie")
-                        
-                            SearchFilter(mediaFilter: "tv")
-                    }
-                    .listStyle(.automatic)
-                } else {
-                    VStack {
-                        Image(systemName: "text.magnifyingglass")
-                            .font(.system(size: 45))
-                            .foregroundColor(Color(.systemPink))
-                            .padding(.vertical)
-                        Text("Search for Movies and TV Shows")
-                    }
+        VStack {
+            
+            if searchResults.count > 0 {
+                List {
+                    SearchFilter(mediaFilter: "movie")
+                    
+                    SearchFilter(mediaFilter: "tv")
                 }
-            }
-            .navigationTitle("Search")
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search for something")
-            .onSubmit(of: .search) {
-                Task {
-                    await downloadSearchMedia(searchText: searchText)
-                }
-            }
-            .onChange(of: searchText) { value in
-                if searchText.isEmpty && !isSearching {
-                    dataController.clearSearch()
+                .listStyle(.automatic)
+            } else {
+                VStack {
+                    Image(systemName: "text.magnifyingglass")
+                        .font(.system(size: 45))
+                        .foregroundColor(Color(.systemPink))
+                        .padding(.vertical)
+                    Text("Search for Movies and TV Shows")
                 }
             }
         }
-        .accentColor(.white)
+        .navigationTitle("Search")
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search for something")
+        .onSubmit(of: .search) {
+            Task {
+                await downloadSearchMedia(searchText: searchText)
+            }
+        }
+        .onChange(of: searchText) { value in
+            if searchText.isEmpty && !isSearching {
+                dataController.clearSearch()
+            }
+        }
     }
     
     func downloadSearchMedia(searchText: String) async {
         
         dataController.clearSearch()
-
+        
         var encoded: String {
             if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
                 return encodedText
@@ -65,19 +62,19 @@ struct SearchView: View {
                 return "Failed"
             }
         }
-
+        
         guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
             print("Invalid URL")
             return
         }
-
+        
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-
+            
             if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-
+                
                 if let searchResults = decodedResponse.results {
-
+                    
                     for item in searchResults {
                         dataController.CreateMediaObject(item: item, context: moc).isSearchObject = true
                     }

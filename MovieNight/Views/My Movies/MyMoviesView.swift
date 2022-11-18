@@ -20,7 +20,6 @@ struct MyMoviesView: View {
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "watchlist == true")) var watchlistResults: FetchedResults<Media>
     
     var body: some View {
-        NavigationView {
             VStack {
                 if watchlistResults.count > 0 {
                     List {
@@ -106,7 +105,6 @@ struct MyMoviesView: View {
                     }
                 }
             }
-        }
     }
 }
 

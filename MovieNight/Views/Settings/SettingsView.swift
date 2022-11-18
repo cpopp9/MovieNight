@@ -14,7 +14,6 @@ struct SettingsView: View {
     @State private var showingAlert = false
     
     var body: some View {
-        NavigationView {
             Form {
                 
                 Section {
@@ -60,7 +59,6 @@ struct SettingsView: View {
                     dataController.deleteObjects(filter: .all)
                 }
             }
-        }
     }
 }
 
