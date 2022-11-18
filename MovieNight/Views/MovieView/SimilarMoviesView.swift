@@ -45,34 +45,32 @@ struct SimilarMoviesView: View {
     
     func downloadSimilarMedia(media: Media) async {
         
-        Task {
-            
-            guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
-                print("Invalid URL")
-                return
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-                    
-                    if let similarResults = decodedResponse.results {
-                        
-                        for item in similarResults {
-                            if item.poster_path == nil { continue }
-                            
-                            media.addToSimilar(dataController.CreateMediaObject(item: item, context: moc))
-                        }
-                        
-                    }
-                }
-                
-            } catch let error {
-                print("Invalid Data \(error)")
-            }
-            dataController.saveMedia(context: moc)
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+            print("Invalid URL")
+            return
         }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
+                
+                if let similarResults = decodedResponse.results {
+                    
+                    for item in similarResults {
+                        if item.poster_path == nil { continue }
+                        
+                        media.addToSimilar(dataController.CreateMediaObject(item: item, context: moc))
+                    }
+                    
+                }
+            }
+            
+        } catch let error {
+            print("Invalid Data \(error)")
+        }
+        dataController.saveMedia(context: moc)
     }
     
 }

@@ -44,30 +44,29 @@ struct CreditsView: View {
     
     func downloadMediaCredits(media: Media) async {
         
-        Task {
+        
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
             
-            guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
-                print("Invalid URL")
-                return
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
+            if let decodedResponse = try?  JSONDecoder().decode(Credits.self, from: data) {
                 
-                if let decodedResponse = try?  JSONDecoder().decode(Credits.self, from: data) {
-                    
-                    if let cast = decodedResponse.cast {
-                        for person in cast {
-                            if person.profile_path == nil { break }
-                            media.addToCredits(dataController.CreatePerson(person: person))
-                        }
+                if let cast = decodedResponse.cast {
+                    for person in cast {
+                        if person.profile_path == nil { break }
+                        media.addToCredits(dataController.CreatePerson(person: person))
                     }
                 }
-            } catch let error {
-                print("Invalid Data \(error)")
             }
-            dataController.saveMedia(context: moc)
+        } catch let error {
+            print("Invalid Data \(error)")
         }
+        dataController.saveMedia(context: moc)
     }
 }
 
