@@ -13,13 +13,6 @@ struct MovieTopDetails: View {
     var body: some View {
         VStack(alignment: .center) {
             
-//            Image(uiImage: media.wrappedPosterImage)
-//                .resizable()
-//                .clipShape(RoundedRectangle(cornerRadius: 15))
-//                .scaledToFit()
-//                .frame(height: 300)
-//                .padding(.trailing)
-            
             AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
                 switch phase {
                 case .empty:
@@ -40,7 +33,6 @@ struct MovieTopDetails: View {
             }
             .frame(height: 300)
             .padding(.bottom)
-            .border(.blue)
             
             VStack {
                 Text(media.wrappedTitle)
@@ -64,7 +56,9 @@ struct MovieTopDetails: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.horizontal)
+        .padding(EdgeInsets(top: 40, leading: 10, bottom: 5, trailing: 10))
+        .border(.red)
+//        .padding(EdgeInsets(top: 20, HorizontalEdge: 10))
     }
 }
 

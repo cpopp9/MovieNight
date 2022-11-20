@@ -14,25 +14,21 @@ struct MovieView: View {
         ScrollView(showsIndicators: false) {
             
             MovieTopDetails(media: media)
-                .border(.green)
 
             ButtonView(media: media)
-                .border(.red)
 
             MovieDetailView(media: media)
-                .border(.white)
 
             CreditsView(media: media)
 
             SimilarMoviesView(media: media)
             
         }
-        
+        .navigationBarTitleDisplayMode(.inline)
         .background (
             
             Image(uiImage: media.wrappedPosterImage)
                 .resizable()
-//                .scaledToFill()
                 .blur(radius: 50)
                 .overlay(Color.gray.opacity(0.1))
                 .ignoresSafeArea()
