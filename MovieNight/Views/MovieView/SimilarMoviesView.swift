@@ -20,7 +20,7 @@ struct SimilarMoviesView: View {
             
             if !media.similarArray.isEmpty {
                 
-                Text("You might also like \(media.similarArray.count)")
+                Text("You might also like")
                     .font(.title.bold())
                     .padding(.horizontal)
                 
@@ -35,6 +35,7 @@ struct SimilarMoviesView: View {
                 }
             }
         }
+        .padding(.bottom, 20)
         .task {
             if media.similarArray.isEmpty {
                 await downloadSimilarMedia(media: media)

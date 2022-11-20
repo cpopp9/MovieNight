@@ -19,7 +19,7 @@ struct MovieDetailView: View {
                     Text(media.wrappedGenres)
                         .font(.subheadline)
                         
-                    Text("\(media.runtime) minutes")
+                    Text(media.wrappedDurationDetails)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .padding(.bottom)

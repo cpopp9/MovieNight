@@ -34,6 +34,7 @@ struct CreditsView: View {
                 }
             }
         }
+        .padding(.bottom, 10)
         .task {
             if media.creditsArray.isEmpty {
                 await downloadMediaCredits(media: media)

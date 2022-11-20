@@ -36,6 +36,7 @@ extension Media {
     @NSManaged public var tagline: String?
     @NSManaged public var revenue: Int64
     @NSManaged public var runtime: Int16
+    @NSManaged public var number_of_seasons: Int16
     @NSManaged public var imdb_id: String?
     @NSManaged public var isDiscoverObject: Bool
     @NSManaged public var isSearchObject: Bool
@@ -102,6 +103,17 @@ extension Media {
     
     var wrappedMediaType: String {
         media_type ?? "Unknown"
+    }
+    
+    var wrappedDurationDetails: String {
+        
+        if wrappedMediaType == "movie" {
+            return "\(runtime) minutes"
+        } else if wrappedMediaType == "tv" {
+            return "\(number_of_seasons) seasons"
+        } else {
+            return "--"
+        }
     }
     
     var wrappedOriginalLanguage: String {

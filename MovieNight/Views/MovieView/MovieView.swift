@@ -58,6 +58,7 @@ struct MovieView: View {
                 media.runtime = Int16(decodedResponse.runtime ?? 0)
                 media.tagline = decodedResponse.tagline
                 media.status = decodedResponse.status
+                media.number_of_seasons = Int16(decodedResponse.number_of_seasons ?? 0)
                 
                 if let genres = decodedResponse.genres {
                     var genString = [String]()

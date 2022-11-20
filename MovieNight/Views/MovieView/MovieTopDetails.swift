@@ -57,8 +57,6 @@ struct MovieTopDetails: View {
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(EdgeInsets(top: 40, leading: 10, bottom: 5, trailing: 10))
-        .border(.red)
-//        .padding(EdgeInsets(top: 20, HorizontalEdge: 10))
     }
 }
 
