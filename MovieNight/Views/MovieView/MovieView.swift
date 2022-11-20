@@ -14,13 +14,16 @@ struct MovieView: View {
         ScrollView(showsIndicators: false) {
             
             MovieTopDetails(media: media)
-            
+                .border(.green)
+
             ButtonView(media: media)
-            
+                .border(.red)
+
             MovieDetailView(media: media)
-            
+                .border(.white)
+
             CreditsView(media: media)
-            
+
             SimilarMoviesView(media: media)
             
         }
@@ -29,7 +32,7 @@ struct MovieView: View {
             
             Image(uiImage: media.wrappedPosterImage)
                 .resizable()
-                .scaledToFill()
+//                .scaledToFill()
                 .blur(radius: 50)
                 .overlay(Color.gray.opacity(0.1))
                 .ignoresSafeArea()

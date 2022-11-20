@@ -15,12 +15,6 @@ struct DiscoverPoster: View {
         } label: {
             VStack {
                 
-//                Image(uiImage: media.wrappedPosterImage)
-//                    .resizable()
-//                    .clipShape(RoundedRectangle(cornerRadius: 10))
-//                    .aspectRatio(2/3, contentMode: .fill)
-//                    .frame(height: 250)
-                
                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
                     switch phase {
                     case .empty:
@@ -39,7 +33,8 @@ struct DiscoverPoster: View {
                     }
                 }
                 .aspectRatio(2/3, contentMode: .fill)
-                .frame(height: 250)
+                .scaledToFit()
+//                .frame(height: 250)
                 
                 
                 Text(media.wrappedTitle)

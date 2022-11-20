@@ -40,6 +40,7 @@ struct MovieTopDetails: View {
             }
             .frame(height: 300)
             .padding(.bottom)
+            .border(.blue)
             
             VStack {
                 Text(media.wrappedTitle)
