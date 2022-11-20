@@ -20,15 +20,9 @@ struct SettingsView: View {
                     Button("Delete App Data") {
                         showingAlert = true
                     }
-                    Button("Save") {
-                        Task {
-                            dataController.saveMedia(context: moc)
-                        }
-                    }
                 }
                 
                 Section("About this app") {
-                    Text("Rate this app")
                     Link("App Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
                 }
                 
@@ -44,12 +38,6 @@ struct SettingsView: View {
                             .foregroundColor(.primary)
                         
                             .padding()
-                    }
-                    
-                    NavigationLink {
-                        AttributionsView()
-                    } label: {
-                        Text("Software Attributions")
                     }
                 }
             }
