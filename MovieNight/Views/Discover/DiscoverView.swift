@@ -73,7 +73,7 @@ struct DiscoverView: View {
         } catch let error {
             print("Invalid Data \(error)")
         }
-        
+        dataController.saveMedia(context: moc)
     }
     
 }

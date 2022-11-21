@@ -19,6 +19,8 @@ class DataController: ObservableObject {
                 return
             }
             
+            self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+            
             ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
         }
         
