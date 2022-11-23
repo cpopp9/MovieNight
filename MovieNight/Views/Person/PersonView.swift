@@ -1,9 +1,9 @@
-//
-//  PersonView.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 10/25/22.
-//
+    //
+    //  PersonView.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 10/25/22.
+    //
 
 import SwiftUI
 
@@ -22,6 +22,8 @@ struct PersonView: View {
             }
         }
     }
+    
+        // Downloads additional information about a person and assigns it to their existing core data object
     
     func downloadAdditionalPersonDetails(person: Person) async {
         

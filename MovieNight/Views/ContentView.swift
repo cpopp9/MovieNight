@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var tabSelection = 0
-    @State private var tappedTwice: Bool = false
+    
+        // IDs assigned to each tabItem
+    
     @State private var discover = UUID()
     @State private var myMovies = UUID()
     @State private var search = UUID()
     @State private var settings = UUID()
     
+        // Listening values that trigger pop to root view
+    
+    @State private var tabSelection = 0
+    @State private var tappedTwice: Bool = false
+    
     var body: some View {
+        
+            // Handler listens to when a user taps more than once on a tabItem
+        
         var handler: Binding<Int> { Binding(
             get: { self.tabSelection },
             set: {
@@ -73,6 +82,9 @@ struct ContentView: View {
                 }
                 .tag(3)
             }
+            
+                // Resets selected tabs id - popping to root view when double tapped
+            
             .onChange(of: tappedTwice, perform: { tapped in
                 guard tappedTwice else { return }
                 

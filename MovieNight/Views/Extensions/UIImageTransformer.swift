@@ -11,6 +11,8 @@ import UIKit
 @objc(UIImageTransformer)
 class UIImageTransformer: ValueTransformer {
     
+    // Transforms raw data into UIImage for use in core data
+    
     override func transformedValue(_ value: Any?) -> Any? {
         guard let image = value as? UIImage else { return nil }
         

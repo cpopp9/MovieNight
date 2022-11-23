@@ -9,7 +9,9 @@ import SwiftUI
 
 struct FilmographyPostersView: View {
     @ObservedObject var media: Media
+    
     var body: some View {
+        
         NavigationLink {
             MovieView(media: media)
         } label: {
@@ -27,12 +29,14 @@ struct FilmographyPostersView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                         
                     case .failure(_):
-                        Image(systemName: "exclamationmark.icloud")
-                            .resizable()
-                            .scaledToFit()
+                        Color.black.opacity(0.1)
+                            .aspectRatio(2/3, contentMode: .fill)
+                            .frame(height: 250)
                         
                     @unknown default:
-                        Image(systemName: "exclamationmark.icloud")
+                        Color.black.opacity(0.1)
+                            .aspectRatio(2/3, contentMode: .fill)
+                            .frame(height: 250)
                     }
                 }
                 .aspectRatio(2/3, contentMode: .fill)
@@ -47,8 +51,8 @@ struct FilmographyPostersView: View {
     }
 }
 
-    struct FilmographyPostersView_Previews: PreviewProvider {
-        static var previews: some View {
-            SimilarPostersView(media: Media())
-        }
+struct FilmographyPostersView_Previews: PreviewProvider {
+    static var previews: some View {
+        SimilarPostersView(media: Media())
     }
+}

@@ -15,7 +15,7 @@ struct MovieView: View {
             
             MovieTopDetails(media: media)
 
-            ButtonView(media: media)
+            AddToMyMoviesButton(media: media)
 
             MovieDetailView(media: media)
 

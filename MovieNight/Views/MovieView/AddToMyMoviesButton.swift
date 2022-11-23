@@ -8,9 +8,11 @@
 import CoreData
 import SwiftUI
 
-struct ButtonView: View {
-    @FetchRequest var mediaResults: FetchedResults<Media>
+struct AddToMyMoviesButton: View {
     @Environment(\.managedObjectContext) var moc
+    
+    @FetchRequest var mediaResults: FetchedResults<Media>
+    
     @ObservedObject var myMedia: Media
     
     var watchlist: Bool {
@@ -76,41 +78,41 @@ struct ButtonView: View {
         }
         .padding(.horizontal)
     }
-
-
-init(media: Media) {
-    _mediaResults = FetchRequest<Media>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i && watchlist == true", media.id))
     
-    myMedia = media
+    
+    init(media: Media) {
+        _mediaResults = FetchRequest<Media>(sortDescriptors: [], predicate: NSPredicate(format: "id == %i && watchlist == true", media.id))
+        
+        myMedia = media
+    }
+    
+    func markWatched() {
+        for media in mediaResults {
+            media.watched = true
+        }
+    }
+    
+    func unmarkWatched() {
+        for media in mediaResults {
+            media.watched = false
+        }
+    }
+    
+    func addToWatchlist() {
+        myMedia.watchlist = true
+    }
+    
+    func removeFromWatchlist() {
+        for media in mediaResults {
+            media.watchlist = false
+        }
+    }
+    
+    
 }
 
-func markWatched() {
-    for media in mediaResults {
-        media.watched = true
+struct addToMyMovies_Previews: PreviewProvider {
+    static var previews: some View {
+        AddToMyMoviesButton(media: Media())
     }
 }
-
-func unmarkWatched() {
-    for media in mediaResults {
-        media.watched = false
-    }
-}
-
-func addToWatchlist() {
-    myMedia.watchlist = true
-}
-
-func removeFromWatchlist() {
-    for media in mediaResults {
-        media.watchlist = false
-    }
-}
-
-
-}
-
-    //struct ButtonView_Previes: PreviewProvider {
-    //    static var previews: some View {
-    //        ButtonView()
-    //    }
-    //}

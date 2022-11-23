@@ -7,6 +7,8 @@
 
 import Foundation
 
+// Formats strings to be read correctly by API query
+
 extension String {
   func stringByAddingPercentEncodingForRFC3986() -> String? {
     let unreserved = "-._~/?"

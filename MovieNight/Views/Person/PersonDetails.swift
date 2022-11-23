@@ -1,9 +1,9 @@
-//
-//  PersonView.swift
-//  MovieNight
-//
-//  Created by Cory Popp on 10/25/22.
-//
+    //
+    //  PersonView.swift
+    //  MovieNight
+    //
+    //  Created by Cory Popp on 10/25/22.
+    //
 
 import SwiftUI
 
