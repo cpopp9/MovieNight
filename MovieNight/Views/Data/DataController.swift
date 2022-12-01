@@ -12,6 +12,9 @@ import SwiftUI
 class DataController: ObservableObject {
     let container = NSPersistentContainer(name: "MovieNight")
     
+    // Your API Key Here
+    @Published var API_KEY = ""
+    
     init() {
         container.loadPersistentStores { description, error in
             if let error = error {

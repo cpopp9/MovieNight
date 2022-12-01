@@ -53,7 +53,7 @@ struct DiscoverView: View {
     
     func downloadDiscoveryMedia(year: Int, page: Int) async {
         
-        guard let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate") else {
+        guard let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=\(dataController.API_KEY)&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate") else {
             print("Invalid URL")
             return
         }

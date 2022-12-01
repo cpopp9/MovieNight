@@ -63,7 +63,7 @@ struct SearchView: View {
             }
         }
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=\(dataController.API_KEY)&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
             print("Invalid URL")
             return
         }

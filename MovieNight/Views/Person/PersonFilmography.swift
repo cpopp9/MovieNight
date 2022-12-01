@@ -40,7 +40,7 @@ struct PersonFilmography: View {
     
     func downloadPersonFilmography(person: Person) async {
         
-        let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US")
+        let discover = URL(string: "https://api.themoviedb.org/3/person/\(person.id)/movie_credits?api_key=\(dataController.API_KEY)&language=en-US")
         
         guard let url = discover else {
             fatalError("Invalid URL")

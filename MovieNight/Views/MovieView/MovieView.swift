@@ -44,7 +44,7 @@ struct MovieView: View {
     
     func downloadAdditionalMediaDetails(media: Media) async {
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US") else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=\(dataController.API_KEY)&language=en-US") else {
             print("Invalid URL")
             return
         }

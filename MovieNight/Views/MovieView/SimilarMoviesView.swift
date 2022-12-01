@@ -47,7 +47,7 @@ struct SimilarMoviesView: View {
     func downloadSimilarMedia(media: Media) async {
         
         
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=\(dataController.API_KEY)&language=en-US&page=1") else {
             print("Invalid URL")
             return
         }
