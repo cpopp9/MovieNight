@@ -14,6 +14,12 @@ Discover, search and track your favorite movies and tv shows with Movie Night - 
 <img src="https://github.com/cpopp9/MovieNight/blob/main/Docs/mockup2.png?raw=true" alt="Alt text" title="Optional title" class="centerImage">
 
 
+### Links
+
+
+- I struggled to implement Core Data - <a href="[https://apps.apple.com/us/app/movie-night-tv-movies/id6444595947](https://medium.com/@coryjamespopp/wrestling-with-core-data-a72a701cf25c)">Here's how I overcame the limitations</a>
+
+
 ### Features
 
 - Discover upcoming movies and new releases
