@@ -17,7 +17,7 @@ Discover, search and track your favorite movies and tv shows with Movie Night - 
 ### Links
 
 
-- I struggled to implement Core Data - <a href="[https://apps.apple.com/us/app/movie-night-tv-movies/id6444595947](https://medium.com/@coryjamespopp/wrestling-with-core-data-a72a701cf25c)">Here's how I overcame the limitations</a>
+- I struggled to implement Core Data - <a href="https://medium.com/@coryjamespopp/wrestling-with-core-data-a72a701cf25c">Here's how I overcame the limitations</a>
 
 
 ### Features
