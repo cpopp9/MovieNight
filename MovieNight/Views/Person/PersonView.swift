@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PersonView: View {
     @ObservedObject var person: Person
-    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var personVM: PersonViewModel
     
     var body: some View {
         ScrollView {
@@ -18,35 +18,10 @@ struct PersonView: View {
         }
         .task {
             if person.biography == nil {
-                await downloadAdditionalPersonDetails(person: person)
+                await personVM.downloadAdditionalPersonDetails(person: person)
             }
         }
     }
-    
-        // Downloads additional information about a person and assigns it to their existing core data object
-    
-    func downloadAdditionalPersonDetails(person: Person) async {
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(person.id)?api_key=\(dataController.API_KEY)&language=en-US") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(PersonResult.self, from: data) {
-                
-                person.biography = decodedResponse.biography
-                person.place_of_birth = decodedResponse.place_of_birth
-                person.birthday = decodedResponse.birthday
-                
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-    }
-    
 }
 
 struct PersonView_Previews: PreviewProvider {

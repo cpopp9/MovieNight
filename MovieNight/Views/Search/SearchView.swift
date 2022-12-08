@@ -9,13 +9,12 @@ import SwiftUI
 
 struct SearchView: View {
     @Environment(\.isSearching) private var isSearching: Bool
-    
-    @EnvironmentObject var dataController: DataController
+
     @Environment(\.managedObjectContext) var moc
     
     @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "isSearchObject == true")) var searchResults: FetchedResults<Media>
     
-    @State var searchText = ""
+    @StateObject var searchVM = SearchViewModel()
     
     var body: some View {
         VStack {
@@ -38,54 +37,18 @@ struct SearchView: View {
             }
         }
         .navigationTitle("Search")
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search for something")
+        .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search for something")
         .onSubmit(of: .search) {
             Task {
-                await downloadSearchMedia(searchText: searchText)
+                await searchVM.downloadSearchMedia(searchText: searchVM.searchText, context: moc)
             }
         }
-        .onChange(of: searchText) { value in
-            if searchText.isEmpty && !isSearching {
-                dataController.clearSearch()
+        .onChange(of: searchVM.searchText) { value in
+            if searchVM.searchText.isEmpty && !isSearching {
+                searchVM.clearSearch(context: moc)
             }
         }
     }
-    
-    func downloadSearchMedia(searchText: String) async {
-        
-        dataController.clearSearch()
-        
-        var encoded: String {
-            if let encodedText = searchText.stringByAddingPercentEncodingForRFC3986() {
-                return encodedText
-            } else {
-                return "Failed"
-            }
-        }
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=\(dataController.API_KEY)&language=en-US&query=\(encoded)&page=1&include_adult=false") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-                
-                if let searchResults = decodedResponse.results {
-                    
-                    for item in searchResults {
-                        dataController.CreateMediaObject(item: item, context: moc).isSearchObject = true
-                    }
-                }
-            }
-        } catch let error {
-            fatalError("Invalid Data \(error)")
-        }
-        dataController.saveMedia(context: moc)
-    }
-    
 }
 
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CreditProfilePictures: View {
     @ObservedObject var person: Person
+    
     var body: some View {
         NavigationLink {
             PersonView(person: person)

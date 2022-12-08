@@ -14,6 +14,7 @@ struct AddToMyMoviesButton: View {
     @FetchRequest var mediaResults: FetchedResults<Media>
     
     @ObservedObject var myMedia: Media
+    @EnvironmentObject var mediaVM: MediaModel
     
     var watchlist: Bool {
         if mediaResults.isEmpty {
@@ -38,9 +39,7 @@ struct AddToMyMoviesButton: View {
         VStack {
             Button() {
                 watchlist ? removeFromWatchlist() : addToWatchlist()
-                
-                
-                dataController.saveMedia(context: moc)
+                mediaVM.saveMedia(context: moc)
                 
             } label: {
                 HStack {
@@ -60,7 +59,7 @@ struct AddToMyMoviesButton: View {
                 watched ? unmarkWatched() : markWatched()
                 
                 Task {
-                    dataController.saveMedia(context: moc)
+                    mediaVM.saveMedia(context: moc)
                 }
                 
             } label: {

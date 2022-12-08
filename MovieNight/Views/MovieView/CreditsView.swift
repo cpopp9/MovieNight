@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct CreditsView: View {
-    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var personVM: PersonViewModel
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var media: Media
     
@@ -37,35 +37,9 @@ struct CreditsView: View {
         .padding(.bottom, 10)
         .task {
             if media.creditsArray.isEmpty {
-                await downloadMediaCredits(media: media)
+                await personVM.downloadMediaCredits(media: media, context: moc)
             }
         }
-    }
-    
-    
-    func downloadMediaCredits(media: Media) async {
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/credits?api_key=\(dataController.API_KEY)&language=en-US") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try?  JSONDecoder().decode(Credits.self, from: data) {
-                
-                if let cast = decodedResponse.cast {
-                    for person in cast {
-                        if person.profile_path == nil { break }
-                        media.addToCredits(dataController.CreatePerson(person: person))
-                    }
-                }
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-        dataController.saveMedia(context: moc)
     }
 }
 

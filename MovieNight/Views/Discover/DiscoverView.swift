@@ -10,10 +10,9 @@ import SwiftUI
 struct DiscoverView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.timeAdded, order: .forward)], predicate: NSPredicate(format: "isDiscoverObject == true")) var discoverResults: FetchedResults<Media>
     
-    @EnvironmentObject var dataController: DataController
-    @Environment(\.managedObjectContext) var moc
+    @StateObject var discoverVM = DiscoverViewModel()
     
-    @State var currentPage = 1
+    @Environment(\.managedObjectContext) var moc
     
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
@@ -32,11 +31,11 @@ struct DiscoverView: View {
                         }
                         Image(systemName: "plus")
                             .padding()
-                            .font(.system(size: 25))
+                            .opacity(0)
                             .onAppear {
-                                currentPage += 1
+                                discoverVM.currentPage += 1
                                 Task {
-                                    await downloadDiscoveryMedia(year: 2022, page: currentPage)
+                                    await discoverVM.downloadDiscoveryMedia(year: 2022, page: discoverVM.currentPage, context: moc)
                                 }
                             }
                     }
@@ -46,36 +45,10 @@ struct DiscoverView: View {
             .navigationTitle("Discover")
             .task {
                 if discoverResults.isEmpty {
-                    await downloadDiscoveryMedia(year: 2022, page: 1)
+                    await discoverVM.downloadDiscoveryMedia(year: 2022, page: 1, context: moc)
                 }
             }
     }
-    
-    func downloadDiscoveryMedia(year: Int, page: Int) async {
-        
-        guard let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=\(dataController.API_KEY)&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=\(year)&with_watch_monetization_types=flatrate") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: discover)
-            
-            if let decodedResponse = try? JSONDecoder().decode(MediaResults.self, from: data) {
-                
-                if let discoverResults = decodedResponse.results {
-                    
-                    for item in discoverResults {
-                        dataController.CreateMediaObject(item: item, context: moc).isDiscoverObject = true
-                    }
-                }
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-        dataController.saveMedia(context: moc)
-    }
-    
 }
 
 struct DiscoverView_Previews: PreviewProvider {

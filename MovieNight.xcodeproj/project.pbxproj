@@ -37,6 +37,7 @@
 		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 		DCC60AFD29159889006D814A /* FilmographyPoster.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC60AFC29159889006D814A /* FilmographyPoster.swift */; };
+		DCCC060F293D775E00713607 /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC060E293D775E00713607 /* MediaModel.swift */; };
 		DCD021EC290842AF00C5BF54 /* PersonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021EB290842AF00C5BF54 /* PersonDetails.swift */; };
 		DCD021F2290887B700C5BF54 /* PersonFilmography.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F1290887B700C5BF54 /* PersonFilmography.swift */; };
 		DCD021F4290888CF00C5BF54 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F3290888CF00C5BF54 /* PersonView.swift */; };
@@ -79,6 +80,7 @@
 		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 		DCC60AFC29159889006D814A /* FilmographyPoster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmographyPoster.swift; sourceTree = "<group>"; };
+		DCCC060E293D775E00713607 /* MediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
 		DCD021EB290842AF00C5BF54 /* PersonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetails.swift; sourceTree = "<group>"; };
 		DCD021F1290887B700C5BF54 /* PersonFilmography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonFilmography.swift; sourceTree = "<group>"; };
 		DCD021F3290888CF00C5BF54 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			children = (
 				DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */,
 				DC6E134428E603F900A50AC5 /* DataController.swift */,
+				DCCC060E293D775E00713607 /* MediaModel.swift */,
 				DC6E134A28E6662200A50AC5 /* MediaResult.swift */,
 				DC881815290040520066C8FB /* MediaDetails.swift */,
 				DC6DB7D2290701BF00F7BCDD /* Credits.swift */,
@@ -332,6 +335,7 @@
 				DC6DB7D7290720AE00F7BCDD /* MovieDetailView.swift in Sources */,
 				DC6DB7D3290701BF00F7BCDD /* Credits.swift in Sources */,
 				DCD021FA29089DD000C5BF54 /* Person+CoreDataClass.swift in Sources */,
+				DCCC060F293D775E00713607 /* MediaModel.swift in Sources */,
 				DCC60AFD29159889006D814A /* FilmographyPoster.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
 				DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */,

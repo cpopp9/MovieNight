@@ -9,7 +9,7 @@ import SwiftUI
 import SafariServices
 
 struct SettingsView: View {
-    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var mediaVM: MediaModel
     @Environment(\.managedObjectContext) var moc
     @State private var showingAlert = false
     
@@ -44,7 +44,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .alert("Delete all movies?", isPresented: $showingAlert) {
                 Button("Confirm", role: .destructive) {
-                    dataController.deleteObjects(filter: .all)
+                    mediaVM.deleteObjects(filter: .all, context: moc)
                 }
             }
     }

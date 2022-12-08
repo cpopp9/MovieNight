@@ -8,7 +8,7 @@ import SwiftUI
 
 struct MovieView: View {
     @ObservedObject var media: Media
-    @EnvironmentObject var dataController: DataController
+    @EnvironmentObject var mediaVM: MediaModel
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -37,46 +37,10 @@ struct MovieView: View {
         
         .task {
             if media.tagline == nil {
-                await downloadAdditionalMediaDetails(media: media)
+                await mediaVM.downloadAdditionalMediaDetails(media: media)
             }
         }
     }
-    
-    func downloadAdditionalMediaDetails(media: Media) async {
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)?api_key=\(dataController.API_KEY)&language=en-US") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(MediaDetails.self, from: data) {
-                
-                media.imdb_id = decodedResponse.imdb_id
-                media.runtime = Int16(decodedResponse.runtime ?? 0)
-                media.tagline = decodedResponse.tagline
-                media.status = decodedResponse.status
-                media.number_of_seasons = Int16(decodedResponse.number_of_seasons ?? 0)
-                
-                if let genres = decodedResponse.genres {
-                    var genString = [String]()
-                    
-                    for genre in genres {
-                        genString.append(genre.name)
-                    }
-                    
-                    media.genres = genString.joined(separator: ", ")
-                }
-                
-                
-            }
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-    }
-    
 }
 
 struct DiscoverMovieView_Previews: PreviewProvider {
