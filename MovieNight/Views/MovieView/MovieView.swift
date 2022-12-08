@@ -26,7 +26,6 @@ struct MovieView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .background (
-            
             Image(uiImage: media.wrappedPosterImage)
                 .resizable()
                 .blur(radius: 50)
