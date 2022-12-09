@@ -17,6 +17,7 @@ I used the creation of this app as an excuse to teach myself some of the most im
 - [Tools and Frameworks](https://github.com/cpopp9/MovieNight/#tools-and-frameworks)
 - [Challenges](https://github.com/cpopp9/MovieNight/#challenges)
 - [Upcoming Changes](https://github.com/cpopp9/MovieNight#upcoming-changes)
+- [Support](https://github.com/cpopp9/MovieNight#support)
 
 <br>
 
@@ -91,6 +92,11 @@ I’m under no illusion that this is the most sophisticated way to use Core Data
 - Customized iPad layout
 - Share options
 - Theme customization
+
+<br>
+
+## **Support**
+If you come across any bugs, or have suggestions for improvements, [please submit a new ticket here](https://github.com/cpopp9/MovieNight/issues).
 
 <br>
 
