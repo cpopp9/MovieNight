@@ -54,6 +54,8 @@ import UIKit
     }
     
     func downloadPoster(media: Media) {
+        
+        // Poster sizes - w92, w154, w185, w342, w500, w780, original
 
             let url = URL(string: "https://image.tmdb.org/t/p/w92\(media.wrappedPosterPath)")!
             
