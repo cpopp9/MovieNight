@@ -24,18 +24,17 @@ struct DiscoverView: View {
                     
                         .foregroundColor(.secondary)
                         .padding(.horizontal)
-                    
+            
                     LazyVGrid(columns: columns) {
                         ForEach(discoverResults) { media in
                             DiscoverPoster(media: media)
                         }
                         Image(systemName: "plus")
-                            .padding()
                             .opacity(0)
                             .onAppear {
-                                discoverVM.currentPage += 1
+                                discoverVM.pageCount += 1
                                 Task {
-                                    await discoverVM.downloadDiscoveryMedia(year: 2022, page: discoverVM.currentPage, context: moc)
+                                    await discoverVM.downloadDiscoveryMedia(year: 1990, page: discoverVM.pageCount, context: moc)
                                 }
                             }
                     }
@@ -43,9 +42,52 @@ struct DiscoverView: View {
                 }
             }
             .navigationTitle("Discover")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu() {
+                        Menu() {
+                            Button() {
+                                
+                            } label: {
+                                Text("Movies")
+                            }
+                            Button() {
+                                
+                            } label: {
+                                Text("TV Shows")
+                            }
+                        } label: {
+                            Text("Media Type")
+                        }
+                        
+                        Menu() {
+                            Button() {
+                                
+                            } label: {
+                                Text("Current")
+                            }
+                            Button() {
+                                
+                            } label: {
+                                Text("90's")
+                            }
+                            Button() {
+                                
+                            } label: {
+                                Text("80's")
+                            }
+                        } label: {
+                            Text("Decade")
+                        }
+                        
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                    }
+                }
+            }
             .task {
                 if discoverResults.isEmpty {
-                    await discoverVM.downloadDiscoveryMedia(year: 2022, page: 1, context: moc)
+                    await discoverVM.downloadDiscoveryMedia(year: 1990, page: 1, context: moc)
                 }
             }
     }

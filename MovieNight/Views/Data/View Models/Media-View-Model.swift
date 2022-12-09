@@ -10,6 +10,8 @@ import UIKit
 
 @MainActor class MediaModel: ObservableObject {
     
+    let APIKEY = "9cb160c0f70956da44963b0444417ee2"
+    
     enum DeleteFilter {
         case all, nonWatchlist
     }
