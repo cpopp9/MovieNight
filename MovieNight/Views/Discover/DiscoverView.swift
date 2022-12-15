@@ -62,17 +62,20 @@ struct DiscoverView: View {
                         
                         Menu() {
                             Button() {
-                                
+                                discoverVM.selectedRange = .current
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
                             } label: {
                                 Text("Current")
                             }
                             Button() {
-                                
+                                discoverVM.selectedRange = .nineties
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
                             } label: {
                                 Text("90's")
                             }
                             Button() {
-                                
+                                discoverVM.selectedRange = .eighties
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
                             } label: {
                                 Text("80's")
                             }

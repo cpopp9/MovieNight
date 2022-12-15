@@ -13,7 +13,7 @@ import UIKit
     let APIKEY = "9cb160c0f70956da44963b0444417ee2"
     
     enum DeleteFilter {
-        case all, nonWatchlist
+        case all, discover, nonWatchlist
     }
     
     func createMediaObject(item: MediaResult, context: NSManagedObjectContext) -> Media {
@@ -105,14 +105,22 @@ import UIKit
             let personResults = try context.fetch(personRequest)
             
             
-            for media in mediaResults {
-                if filter == .all {
+            if filter == .all {
+                for media in mediaResults {
                     context.delete(media)
-                } else if filter == .nonWatchlist {
+                }
+            } else if filter == .discover {
+                for media in mediaResults {
+                    if media.watchlist == false {
+                        context.delete(media)
+                    } else {
+                        media.isDiscoverObject = false
+                    }
+                }
+            } else if filter == .nonWatchlist {
+                for media in mediaResults {
                     if media.watchlist {
                         media.isDiscoverObject = false
-                    } else {
-                        context.delete(media)
                     }
                 }
             }

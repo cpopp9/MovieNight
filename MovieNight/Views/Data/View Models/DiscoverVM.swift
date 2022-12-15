@@ -12,37 +12,35 @@ import CoreData
     
     @Published var pageCount = 1
     
+    enum DecadeRange {
+        case fifties, sixties, seventies, eighties, nineties, twoThousands, twentyTens, current
+    }
     
-    var dateRange = "&primary_release_date.gte=1990-01-01&primary_release_date.lte=1999-12-31"
+    var selectedRange = DecadeRange.current
     
-    
-    var decades: [String] = [
+    var dateRange: String {
         
-        // Current
-        "2020", "2029",
+        if selectedRange == .current {
+            return ""
+        } else if selectedRange == .twentyTens {
+            return "&primary_release_date.gte=2010-01-01&primary_release_date.lte=2019-12-31"
+        } else if selectedRange == .twoThousands {
+            return "&primary_release_date.gte=2000-01-01&primary_release_date.lte=2009-12-31"
+        } else if selectedRange == .nineties {
+            return "&primary_release_date.gte=1990-01-01&primary_release_date.lte=1999-12-31"
+        } else if selectedRange == .eighties {
+            return "&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31"
+        } else if selectedRange == .seventies {
+            return "&primary_release_date.gte=1970-01-01&primary_release_date.lte=1979-12-31"
+        } else if selectedRange == .sixties {
+            return "&primary_release_date.gte=1960-01-01&primary_release_date.lte=1969-12-31"
+        } else if selectedRange == .fifties {
+            return "&primary_release_date.gte=1950-01-01&primary_release_date.lte=1959-12-31"
+        }
         
-        // 2010's
-        "2010", "2019",
         
-        // 2000's
-        "2000", "2009",
-        
-        // 90's
-        "1990", "1999",
-        
-        // 80's
-        "1980", "1989",
-        
-        // 70's
-        "1970", "1979",
-        
-        // 60's
-        "1960", "1969",
-        
-        // 50's
-        "1950", "1959"
-        
-    ]
+        return ""
+    }
     
     let mediaType = ["movie", "tv"]
     
@@ -69,11 +67,6 @@ import CoreData
             return
         }
         
-//        guard let discover = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=\(page)&primary_release_year=2022&with_watch_monetization_types=flatrate") else {
-//            print("Invalid URL")
-//            return
-//        }
-        
         do {
             let (data, _) = try await URLSession.shared.data(from: discover)
             
@@ -91,4 +84,5 @@ import CoreData
         }
         saveMedia(context: context)
     }
+    
 }
