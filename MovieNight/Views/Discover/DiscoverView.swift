@@ -64,20 +64,58 @@ struct DiscoverView: View {
                             Button() {
                                 discoverVM.selectedRange = .current
                                 discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
                             } label: {
                                 Text("Current")
                             }
                             Button() {
+                                discoverVM.selectedRange = .twentyTens
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
+                            } label: {
+                                Text("2010's")
+                            }
+                            Button() {
+                                discoverVM.selectedRange = .twoThousands
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
+                            } label: {
+                                Text("2000's")
+                            }
+                            Button() {
                                 discoverVM.selectedRange = .nineties
                                 discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
                             } label: {
                                 Text("90's")
                             }
                             Button() {
                                 discoverVM.selectedRange = .eighties
                                 discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
                             } label: {
                                 Text("80's")
+                            }
+                            Button() {
+                                discoverVM.selectedRange = .seventies
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
+                            } label: {
+                                Text("70's")
+                            }
+                            Button() {
+                                discoverVM.selectedRange = .sixties
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
+                            } label: {
+                                Text("60's")
+                            }
+                            Button() {
+                                discoverVM.selectedRange = .fifties
+                                discoverVM.deleteObjects(filter: .discover, context: moc)
+                                discoverVM.pageCount = 1
+                            } label: {
+                                Text("50's")
                             }
                         } label: {
                             Text("Decade")
