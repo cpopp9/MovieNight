@@ -16,7 +16,6 @@ struct MovieNightApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-//                .environmentObject(dataController)
                 .environmentObject(mediaVM)
                 .environmentObject(personVM)
                 .environment(\.managedObjectContext, dataController.container.viewContext)

@@ -14,7 +14,6 @@ struct PersonDetails: View {
     var body: some View {
         
         VStack {
-            
             AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(person.wrappedProfilePath)")) { image in
                 image
                     .resizable()
