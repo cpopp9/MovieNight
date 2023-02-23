@@ -56,7 +56,6 @@ import CoreData
     
     var subHeading = "New and upcoming releases"
     
-    
     var baseURL: String {  "https://api.themoviedb.org/3/discover/\(selectedMediaType)?api_key=\(apiKey)&language=\(selectedLanguage)&sort_by=\(selectedSortBy)&include_adult=false&include_video=false&page=\(pageCount)\(dateRange)&with_watch_monetization_types=flatrate"
     }
     

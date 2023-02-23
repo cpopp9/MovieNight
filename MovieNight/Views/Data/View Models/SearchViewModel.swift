@@ -12,7 +12,8 @@ import CoreData
     
     var searchText = ""
     
-    func downloadSearchMedia(searchText: String, context: NSManagedObjectContext) async {
+    
+    func downloadSearchMedia(context: NSManagedObjectContext) async {
         
         clearSearch(context: context)
         

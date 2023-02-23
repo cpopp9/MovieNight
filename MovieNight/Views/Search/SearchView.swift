@@ -40,7 +40,7 @@ struct SearchView: View {
         .searchable(text: $searchVM.searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search for something")
         .onSubmit(of: .search) {
             Task {
-                await searchVM.downloadSearchMedia(searchText: searchVM.searchText, context: moc)
+                await searchVM.downloadSearchMedia(context: moc)
             }
         }
         .onChange(of: searchVM.searchText) { value in
