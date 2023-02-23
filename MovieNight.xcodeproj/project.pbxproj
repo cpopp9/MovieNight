@@ -40,7 +40,7 @@
 		DCCC060F293D775E00713607 /* Media-View-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC060E293D775E00713607 /* Media-View-Model.swift */; };
 		DCCC06122942608100713607 /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC06112942608100713607 /* DiscoverViewModel.swift */; };
 		DCCC06142942609400713607 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC06132942609400713607 /* SearchViewModel.swift */; };
-		DCCC0616294260A200713607 /* SimilarVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC0615294260A200713607 /* SimilarVM.swift */; };
+		DCCC0616294260A200713607 /* SimilarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC0615294260A200713607 /* SimilarViewModel.swift */; };
 		DCCC0618294260E900713607 /* Person-View-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC0617294260E900713607 /* Person-View-Model.swift */; };
 		DCD021EC290842AF00C5BF54 /* PersonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021EB290842AF00C5BF54 /* PersonDetails.swift */; };
 		DCD021F2290887B700C5BF54 /* PersonFilmography.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F1290887B700C5BF54 /* PersonFilmography.swift */; };
@@ -87,7 +87,7 @@
 		DCCC060E293D775E00713607 /* Media-View-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Media-View-Model.swift"; sourceTree = "<group>"; };
 		DCCC06112942608100713607 /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
 		DCCC06132942609400713607 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		DCCC0615294260A200713607 /* SimilarVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarVM.swift; sourceTree = "<group>"; };
+		DCCC0615294260A200713607 /* SimilarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarViewModel.swift; sourceTree = "<group>"; };
 		DCCC0617294260E900713607 /* Person-View-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person-View-Model.swift"; sourceTree = "<group>"; };
 		DCD021EB290842AF00C5BF54 /* PersonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetails.swift; sourceTree = "<group>"; };
 		DCD021F1290887B700C5BF54 /* PersonFilmography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonFilmography.swift; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 			children = (
 				DCCC060E293D775E00713607 /* Media-View-Model.swift */,
 				DCCC0617294260E900713607 /* Person-View-Model.swift */,
-				DCCC0615294260A200713607 /* SimilarVM.swift */,
+				DCCC0615294260A200713607 /* SimilarViewModel.swift */,
 				DCCC06132942609400713607 /* SearchViewModel.swift */,
 				DCCC06112942608100713607 /* DiscoverViewModel.swift */,
 			);
@@ -356,7 +356,7 @@
 				DC7A37D72912AE6A00E8343A /* SimilarPostersView.swift in Sources */,
 				DCD021F829089B7100C5BF54 /* Person+CoreDataProperties.swift in Sources */,
 				DC13862929259C870049D070 /* AddToMyMoviesButton.swift in Sources */,
-				DCCC0616294260A200713607 /* SimilarVM.swift in Sources */,
+				DCCC0616294260A200713607 /* SimilarViewModel.swift in Sources */,
 				DC881816290040520066C8FB /* MediaDetails.swift in Sources */,
 				DC7A37D92912B87A00E8343A /* CreditProfilePictures.swift in Sources */,
 				DC7A37DF291327C900E8343A /* DiscoverPosters.swift in Sources */,

@@ -9,10 +9,20 @@ import Foundation
 import CoreData
 
 @MainActor class SimilarViewModel: MediaModel {
-    func downloadSimilarMedia(media: Media, context: NSManagedObjectContext) async {
+    
+    let media: Media
+    
+    var similarURL: String {
+        "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1"
+    }
+    
+    init(media: Media) {
+        self.media = media
+    }
+    
+    func downloadSimilarMedia(context: NSManagedObjectContext) async {
         
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/\(media.wrappedMediaType)/\(media.id)/recommendations?api_key=9cb160c0f70956da44963b0444417ee2&language=en-US&page=1") else {
+        guard let url = URL(string: similarURL) else {
             print("Invalid URL")
             return
         }

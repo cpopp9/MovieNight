@@ -9,9 +9,9 @@ import SwiftUI
 import CoreData
 
 struct SimilarMoviesView: View {
-    @StateObject var similarVM = SimilarViewModel()
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var media: Media
+    var similarVM: SimilarViewModel
     
     
     var body: some View {
@@ -38,9 +38,14 @@ struct SimilarMoviesView: View {
         .padding(.bottom, 20)
         .task {
             if media.similarArray.isEmpty {
-                await similarVM.downloadSimilarMedia(media: media, context: moc)
+                await similarVM.downloadSimilarMedia(context: moc)
             }
         }
+    }
+    
+    init(media: Media) {
+        self.media = media
+        self.similarVM = SimilarViewModel(media: media)
     }
 }
 
