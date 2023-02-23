@@ -7,13 +7,13 @@
 
 import Foundation
 
-// Formats strings to be read correctly by API query
+// Formats strings to be read correctly by API query by replacing spaces with %
 
 extension String {
-  func stringByAddingPercentEncodingForRFC3986() -> String? {
+  func formatQuery() -> String {
     let unreserved = "-._~/?"
     let allowed = NSMutableCharacterSet.alphanumeric()
     allowed.addCharacters(in: unreserved)
-    return addingPercentEncoding(withAllowedCharacters: allowed as CharacterSet)
+      return addingPercentEncoding(withAllowedCharacters: allowed as CharacterSet)!
   }
 }
