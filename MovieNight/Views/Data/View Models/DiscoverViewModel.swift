@@ -20,26 +20,24 @@ import CoreData
     
     var dateRange: String {
         
-        if selectedRange == .current {
+        switch selectedRange {
+        case .current:
             return ""
-        } else if selectedRange == .twentyTens {
+        case .twentyTens:
             return "&primary_release_date.gte=2010-01-01&primary_release_date.lte=2019-12-31"
-        } else if selectedRange == .twoThousands {
+        case .twoThousands:
             return "&primary_release_date.gte=2000-01-01&primary_release_date.lte=2009-12-31"
-        } else if selectedRange == .nineties {
+        case .nineties:
             return "&primary_release_date.gte=1990-01-01&primary_release_date.lte=1999-12-31"
-        } else if selectedRange == .eighties {
+        case .eighties:
             return "&primary_release_date.gte=1980-01-01&primary_release_date.lte=1989-12-31"
-        } else if selectedRange == .seventies {
+        case .seventies:
             return "&primary_release_date.gte=1970-01-01&primary_release_date.lte=1979-12-31"
-        } else if selectedRange == .sixties {
+        case .sixties:
             return "&primary_release_date.gte=1960-01-01&primary_release_date.lte=1969-12-31"
-        } else if selectedRange == .fifties {
+        case .fifties:
             return "&primary_release_date.gte=1950-01-01&primary_release_date.lte=1959-12-31"
         }
-        
-        
-        return ""
     }
     
     let mediaType = ["movie", "tv"]
@@ -59,7 +57,7 @@ import CoreData
     var baseURL: String {  "https://api.themoviedb.org/3/discover/\(selectedMediaType)?api_key=\(apiKey)&language=\(selectedLanguage)&sort_by=\(selectedSortBy)&include_adult=false&include_video=false&page=\(pageCount)\(dateRange)&with_watch_monetization_types=flatrate"
     }
     
-    func downloadDiscoveryMedia(year: Int, page: Int, context: NSManagedObjectContext) async {
+    func downloadDiscoveryMedia(context: NSManagedObjectContext) async {
         
         guard let discover = URL(string: baseURL) else {
             print("Invalid URL")
