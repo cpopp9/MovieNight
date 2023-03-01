@@ -80,6 +80,7 @@ import CoreData
             print("Invalid Data \(error)")
         }
         saveMedia(context: context)
+        pageCount += 1
     }
     
 }

@@ -10,6 +10,8 @@
 		DC13862929259C870049D070 /* AddToMyMoviesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13862829259C870049D070 /* AddToMyMoviesButton.swift */; };
 		DC25CA0528F0E41300646BB9 /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC25CA0428F0E41300646BB9 /* SearchFilter.swift */; };
 		DC2BC11D28F71C5800E12FA5 /* Media+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2BC11B28F71C5800E12FA5 /* Media+CoreDataClass.swift */; };
+		DC52B24E29AFB5A800A93106 /* MediaGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC52B24D29AFB5A800A93106 /* MediaGridView.swift */; };
+		DC52B25029AFB5DA00A93106 /* PosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC52B24F29AFB5DA00A93106 /* PosterView.swift */; };
 		DC5C891F28FF23D700850DF3 /* FiveStarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C891E28FF23D700850DF3 /* FiveStarView.swift */; };
 		DC6DB7D12902D4F000F7BCDD /* SimilarMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DB7D02902D4F000F7BCDD /* SimilarMoviesView.swift */; };
 		DC6DB7D3290701BF00F7BCDD /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DB7D2290701BF00F7BCDD /* Credits.swift */; };
@@ -31,10 +33,8 @@
 		DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC72838028E672490028D4BA /* MovieNight.xcdatamodeld */; };
 		DC7A37D72912AE6A00E8343A /* SimilarPostersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A37D62912AE6A00E8343A /* SimilarPostersView.swift */; };
 		DC7A37D92912B87A00E8343A /* CreditProfilePictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */; };
-		DC7A37DF291327C900E8343A /* DiscoverPosters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A37DE291327C900E8343A /* DiscoverPosters.swift */; };
 		DC881816290040520066C8FB /* MediaDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC881815290040520066C8FB /* MediaDetails.swift */; };
 		DCAB67602922D3AF0081BAA9 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB675F2922D3AF0081BAA9 /* UIImageTransformer.swift */; };
-		DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
 		DCC60AFD29159889006D814A /* FilmographyPoster.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC60AFC29159889006D814A /* FilmographyPoster.swift */; };
 		DCCC060F293D775E00713607 /* Media-View-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC060E293D775E00713607 /* Media-View-Model.swift */; };
@@ -56,6 +56,8 @@
 		DC13862829259C870049D070 /* AddToMyMoviesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToMyMoviesButton.swift; sourceTree = "<group>"; };
 		DC25CA0428F0E41300646BB9 /* SearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
 		DC2BC11B28F71C5800E12FA5 /* Media+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Media+CoreDataClass.swift"; path = "MovieNight/Media+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DC52B24D29AFB5A800A93106 /* MediaGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaGridView.swift; sourceTree = "<group>"; };
+		DC52B24F29AFB5DA00A93106 /* PosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterView.swift; sourceTree = "<group>"; };
 		DC5C891E28FF23D700850DF3 /* FiveStarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveStarView.swift; sourceTree = "<group>"; };
 		DC6DB7D02902D4F000F7BCDD /* SimilarMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMoviesView.swift; sourceTree = "<group>"; };
 		DC6DB7D2290701BF00F7BCDD /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
@@ -78,10 +80,8 @@
 		DC72838128E672490028D4BA /* MovieNight.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieNight.xcdatamodel; sourceTree = "<group>"; };
 		DC7A37D62912AE6A00E8343A /* SimilarPostersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarPostersView.swift; sourceTree = "<group>"; };
 		DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditProfilePictures.swift; sourceTree = "<group>"; };
-		DC7A37DE291327C900E8343A /* DiscoverPosters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPosters.swift; sourceTree = "<group>"; };
 		DC881815290040520066C8FB /* MediaDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetails.swift; sourceTree = "<group>"; };
 		DCAB675F2922D3AF0081BAA9 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageTransformer.swift; sourceTree = "<group>"; };
-		DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchListButton.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
 		DCC60AFC29159889006D814A /* FilmographyPoster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmographyPoster.swift; sourceTree = "<group>"; };
 		DCCC060E293D775E00713607 /* Media-View-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Media-View-Model.swift"; sourceTree = "<group>"; };
@@ -124,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				DC6E135228E6668E00A50AC5 /* DiscoverView.swift */,
-				DC7A37DE291327C900E8343A /* DiscoverPosters.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -146,21 +145,44 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		DC5C891D28FF238500850DF3 /* MovieView */ = {
+		DC52B24A29AFB43500A93106 /* Similar Media */ = {
 			isa = PBXGroup;
 			children = (
-				DC6E134628E665E200A50AC5 /* MovieView.swift */,
-				DC6DB7D82907219B00F7BCDD /* MovieTopDetails.swift */,
-				DC5C891E28FF23D700850DF3 /* FiveStarView.swift */,
-				DCAE9A0A28E757EA00753F1A /* AddToWatchListButton.swift */,
-				DC13862829259C870049D070 /* AddToMyMoviesButton.swift */,
-				DC6DB7D6290720AE00F7BCDD /* MovieDetailView.swift */,
-				DC6DB7D42907078A00F7BCDD /* CreditsView.swift */,
-				DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */,
 				DC6DB7D02902D4F000F7BCDD /* SimilarMoviesView.swift */,
 				DC7A37D62912AE6A00E8343A /* SimilarPostersView.swift */,
 			);
-			path = MovieView;
+			path = "Similar Media";
+			sourceTree = "<group>";
+		};
+		DC52B24B29AFB53500A93106 /* Credits */ = {
+			isa = PBXGroup;
+			children = (
+				DC6DB7D42907078A00F7BCDD /* CreditsView.swift */,
+				DC7A37D82912B87A00E8343A /* CreditProfilePictures.swift */,
+			);
+			path = Credits;
+			sourceTree = "<group>";
+		};
+		DC52B24C29AFB56000A93106 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				DC6DB7D82907219B00F7BCDD /* MovieTopDetails.swift */,
+				DC5C891E28FF23D700850DF3 /* FiveStarView.swift */,
+				DC13862829259C870049D070 /* AddToMyMoviesButton.swift */,
+				DC6DB7D6290720AE00F7BCDD /* MovieDetailView.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		DC5C891D28FF238500850DF3 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				DC6E134628E665E200A50AC5 /* MovieView.swift */,
+				DC52B24C29AFB56000A93106 /* Details */,
+				DC52B24B29AFB53500A93106 /* Credits */,
+				DC52B24A29AFB43500A93106 /* Similar Media */,
+			);
+			path = Media;
 			sourceTree = "<group>";
 		};
 		DC6E132728E5F4EE00A50AC5 = {
@@ -206,8 +228,10 @@
 			isa = PBXGroup;
 			children = (
 				DC6E133528E5F4EE00A50AC5 /* ContentView.swift */,
+				DC52B24D29AFB5A800A93106 /* MediaGridView.swift */,
+				DC52B24F29AFB5DA00A93106 /* PosterView.swift */,
 				DCD021EA2908429C00C5BF54 /* Person */,
-				DC5C891D28FF238500850DF3 /* MovieView */,
+				DC5C891D28FF238500850DF3 /* Media */,
 				DC2BC11F28F7740600E12FA5 /* Discover */,
 				DC423EE928F5D508005B91B8 /* My Movies */,
 				DC25CA0328F0E3C300646BB9 /* Search */,
@@ -347,6 +371,7 @@
 				DC6E134728E665E200A50AC5 /* MovieView.swift in Sources */,
 				DCEDDFA029157D3E009D07B5 /* Media+CoreDataProperties.swift in Sources */,
 				DC6E135328E6668E00A50AC5 /* DiscoverView.swift in Sources */,
+				DC52B25029AFB5DA00A93106 /* PosterView.swift in Sources */,
 				DC6E133628E5F4EE00A50AC5 /* ContentView.swift in Sources */,
 				DC6E134528E603F900A50AC5 /* DataController.swift in Sources */,
 				DC6E134D28E6664000A50AC5 /* SearchView.swift in Sources */,
@@ -359,7 +384,6 @@
 				DCCC0616294260A200713607 /* SimilarViewModel.swift in Sources */,
 				DC881816290040520066C8FB /* MediaDetails.swift in Sources */,
 				DC7A37D92912B87A00E8343A /* CreditProfilePictures.swift in Sources */,
-				DC7A37DF291327C900E8343A /* DiscoverPosters.swift in Sources */,
 				DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */,
 				DC6DB7D7290720AE00F7BCDD /* MovieDetailView.swift in Sources */,
 				DCCC06122942608100713607 /* DiscoverViewModel.swift in Sources */,
@@ -373,9 +397,9 @@
 				DCCC06142942609400713607 /* SearchViewModel.swift in Sources */,
 				DCE9740428F83BD9002917F0 /* AllSearchResults.swift in Sources */,
 				DCD021F2290887B700C5BF54 /* PersonFilmography.swift in Sources */,
-				DCAE9A0B28E757EA00753F1A /* AddToWatchListButton.swift in Sources */,
 				DCD021EC290842AF00C5BF54 /* PersonDetails.swift in Sources */,
 				DC6E134B28E6662200A50AC5 /* MediaResult.swift in Sources */,
+				DC52B24E29AFB5A800A93106 /* MediaGridView.swift in Sources */,
 				DCCC0618294260E900713607 /* Person-View-Model.swift in Sources */,
 				DC6DB7D92907219B00F7BCDD /* MovieTopDetails.swift in Sources */,
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
@@ -519,18 +543,21 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.coryjpopp.movienighttracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coryjpopp.movienightapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -550,18 +577,21 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.coryjpopp.movienighttracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coryjpopp.movienightapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

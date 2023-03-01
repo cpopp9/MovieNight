@@ -1,20 +1,19 @@
-    //
-    //  DiscoverPosters.swift
-    //  MovieNight
-    //
-    //  Created by Cory Popp on 11/2/22.
-    //
+//
+//  PosterView.swift
+//  MovieNight
+//
+//  Created by Cory Popp on 3/1/23.
+//
 
 import SwiftUI
 
-struct DiscoverPoster: View {
+struct PosterView: View {
     @ObservedObject var media: Media
     var body: some View {
         NavigationLink {
             MovieView(media: media)
         } label: {
             VStack {
-                
                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
                     switch phase {
                     case .empty:
@@ -34,7 +33,6 @@ struct DiscoverPoster: View {
                 }
                 .aspectRatio(2/3, contentMode: .fill)
                 .scaledToFit()
-//                .frame(height: 250)
                 
                 
                 Text(media.wrappedTitle)
@@ -46,8 +44,8 @@ struct DiscoverPoster: View {
     }
 }
 
-struct DiscoverPoster_Previews: PreviewProvider {
+struct PosterView_Previews: PreviewProvider {
     static var previews: some View {
-        DiscoverPoster(media: Media())
+        PosterView(media: Media())
     }
 }

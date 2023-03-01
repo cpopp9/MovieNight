@@ -15,6 +15,7 @@ struct PersonView: View {
         ScrollView {
             PersonDetails(person: person)
             PersonFilmography(person: person)
+            
         }
         .task {
             if person.biography == nil {

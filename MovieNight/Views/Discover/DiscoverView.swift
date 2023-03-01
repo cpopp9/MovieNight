@@ -14,31 +14,19 @@ struct DiscoverView: View {
     
     @Environment(\.managedObjectContext) var moc
     
+    @State private var endOFList = false
+    
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                
-                Text("New and upcoming releases:")
-                
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal)
-                
-                LazyVGrid(columns: columns) {
-                    ForEach(discoverResults) { media in
-                        DiscoverPoster(media: media)
-                    }
-                    Image(systemName: "plus")
-                        .opacity(0)
-                        .onAppear {
-                            Task {
-                                await discoverVM.downloadDiscoveryMedia(context: moc)
-                                discoverVM.pageCount += 1
-                            }
+            VStack {
+                MediaGridView(endOfList: $endOFList)
+                    .onChange(of: endOFList, perform: { _ in
+                        Task {
+                            await discoverVM.downloadDiscoveryMedia(context: moc)
                         }
-                }
-                .padding(.horizontal)
+                    })
             }
         }
         .navigationTitle("Discover")
@@ -131,6 +119,13 @@ struct DiscoverView: View {
             }
         }
     }
+    
+    func download() {
+        Task {
+            await discoverVM.downloadDiscoveryMedia(context: moc)
+        }
+    }
+    
 }
 
 struct DiscoverView_Previews: PreviewProvider {
