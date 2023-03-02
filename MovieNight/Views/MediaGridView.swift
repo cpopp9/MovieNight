@@ -45,8 +45,8 @@ struct MediaGridView: View {
     
 }
 
-//struct MediaGridView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MediaGridView(mediaArray: <#T##FetchedResults<Media>#>)
-//    }
-//}
+struct MediaGridView_Previews: PreviewProvider {
+    static var previews: some View {
+        MediaGridView(endOfList: .constant(true))
+    }
+}
