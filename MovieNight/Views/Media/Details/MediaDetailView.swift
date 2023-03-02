@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MovieDetailView: View {
+struct MediaDetailView: View {
     @ObservedObject var media: Media
     
     var body: some View {
@@ -52,6 +52,6 @@ struct MovieDetailView: View {
 
     struct MovieDetailView_Previews: PreviewProvider {
         static var previews: some View {
-            MovieDetailView(media: Media())
+            MediaDetailView(media: Media())
         }
     }

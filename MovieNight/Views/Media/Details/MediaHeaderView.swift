@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MovieTopDetails: View {
+struct MediaHeaderView: View {
     @ObservedObject var media: Media
     
     var body: some View {
@@ -48,7 +48,7 @@ struct MovieTopDetails: View {
                 }
                 
                 HStack {
-                    MediaRatingView(voteAverage: media.vote_average)
+                    RatingView(voteAverage: media.vote_average)
                     Text("(\(media.vote_count) ratings)")
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -60,8 +60,8 @@ struct MovieTopDetails: View {
     }
 }
 
-struct MovieTopDetails_Previews: PreviewProvider {
+struct MovieTopDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieTopDetails(media: Media())
+        MediaHeaderView(media: Media())
     }
 }

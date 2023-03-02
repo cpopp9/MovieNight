@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MediaRatingView: View {
+struct RatingView: View {
     let voteAverage: Double
     
     var body: some View {
@@ -33,6 +33,6 @@ struct MediaRatingView: View {
 
 struct MovieRatingView_Previews: PreviewProvider {
     static var previews: some View {
-        MediaRatingView(voteAverage: 3.5)
+        RatingView(voteAverage: 3.5)
     }
 }

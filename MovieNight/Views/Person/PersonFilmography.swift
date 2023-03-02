@@ -19,13 +19,9 @@ struct PersonFilmography: View {
         
         VStack(alignment: .leading) {
             
-            Text("Filmography \(person.filmographyArray.count):")
-                .foregroundColor(.secondary)
-                .padding(.horizontal)
-            
             LazyVGrid(columns: columns) {
                 ForEach(person.filmographyArray) { media in
-                    FilmographyPostersView(media: media)
+                    PosterView(media: media)
                 }
             }
             .padding(.horizontal)

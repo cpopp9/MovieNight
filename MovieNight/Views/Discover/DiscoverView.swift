@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DiscoverView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.timeAdded, order: .forward)], predicate: NSPredicate(format: "isDiscoverObject == true")) var discoverResults: FetchedResults<Media>
     
     @StateObject var discoverVM = DiscoverViewModel()
     
@@ -16,12 +15,10 @@ struct DiscoverView: View {
     
     @State private var endOFList = false
     
-    let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
-    
     var body: some View {
         ScrollView {
             VStack {
-                MediaGridView(endOfList: $endOFList)
+                MediaGridView(mediaGridType: .discover, endOfList: $endOFList)
                     .onChange(of: endOFList, perform: { _ in
                         Task {
                             await discoverVM.downloadDiscoveryMedia(context: moc)
@@ -33,26 +30,6 @@ struct DiscoverView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu() {
-//                    Menu() {
-//                        Button() {
-//                            discoverVM.selectedMediaType = "movie"
-//                            discoverVM.deleteObjects(filter: .discover, context: moc)
-//                            discoverVM.pageCount = 1
-//                        } label: {
-//                            Text("Movies")
-//                        }
-//                        Button() {
-//                            discoverVM.selectedMediaType = "tv"
-//                            discoverVM.deleteObjects(filter: .discover, context: moc)
-//                            discoverVM.pageCount = 1
-//                        } label: {
-//                            Text("TV Shows")
-//                        }
-//                    } label: {
-//                        Text("Media Type")
-//                    }
-                    
-//                    Menu() {
                         Button() {
                             discoverVM.selectedRange = .current
                             discoverVM.deleteObjects(filter: .discover, context: moc)
@@ -109,10 +86,6 @@ struct DiscoverView: View {
                         } label: {
                             Text("50's")
                         }
-//                    } label: {
-//                        Text("Decade")
-//                    }
-                    
                 } label: {
                     Image(systemName: "calendar")
                 }

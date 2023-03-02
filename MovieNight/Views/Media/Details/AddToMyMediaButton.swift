@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct AddToMyMoviesButton: View {
+struct AddToMyMediaButton: View {
     @Environment(\.managedObjectContext) var moc
     
     @FetchRequest var mediaResults: FetchedResults<Media>
@@ -112,6 +112,6 @@ struct AddToMyMoviesButton: View {
 
 struct addToMyMovies_Previews: PreviewProvider {
     static var previews: some View {
-        AddToMyMoviesButton(media: Media())
+        AddToMyMediaButton(media: Media())
     }
 }
