@@ -23,7 +23,7 @@ struct SettingsView: View {
                 }
                 
                 Section("About this app") {
-                    Link("Rate this App", destination: URL(string: "https://apps.apple.com/us/app/movie-night-tv-movies/id6444595947?action=write-review")!)
+                    Link("Rate this App", destination: URL(string: "https://apps.apple.com/us/app/movie-night-tv-movies/id1672641375?action=write-review")!)
                     Link("App Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
                 }
                 
