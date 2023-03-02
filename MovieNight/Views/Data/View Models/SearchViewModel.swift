@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-@MainActor class SearchViewModel: MediaModel {
+@MainActor class SearchViewModel: MediaViewModel {
     
     var searchText = ""
     

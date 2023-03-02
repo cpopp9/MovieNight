@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-@MainActor class SimilarViewModel: MediaModel {
+@MainActor class SimilarViewModel: MediaViewModel {
     
     let media: Media
     

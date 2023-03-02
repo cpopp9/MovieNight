@@ -8,7 +8,7 @@ import SwiftUI
 
 struct MovieView: View {
     @ObservedObject var media: Media
-    @EnvironmentObject var mediaVM: MediaModel
+    @EnvironmentObject var mediaVM: MediaViewModel
     
     var body: some View {
         ScrollView(showsIndicators: false) {

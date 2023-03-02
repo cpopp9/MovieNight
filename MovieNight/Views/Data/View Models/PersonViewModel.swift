@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-@MainActor class PersonViewModel: MediaModel {
+@MainActor class PersonViewModel: MediaViewModel {
     
     func CreatePerson(person: Cast, context: NSManagedObjectContext) -> Person {
         let newPerson = Person(context: context)

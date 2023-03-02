@@ -9,7 +9,7 @@ import SwiftUI
 import SafariServices
 
 struct SettingsView: View {
-    @EnvironmentObject var mediaVM: MediaModel
+    @EnvironmentObject var mediaVM: MediaViewModel
     @Environment(\.managedObjectContext) var moc
     @State private var showingAlert = false
     

@@ -8,7 +8,7 @@ import CoreData
 import Foundation
 import UIKit
 
-@MainActor class MediaModel: ObservableObject {
+@MainActor class MediaViewModel: ObservableObject {
     
     let APIKEY = "9cb160c0f70956da44963b0444417ee2"
     

@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-@MainActor class DiscoverViewModel: MediaModel {
+@MainActor class DiscoverViewModel: MediaViewModel {
     
     @Published var pageCount = 1
     

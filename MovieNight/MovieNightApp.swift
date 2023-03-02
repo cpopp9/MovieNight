@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct MovieNightApp: App {
     @StateObject var dataController = DataController()
-    @StateObject var mediaVM = MediaModel()
+    @StateObject var mediaVM = MediaViewModel()
     @StateObject var personVM = PersonViewModel()
     
     var body: some Scene {

@@ -14,7 +14,7 @@ struct AddToMyMediaButton: View {
     @FetchRequest var mediaResults: FetchedResults<Media>
     
     @ObservedObject var myMedia: Media
-    @EnvironmentObject var mediaVM: MediaModel
+    @EnvironmentObject var mediaVM: MediaViewModel
     
     var watchlist: Bool {
         if mediaResults.isEmpty {

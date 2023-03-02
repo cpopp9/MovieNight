@@ -36,11 +36,11 @@
 		DC881816290040520066C8FB /* MediaDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC881815290040520066C8FB /* MediaDetails.swift */; };
 		DCAB67602922D3AF0081BAA9 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAB675F2922D3AF0081BAA9 /* UIImageTransformer.swift */; };
 		DCC4850028EB177A004116CD /* WatchListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC484FF28EB177A004116CD /* WatchListFilter.swift */; };
-		DCCC060F293D775E00713607 /* Media-View-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC060E293D775E00713607 /* Media-View-Model.swift */; };
+		DCCC060F293D775E00713607 /* MediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC060E293D775E00713607 /* MediaViewModel.swift */; };
 		DCCC06122942608100713607 /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC06112942608100713607 /* DiscoverViewModel.swift */; };
 		DCCC06142942609400713607 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC06132942609400713607 /* SearchViewModel.swift */; };
 		DCCC0616294260A200713607 /* SimilarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC0615294260A200713607 /* SimilarViewModel.swift */; };
-		DCCC0618294260E900713607 /* Person-View-Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC0617294260E900713607 /* Person-View-Model.swift */; };
+		DCCC0618294260E900713607 /* PersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC0617294260E900713607 /* PersonViewModel.swift */; };
 		DCD021EC290842AF00C5BF54 /* PersonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021EB290842AF00C5BF54 /* PersonDetails.swift */; };
 		DCD021F2290887B700C5BF54 /* PersonFilmography.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F1290887B700C5BF54 /* PersonFilmography.swift */; };
 		DCD021F4290888CF00C5BF54 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD021F3290888CF00C5BF54 /* PersonView.swift */; };
@@ -82,11 +82,11 @@
 		DC881815290040520066C8FB /* MediaDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetails.swift; sourceTree = "<group>"; };
 		DCAB675F2922D3AF0081BAA9 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageTransformer.swift; sourceTree = "<group>"; };
 		DCC484FF28EB177A004116CD /* WatchListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListFilter.swift; sourceTree = "<group>"; };
-		DCCC060E293D775E00713607 /* Media-View-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Media-View-Model.swift"; sourceTree = "<group>"; };
+		DCCC060E293D775E00713607 /* MediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewModel.swift; sourceTree = "<group>"; };
 		DCCC06112942608100713607 /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
 		DCCC06132942609400713607 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		DCCC0615294260A200713607 /* SimilarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarViewModel.swift; sourceTree = "<group>"; };
-		DCCC0617294260E900713607 /* Person-View-Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person-View-Model.swift"; sourceTree = "<group>"; };
+		DCCC0617294260E900713607 /* PersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewModel.swift; sourceTree = "<group>"; };
 		DCD021EB290842AF00C5BF54 /* PersonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetails.swift; sourceTree = "<group>"; };
 		DCD021F1290887B700C5BF54 /* PersonFilmography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonFilmography.swift; sourceTree = "<group>"; };
 		DCD021F3290888CF00C5BF54 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
@@ -263,8 +263,8 @@
 		DCCC06102942606500713607 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				DCCC060E293D775E00713607 /* Media-View-Model.swift */,
-				DCCC0617294260E900713607 /* Person-View-Model.swift */,
+				DCCC060E293D775E00713607 /* MediaViewModel.swift */,
+				DCCC0617294260E900713607 /* PersonViewModel.swift */,
 				DCCC0615294260A200713607 /* SimilarViewModel.swift */,
 				DCCC06132942609400713607 /* SearchViewModel.swift */,
 				DCCC06112942608100713607 /* DiscoverViewModel.swift */,
@@ -386,7 +386,7 @@
 				DCCC06122942608100713607 /* DiscoverViewModel.swift in Sources */,
 				DC6DB7D3290701BF00F7BCDD /* Credits.swift in Sources */,
 				DCD021FA29089DD000C5BF54 /* Person+CoreDataClass.swift in Sources */,
-				DCCC060F293D775E00713607 /* Media-View-Model.swift in Sources */,
+				DCCC060F293D775E00713607 /* MediaViewModel.swift in Sources */,
 				DC6E135128E6668900A50AC5 /* SettingsView.swift in Sources */,
 				DC72838228E672490028D4BA /* MovieNight.xcdatamodeld in Sources */,
 				DC5C891F28FF23D700850DF3 /* RatingView.swift in Sources */,
@@ -396,7 +396,7 @@
 				DCD021EC290842AF00C5BF54 /* PersonDetails.swift in Sources */,
 				DC6E134B28E6662200A50AC5 /* MediaResult.swift in Sources */,
 				DC52B24E29AFB5A800A93106 /* MediaGridView.swift in Sources */,
-				DCCC0618294260E900713607 /* Person-View-Model.swift in Sources */,
+				DCCC0618294260E900713607 /* PersonViewModel.swift in Sources */,
 				DC6DB7D92907219B00F7BCDD /* MediaHeaderView.swift in Sources */,
 				DC6E133428E5F4EE00A50AC5 /* MovieNightApp.swift in Sources */,
 				DC6DB7D12902D4F000F7BCDD /* SimilarMoviesView.swift in Sources */,
