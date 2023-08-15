@@ -13,6 +13,7 @@ struct PersonFilmography: View {
     @ObservedObject var person: Person
     @EnvironmentObject var personVM: PersonViewModel
     
+    // Set grid size and spacing.
     let columns = [GridItem(.adaptive(minimum: 150, maximum: 300), spacing: 10, alignment: .topTrailing)]
     
     var body: some View {

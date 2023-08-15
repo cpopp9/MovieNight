@@ -23,7 +23,7 @@ struct ContentView: View {
     
     var body: some View {
         
-            // Handler listens to when a user taps more than once on a tabItem
+        // Handler establishes which tab is selected, and if it gets tapped twice it will pop to root view
         
         var handler: Binding<Int> { Binding(
             get: { self.tabSelection },
@@ -83,7 +83,7 @@ struct ContentView: View {
                 .tag(3)
             }
             
-                // Resets selected tabs id - popping to root view when double tapped
+                // onChange modifier will reset selected tabs UUID, which will perform the pop to root view when double tapped
             
             .onChange(of: tappedTwice, perform: { tapped in
                 guard tappedTwice else { return }

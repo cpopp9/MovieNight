@@ -15,9 +15,9 @@ struct PersonView: View {
         ScrollView {
             PersonDetails(person: person)
             PersonFilmography(person: person)
-            
         }
         .task {
+            // if person doesn't contain a biolography, attempt to download one of view load.
             if person.biography == nil {
                 await personVM.downloadAdditionalPersonDetails(person: person)
             }

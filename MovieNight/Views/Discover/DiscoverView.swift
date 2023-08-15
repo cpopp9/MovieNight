@@ -28,6 +28,9 @@ struct DiscoverView: View {
         }
         .navigationTitle("Discover")
         .toolbar {
+            
+            // MARK: New feature that has not been made public yet - allow user to discover media from a list of decade ranges for more interesting media results.
+            
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu() {
                         Button() {

@@ -14,6 +14,9 @@ struct PosterView: View {
             MovieView(media: media)
         } label: {
             VStack {
+                
+                // Loads and displays image asynchronously from URL. AsyncImage inherently contains phases that include fallbacks for if the image fails to load, or if the URL doesn't contain an image.
+                
                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w342\(media.wrappedPosterPath)"), transaction: Transaction(animation: .spring())) { phase in
                     switch phase {
                     case .empty:

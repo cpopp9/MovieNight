@@ -46,6 +46,8 @@ extension Media {
     @NSManaged public var timeAdded: Date
     @NSManaged public var genres: String?
     
+    // Although Core Data can assign properties as non-optional, when values are read from SQLite, it can't be certain that the values are actually there. To guarantee that we can return the property we promised, we can use the following computed variables:
+    
     public var similarArray: [Media] {
         let set = similar as? Set<Media> ?? []
         return set.sorted {
